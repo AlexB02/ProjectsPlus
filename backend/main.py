@@ -1,9 +1,14 @@
 import flask
+from flask import request, url_for
 
 app = flask.Flask("__main__")
 
-@app.route("/")
+@app.route("/", methods=["GET","POST"])
 def index():
-    return flask.render_template("index.html",token="React+Flask",apple="doggo")
+    loginstatus = ""
+    if request.method == "POST":
+        name = request.form["name"]
+        loginstatus = "Welcome " + name
+    return flask.render_template("index.html",loginstatus=loginstatus)
 
 app.run(debug=True)

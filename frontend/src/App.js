@@ -6,13 +6,21 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>My token = {window.token}</p>
-        <p>Apple = {window.apple}</p>
-      </header>
+        <h1>Projects Plus</h1>
+        <p>Team management made simple.</p>
+
+        <form method="POST">
+        <label>
+        Name:
+        <input type="text" name="name" />
+        </label>
+        <input type="submit" value="Submit" />
+        </form>
+
+        <p>{window.loginstatus}</p>
+
+        </header>
+
     </div>
   );
 }
