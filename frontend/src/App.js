@@ -14,7 +14,7 @@ function App() {
         Name:
         <input type="text" name="name" />
         Password:
-        <input type="password" name="pass" />
+        <input type="password" name="password" />
         </label>
         <input type="submit" value="Submit" />
         </form>
