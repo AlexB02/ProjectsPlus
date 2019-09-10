@@ -8,6 +8,7 @@ def index():
     loginstatus = ""
     if request.method == "POST":
         name = request.form["name"]
+        password = request.form["password"]
         loginstatus = "Welcome " + name
     return flask.render_template("index.html",loginstatus=loginstatus)
 
