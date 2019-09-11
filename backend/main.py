@@ -12,4 +12,8 @@ def index():
         loginstatus = "Welcome " + name
     return flask.render_template("index.html",loginstatus=loginstatus)
 
+@app.route("/about")
+def about():
+    return flask.render_template("about.html")
+
 app.run(debug=True)
