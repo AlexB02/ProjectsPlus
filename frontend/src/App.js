@@ -1,14 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Link, animateScroll as scroll } from "react-scroll";
 
 export function App() {
   return (
+    <html>
     <div className="App" id="home">
       <header className="App-header">
-        <h1 className="title"><b>projects plus.</b></h1>
-        <p className="strapline"><b>team management, made simple.</b></p>
-
+        <div className="space1"></div>
+        <h1 className="title"><b>projects plus+</b></h1>
+        <a className="strapline"><b>team management, made simple.</b></a>
         {/*}
         <form method="POST">
         <label>
@@ -25,33 +26,113 @@ export function App() {
 
         </header>
     </div>
+    </html>
   );
 };
 
 export function NavBar() {
   return (
+    <html>
     <div className="NavBar">
     <b>
-    <a href="#home">home</a>
-    <a href="#about">about</a>
-    <a href="#pricing">pricing</a>
-    <a href="#signup">sign up</a>
+    <Link to="home" smooth={true} activeClass="active"><a href="#">home</a></Link>
+    <Link to="about" smooth={true} activeClass="active" offset={-120}><a href="#">about</a></Link>
+    <Link to="pricing" smooth={true} activeClass="active" offset={-70}><a href="#">pricing</a></Link>
+    <Link to="signup" smooth={true} activeClass="active" offset={-120}><a href="#">sign up</a></Link>
     </b>
     </div>
+    </html>
   );
 };
 
 export function Body() {
   return (
-    <body className="body">
+    <html>
+    <div className="space2"></div>
+    <body className="Body">
     <b>
     <div id="about">
-      <a className="bodytitle">you are efficiency.</a>
+      <a className="bodytitle">strive for efficiency+</a>
       <p>Explore the data behind what makes your team work. Receive customised employee recommendations, that learns as you use the app.</p>
     </div>
-    <div id="pricing">pricing</div>
+
+    <div className="space2"></div>
+
+    <div id="pricing">
+      <a className="bodytitle">all at a price you can't say no to+</a>
+      <p>Discover all 4 price plans, for 4 different sized projects.</p>
+
+        <div className="priceboxes">
+
+          <div className="prepricebox"></div>
+
+          <div className="silver">
+            <a className="boxtitle">Silver</a>
+            <p>Efficiency reports and employee recommendations</p>
+            <p>Up to 5 team members</p>
+            <p>Up to 20 active tasks</p>
+            <div className="payboxgap"></div>
+            <div className="paybox">
+            <div className="price">£2.89</div>
+            <p>pcm per member</p>
+            </div>
+          </div>
+
+          <div className="boxspace"></div>
+
+          <div className="gold">
+            <a className="boxtitle">Gold</a>
+            <p>Efficiency reports and employee recommendations</p>
+            <p>Up to 25 team members</p>
+            <p>Up to 100 active tasks</p>
+            <p>Up to 8 tasks in the critical path</p>
+            <div className="payboxgap"></div>
+            <div className="paybox">
+            <div className="price">£5.89</div>
+            <p>pcm per member</p>
+            </div>
+          </div>
+
+          <div className="boxspace"></div>
+
+          <div className="diamond">
+            <p className="mostpopulartext">most popular</p>
+            <a className="boxtitle">Diamond</a>
+            <p>Efficiency reports and employee recommendations</p>
+            <p>Up to 50 team members</p>
+            <p>Up to 1000 active tasks</p>
+            <p>Up to 15 tasks in the critical path</p>
+            <div className="payboxgap"></div>
+            <div className="paybox">
+            <div className="price">£8.89</div>
+            <p>pcm per member</p>
+            </div>
+          </div>
+
+          <div className="boxspace"></div>
+
+          <div className="platinum">
+            <a className="boxtitle">Platinum</a>
+            <p>Efficiency reports and employee recommendations</p>
+            <p>Unlimited team members</p>
+            <p>Unlimited active tasks</p>
+            <p>Unlimited tasks in the critical path</p>
+            <div className="payboxgap"></div>
+            <div className="paybox">
+            <div className="price">£15.89</div>
+            <p>pcm per member</p>
+            </div>
+          </div>
+
+          <div className="postpricebox"></div>
+        </div>
+
+    </div>
+
+    <div className="space2"></div>
     <div id="signup">signup</div>
     </b>
     </body>
+    </html>
   );
 };
