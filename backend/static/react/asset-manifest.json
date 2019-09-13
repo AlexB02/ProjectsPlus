@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/static/react/css/main.ca530f5f.chunk.css",
-    "main.js": "/static/react/js/main.585ac2ef.chunk.js",
-    "main.js.map": "/static/react/js/main.585ac2ef.chunk.js.map",
+    "main.js": "/static/react/js/main.65c54abb.chunk.js",
+    "main.js.map": "/static/react/js/main.65c54abb.chunk.js.map",
     "runtime~main.js": "/static/react/js/runtime~main.e980ba3a.js",
     "runtime~main.js.map": "/static/react/js/runtime~main.e980ba3a.js.map",
     "js/2.a723dcd4.chunk.js": "/static/react/js/2.a723dcd4.chunk.js",
     "js/2.a723dcd4.chunk.js.map": "/static/react/js/2.a723dcd4.chunk.js.map",
     "../../templates/index.html": "/static/react/../../templates/index.html",
     "css/main.ca530f5f.chunk.css.map": "/static/react/css/main.ca530f5f.chunk.css.map",
-    "media/crown.svg": "/static/react/media/crown.48ef88ba.svg",
-    "precache-manifest.12ec1824f142de6a7bd2909bc44b70e0.js": "/static/react/precache-manifest.12ec1824f142de6a7bd2909bc44b70e0.js",
+    "media/crown.svg": "/static/react/media/crown.82939c39.svg",
+    "precache-manifest.ab1a38f93c02bfe3662661b36dc91e8d.js": "/static/react/precache-manifest.ab1a38f93c02bfe3662661b36dc91e8d.js",
     "service-worker.js": "/static/react/service-worker.js"
   }
 }
