@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Link, animateScroll as scroll } from "react-scroll";
+import crown from "./img/crown.svg";
 
 export function App() {
   return (
@@ -96,6 +97,7 @@ export function Body() {
           <div className="boxspace"></div>
 
           <div className="diamond">
+            <img src={crown} height="10%" width="10px" />
             <p className="mostpopulartext">most popular</p>
             <a className="boxtitle">Diamond</a>
             <p>Efficiency reports and employee recommendations</p>
