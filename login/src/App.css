@@ -1,0 +1,267 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #D3D3D3;
+  min-height: calc(12px + 5vmin);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+  color: black;
+}
+
+.space1{
+  padding: 18vmin;
+}
+
+.title {
+  font-size: calc(10px + 5vmin);
+  padding-top: 20px;
+  width: 100%;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.strapline{
+  font-size: calc(10px + 2vmin);
+  color: #202020;
+  width: 100%;
+  margin-top: 0;
+  padding-top: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.NavBar{
+  font-family: 'Roboto', sans-serif;
+  background-color: #FFFFFF;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: calc(50px + 1vmin);
+  z-index: 1;
+}
+
+.NavBar a{
+  float: center;
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px;
+  margin-top: -5px;
+  font-size: calc(10px + 1vmin);
+  text-decoration: none;
+}
+
+.space2{
+  padding: 40vmin;
+  background-color: #D3D3D3;
+}
+
+.Body{
+  background-color: #D3D3D3;
+  font-family: 'Source Sans Pro', sans-serif;
+  min-height: 150vmin;
+  text-align: center;
+}
+
+.bodytitle{
+  font-size: calc(20px + 2vmin);
+  color: #202020;
+  margin-top: 0;
+  padding-top: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.priceboxes{
+  padding-top: 80px;
+  background-color: #D3D3D3;
+}
+
+.silver{
+  transition: box-shadow 0.2s;
+  display: inline-block;
+  vertical-align: top;
+  padding: 30px;
+  height: 55vh;
+  width: 120px;
+  margin-top: -28px;
+  background-color: white;
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 15px;
+  color: black;
+}
+
+.gold{
+  transition: box-shadow 0.2s;
+  display: inline-block;
+  vertical-align: top;
+  padding: 30px;
+  height: 55vh;
+  width: 120px;
+  margin-top: -28px;
+  background-color: white;
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 15px;
+  color: black;
+}
+
+.diamond{
+  transition: box-shadow 0.2s;
+  display: inline-block;
+  vertical-align: top;
+  padding: 30px;
+  height: 55vh;
+  width: 120px;
+  margin-top: -28px;
+  background-color: white;
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 15px;
+  border-color: #FFA500;
+  border-width: medium;
+  border-style: solid;
+  z-index: 0;
+  color: black;
+}
+
+.crownsvg{
+  width: 50%;
+  position: relative;
+  top: -56px;
+  shadow: 10px;
+  src: "./img/crown.svg";
+}
+
+.mostpopulartext{
+  color: #FFA500;
+  margin-bottom: 5px;
+}
+
+.diamondboxtext{
+  position: relative;
+  top: -60px;
+}
+
+.platinum{
+  transition: box-shadow 0.2s;
+  display: inline-block;
+  vertical-align: top;
+  padding: 30px;
+  height: 55vh;
+  width: 120px;
+  margin-top: -28px;
+  background-color: white;
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 15px;
+  color: black;
+}
+
+.silver:hover{
+  box-shadow: 0px 0px 11px #707070;
+}
+.gold:hover{
+  box-shadow: 0px 0px 11px #707070;
+}
+.diamond:hover{
+  box-shadow: 0px 0px 11px #707070;
+}
+.platinum:hover{
+  box-shadow: 0px 0px 11px #707070;
+}
+
+.boxtitle{
+  font-size: 20px;
+}
+
+.boxspace{
+  display: inline-block;
+  background-color: #D3D3D3;
+  padding-right: 60px;
+}
+
+.prepricebox{
+  display: inline-block;
+  background-color: #D3D3D3;
+}
+
+.postpricebox{
+  display: inline-block;
+  background-color: #D3D3D3;
+}
+
+.paybox{
+  background-color: #32CD32;
+  height: 60px;
+  width: 100px;
+  border-radius: 10px;
+  text-align: center;
+  display: inline-block;
+}
+
+.paybox p{
+  font-size: 10px;
+  margin-top: 2px;
+}
+
+.payboxgap{
+  background-color: white;
+  padding-top: 10px;
+}
+
+.price{
+  font-size: 20px;
+  padding-top: 10px;
+}
+
+.signup{
+  padding-bottom: 50%;
+}
+
+.texttoinputbreak{
+  padding: 5vh;
+}
+
+.midboxbreak{
+  padding: 1vh;
+}
+
+.boxinput{
+  padding: 15px;
+  background-color: #E8E8E8;
+  transition-property: background-color, outline;
+  transition-duration: 0.3s, 0.2s;
+  border: 1px;
+  border-radius: 10px 10px 10px 10px;
+  border-style: solid;
+  border-color: #C0C0C0;
+  box-shadow: none;
+  width: 30%;
+  outline: none;
+}
+
+.boxinput:hover{
+  background-color: white;
+}
+
+.boxinput:focus{
+  background-color: white;
+  outline: none;
+}
+
+.footer{
+  background-color: #D3D3D3;
+  text-align: center;
+  font-family: 'Heebo', sans-serif;
+  padding-bottom: 20px;
+}
