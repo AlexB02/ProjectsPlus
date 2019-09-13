@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Link, animateScroll as scroll } from "react-scroll";
+import { Link } from "react-scroll";
 import crown from "./img/crown.svg";
 
 export function App() {
@@ -37,9 +37,9 @@ export function NavBar() {
     <div className="NavBar">
     <b>
     <Link to="home" smooth={true} activeClass="active"><a href="#">home</a></Link>
-    <Link to="about" smooth={true} activeClass="active" offset={-120}><a href="#">about</a></Link>
+    <Link to="about" smooth={true} activeClass="active" offset={-70}><a href="#">about</a></Link>
     <Link to="pricing" smooth={true} activeClass="active" offset={-70}><a href="#">pricing</a></Link>
-    <Link to="signup" smooth={true} activeClass="active" offset={-120}><a href="#">sign up</a></Link>
+    <Link to="signup" smooth={true} activeClass="active" offset={-70}><a href="#">sign up</a></Link>
     </b>
     </div>
     </html>
@@ -67,6 +67,7 @@ export function Body() {
 
           <div className="prepricebox"></div>
 
+          <Link to="signup" smooth={true} activeClass="active" offset={-70}><a href="#">
           <div className="silver">
             <a className="boxtitle">Silver</a>
             <p>Efficiency reports and employee recommendations</p>
@@ -78,9 +79,11 @@ export function Body() {
             <p>pcm per member</p>
             </div>
           </div>
+          </a></Link>
 
           <div className="boxspace"></div>
 
+          <Link to="signup" smooth={true} activeClass="active" offset={-70}><a href="#">
           <div className="gold">
             <a className="boxtitle">Gold</a>
             <p>Efficiency reports and employee recommendations</p>
@@ -93,26 +96,32 @@ export function Body() {
             <p>pcm per member</p>
             </div>
           </div>
+          </a></Link>
 
           <div className="boxspace"></div>
 
+          <Link to="signup" smooth={true} activeClass="active" offset={-70}><a href="#">
           <div className="diamond">
-            <img src={crown} height="10%" width="10px" />
-            <p className="mostpopulartext">most popular</p>
-            <a className="boxtitle">Diamond</a>
-            <p>Efficiency reports and employee recommendations</p>
-            <p>Up to 50 team members</p>
-            <p>Up to 1000 active tasks</p>
-            <p>Up to 15 tasks in the critical path</p>
-            <div className="payboxgap"></div>
-            <div className="paybox">
-            <div className="price">£8.89</div>
-            <p>pcm per member</p>
+            <img className="crownsvg" src={crown}/>
+            <div className="diamondboxtext">
+              <p className="mostpopulartext">most popular</p>
+              <a className="boxtitle">Diamond</a>
+              <p>Efficiency reports and employee recommendations</p>
+              <p>Up to 50 team members</p>
+              <p>Up to 1000 active tasks</p>
+              <p>Up to 15 tasks in the critical path</p>
+              <div className="payboxgap"></div>
+              <div className="paybox">
+                <div className="price">£8.89</div>
+                <p>pcm per member</p>
+              </div>
             </div>
           </div>
+          </a></Link>
 
           <div className="boxspace"></div>
 
+          <Link to="signup" smooth={true} activeClass="active" offset={-70}><a href="#">
           <div className="platinum">
             <a className="boxtitle">Platinum</a>
             <p>Efficiency reports and employee recommendations</p>
@@ -125,6 +134,7 @@ export function Body() {
             <p>pcm per member</p>
             </div>
           </div>
+          </a></Link>
 
           <div className="postpricebox"></div>
         </div>
@@ -132,9 +142,26 @@ export function Body() {
     </div>
 
     <div className="space2"></div>
-    <div id="signup">signup</div>
+
+    <div id="signup" className="signup">
+      <a className="bodytitle">sign up and experience the magic of automation+</a>
+      <div className="texttoinputbreak"/>
+
+      <form method="POST">
+      <input type="text" className="boxinput" placeholder="username"/>
+      <div className="midboxbreak"/>
+      <input type="email" className="boxinput" placeholder="e-mail address"/>
+      <div className="midboxbreak"/>
+      <input type="submit" className="boxinput"/>
+      </form>
+
+    </div>
     </b>
     </body>
+
+    <footer className="footer">
+    <b>Alex Bainbridge 2019-2020 NEA</b>
+    </footer>
     </html>
   );
 };
