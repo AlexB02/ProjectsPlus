@@ -1,30 +1,15 @@
 import flask
+import StoragePy
 from flask import request, url_for
 
 app = flask.Flask("__main__")
 
-def authenticate(username,password):
-
-    if username == "abain001" and password == "password":
-
-        return True
-
 @app.route("/", methods=["GET","POST"])
 def index():
-    loginstatus = ""
-    if request.method == "POST":
-        username = request.form["name"]
-        password = request.form["password"]
 
-        if authenticate(username,password):
+    StoragePy.createDatabase()
 
-            loginstatus = "Authorised"
-
-        else:
-
-            loginstatus = "Unauthorised"
-
-    return flask.render_template("index.html",loginstatus=loginstatus)
+    return flask.render_template("index.html")
 
 @app.route("/about")
 def about():
