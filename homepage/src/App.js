@@ -38,7 +38,7 @@ export function NavBar() {
     <b>
     <Link to="home" smooth={true} activeClass="active"><a href="#">home</a></Link>
     <Link to="about" smooth={true} activeClass="active" offset={-70}><a href="#">about</a></Link>
-    <Link to="pricing" smooth={true} activeClass="active" offset={-70}><a href="#">pricing</a></Link>
+    <Link to="pricing" smooth={true} activeClass="active" offset={-55}><a href="#">pricing</a></Link>
     <Link to="signup" smooth={true} activeClass="active" offset={-70}><a href="#">sign up</a></Link>
     </b>
     </div>
@@ -148,9 +148,9 @@ export function Body() {
       <div className="texttoinputbreak"/>
 
       <form method="POST">
-      <input type="text" className="boxinput" placeholder="username"/>
+      <input type="text" className="boxinput" placeholder="username" name="username"/>
       <div className="midboxbreak"/>
-      <input type="email" className="boxinput" placeholder="e-mail address"/>
+      <input type="email" className="boxinput" placeholder="e-mail address" name="email"/>
       <div className="midboxbreak"/>
       <input type="submit" className="boxinput"/>
       </form>
