@@ -246,8 +246,11 @@
   border-style: solid;
   border-color: #C0C0C0;
   box-shadow: none;
-  width: 30%;
+  width: 135%;
   outline: none;
+  align-content: center;
+  float: none;
+  box-sizing:border-box;
 }
 
 .boxinput:hover{
@@ -257,6 +260,43 @@
 .boxinput:focus{
   background-color: white;
   outline: none;
+}
+
+.signup {
+  display: inline-block;
+  align-items: center;
+}
+
+.signup p {
+  padding: 0;
+  margin-top: 1vh;
+  font-size: 2.5vh;
+  margin-bottom: 1vh;
+  text-align: left;
+  position: relative;
+  left: 1vw;
+}
+
+.signupsigninbreak{
+  display: inline-block;
+  padding: 10vh;
+}
+
+.signin {
+  display: inline-block;
+  align-items: center;
+  vertical-align: top;
+  text-align: center;
+}
+
+.signin p {
+  margin-left: 0px;
+  position: relative;
+  left: 3.5vw;
+}
+
+.dropdown{
+  border: 0px;
 }
 
 .footer{
