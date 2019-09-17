@@ -2,6 +2,7 @@ import flask
 import StoragePy as sp
 from flask import request, url_for, redirect, session
 import secrets
+import wtforms
 
 app = flask.Flask("__main__")
 

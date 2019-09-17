@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import { Link } from "react-scroll";
 import crown from "./img/crown.svg";
@@ -17,7 +17,7 @@ export function App() {
     );
   };
 
-  export function NavBar() {
+export function NavBar() {
     return (
       <html>
       <div className="NavBar">
@@ -25,14 +25,65 @@ export function App() {
       <Link to="home" smooth={true} activeClass="active"><a href="#">home</a></Link>
       <Link to="about" smooth={true} activeClass="active" offset={-75}><a href="#">about</a></Link>
       <Link to="pricing" smooth={true} activeClass="active" offset={-55}><a href="#">pricing</a></Link>
-      <Link to="signupsection" smooth={true} activeClass="active" offset={-75}><a href="#">sign up / log in</a></Link>
+      <Link to="signupsection" smooth={true} activeClass="active" offset={-75}><a href="#">sign up + log in</a></Link>
       </b>
       </div>
       </html>
     );
   };
 
-  export function Body() {
+export class Body extends Component {
+
+  constructor(props) {
+    super(props);
+    this.check = this.check.bind(this);
+    this.getPassword = this.getPassword.bind(this);
+    this.getConfirmPassword = this.getConfirmPassword.bind(this);
+
+    this.state = {
+      password: "",
+      confirmpassword: "",
+      confirmpasswordstatus: ""
+    }
+
+    let timerId = setInterval(() => this.check(), 750);
+
+    this.setState({signupmessage: window.signupmessage});
+  }
+
+
+
+  check() {
+    try {
+
+      if (this.state.password == this.state.confirmpassword) {
+        if (this.state.password == "") {
+          this.setState({confirmpasswordstatus: ""});
+        }
+        else {
+          this.setState({confirmpasswordstatus: "passwords match"});
+        }
+      }
+      else {
+        this.setState({confirmpasswordstatus: "passwords do not match"});
+      }
+    }
+    catch (e) {
+      console.log("Error")
+    }
+  }
+
+  async getPassword(event) {
+    //this.setState({password: event.target.value});
+    await this.setState({password: event.target.value});
+  };
+
+  async getConfirmPassword(event) {
+    //this.setState({confirmpassword: event.target.value});
+    await this.setState({confirmpassword: event.target.value});
+  };
+
+  render() {
       return (
       <html>
       <div className="space2"></div>
@@ -137,23 +188,24 @@ export function App() {
               <form method="POST">
               <input type="hidden" name="form_name" value="signup"/>
 
-              <input type="text" className="boxinput" placeholder="first name" name="fname"/>
+              <input type="text" className="boxinput" placeholder="first name" name="fname" required/>
               <div className="midboxbreak"/>
 
-              <input type="text" className="boxinput" placeholder="last name" name="lname"/>
+              <input type="text" className="boxinput" placeholder="last name" name="lname" required/>
               <div className="midboxbreak"/>
 
-              <input type="email" className="boxinput" placeholder="e-mail address" name="email"/>
+              <input type="email" className="boxinput" placeholder="e-mail address" name="email" required/>
               <div className="midboxbreak"/>
 
-              <input type="password" className="boxinput" placeholder="create password" name="password"/>
+              <input type="password" className="boxinput" placeholder="create password" name="password" id="password" value={this.state.password} onChange={this.getPassword} required/>
               <div className="midboxbreak"/>
 
-              <input type="password" className="boxinput" placeholder="confirm password" name="password"/>
+              <input type="password" className="boxinput" placeholder="confirm password" name="confirmpassword" id="confirmpassword" value={this.state.confirmpassword} onChange={this.getConfirmPassword} required/>
 
-              <div className="midboxbreak"/>
+              <p className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</p>
 
               <input type="hidden" name="identifier" value="signup" />
+
               <input type="submit" className="boxinput" value="sign up"/>
 
               </form>
@@ -164,9 +216,9 @@ export function App() {
             <div className="signupsigninbreak"/>
             <div className="login">
               <form method="POST">
-              <input type="email" className="boxinput" placeholder="e-mail address" name="email"/>
+              <input type="email" className="boxinput" placeholder="e-mail address" name="email" required/>
               <div className="midboxbreak"/>
-              <input type="password" className="boxinput" placeholder="password" name="password"/>
+              <input type="password" className="boxinput" placeholder="password" name="password" required/>
               <div className="midboxbreak"/>
               <input type="hidden" name="identifier" value="login" />
               <input type="submit" className="boxinput" value="log in"/>
@@ -183,4 +235,5 @@ export function App() {
       </footer>
       </html>
     );
+  };
 };

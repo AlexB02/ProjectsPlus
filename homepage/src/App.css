@@ -277,28 +277,21 @@
   left: 1vw;
 }
 
+.confirmpasswordstatus {
+  margin: 0px;
+  padding: 0px;
+}
+
 .signupsigninbreak{
   display: inline-block;
   padding: 10vh;
 }
 
-.signin {
+.login {
   display: inline-block;
   align-items: center;
   vertical-align: top;
   text-align: center;
-}
-
-.signin p {
-  margin-left: 0px;
-  position: relative;
-  left: 3.5vw;
-}
-
-.signup p {
-  margin-left: 0px;
-  position: relative;
-  left: 3.5vw;
 }
 
 .dropdown{
