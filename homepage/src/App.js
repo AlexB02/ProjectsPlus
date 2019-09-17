@@ -23,9 +23,9 @@ export function App() {
       <div className="NavBar">
       <b>
       <Link to="home" smooth={true} activeClass="active"><a href="#">home</a></Link>
-      <Link to="about" smooth={true} activeClass="active" offset={-70}><a href="#">about</a></Link>
+      <Link to="about" smooth={true} activeClass="active" offset={-75}><a href="#">about</a></Link>
       <Link to="pricing" smooth={true} activeClass="active" offset={-55}><a href="#">pricing</a></Link>
-      <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">sign up / log in</a></Link>
+      <Link to="signupsection" smooth={true} activeClass="active" offset={-75}><a href="#">sign up / log in</a></Link>
       </b>
       </div>
       </html>
@@ -151,28 +151,24 @@ export function App() {
 
               <input type="password" className="boxinput" placeholder="confirm password" name="password"/>
 
-              <p>I am a...</p>
-              <select name = "dropdown" className="boxinput">
-                <option value="projectmanager" className="dropdown">project manager</option>
-                <option value="teammember" className="dropdown">team member</option>
-              </select>
-
               <div className="midboxbreak"/>
 
+              <input type="hidden" name="identifier" value="signup" />
               <input type="submit" className="boxinput" value="sign up"/>
 
               </form>
+              <p>{window.signupmessage}</p>
 
             </div>
 
             <div className="signupsigninbreak"/>
-            <div className="signin">
+            <div className="login">
               <form method="POST">
-              <input type="hidden" name="form_name" value="signin"/>
               <input type="email" className="boxinput" placeholder="e-mail address" name="email"/>
               <div className="midboxbreak"/>
               <input type="password" className="boxinput" placeholder="password" name="password"/>
               <div className="midboxbreak"/>
+              <input type="hidden" name="identifier" value="login" />
               <input type="submit" className="boxinput" value="log in"/>
               </form>
               <p>{window.loginmessage}</p>

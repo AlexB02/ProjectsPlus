@@ -57,7 +57,7 @@
 }
 
 .space2{
-  padding: 40vmin;
+  padding: 45vh;
   background-color: #D3D3D3;
 }
 
@@ -290,6 +290,12 @@
 }
 
 .signin p {
+  margin-left: 0px;
+  position: relative;
+  left: 3.5vw;
+}
+
+.signup p {
   margin-left: 0px;
   position: relative;
   left: 3.5vw;
