@@ -117,7 +117,6 @@ export class Body extends Component {
               </div>
             </div>
             </a></Link>
-
             <div className="boxspace"></div>
 
             <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
