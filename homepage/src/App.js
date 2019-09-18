@@ -98,7 +98,7 @@ export class Body extends Component {
 
       <div id="pricing">
         <a className="bodytitle">all at a price you can't say no to+</a>
-        <p>Discover all 4 price plans, for 4 different sized projects.</p>
+        <p>discover all 4 price plans, for 4 different sized projects.</p>
 
           <div className="priceboxes">
 
