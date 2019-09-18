@@ -2,7 +2,6 @@ import flask
 import StoragePy as sp
 from flask import request, url_for, redirect, session
 import secrets
-import wtforms
 
 app = flask.Flask("__main__")
 
@@ -47,7 +46,7 @@ def index():
 
             signupmessage = "Tried to sign up"
             return flask.render_template("index.html",loginmessage=loginmessage,signupmessage=signupmessage)
-            
+
     return flask.render_template("index.html",loginmessage=loginmessage)
 
 app.run(debug=True)
