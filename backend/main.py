@@ -9,7 +9,7 @@ app.secret_key = secrets.token_urlsafe(24)
 
 @app.route("/",methods=["GET","POST"])
 def index():
-
+    sp.connect()
     loginmessage = ""
     signupmessage = ""
 
@@ -27,6 +27,7 @@ def index():
 
                 # Check if login is valid
                 if email == "alex@email.com" and password == "a":
+
                     loginmessage = "login successful"
 
                     return flask.render_template("index.html",loginmessage=loginmessage)
