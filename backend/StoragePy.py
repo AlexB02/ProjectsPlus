@@ -6,9 +6,11 @@ def connect():
     c = conn.cursor()
     c.execute("PRAGMA foreign_keys = ON")
     create(c)
+    conn.commit()
+    conn.close()
 
 def create(c):
-    #try:
+    try:
 
         c.execute("""CREATE TABLE IF NOT EXISTS members (
                     id integer PRIMARY KEY,
@@ -18,21 +20,21 @@ def create(c):
                     passwordhash text
         )""")
 
-    #except:
-        #print("Create member table error")
-        #pass
+    except:
+        print("Create member table error")
+        pass
 
-    #try:
+    try:
         c.execute("""CREATE TABLE IF NOT EXISTS skillslist (
                     id integer PRIMARY KEY,
                     title text
         )""")
 
-    #except:
-        #print("Create skillslist table error")
-        #pass
+    except:
+        print("Create skillslist table error")
+        pass
 
-    #try:
+    try:
         c.execute("""CREATE TABLE IF NOT EXISTS efficiencylist (
                     date text,
                     time text,
@@ -42,6 +44,17 @@ def create(c):
                     PRIMARY KEY (memberid, skillid, date, time)
         )""")
 
-    #except:
-        #print("Create efficiencylist table error")
-        #pass
+    except:
+        print("Create efficiencylist table error")
+        pass
+
+def recordExists(email):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+
+    c.execute("""SELECT email FROM members WHERE email=?""",(email,))
+
+    if c.fetchone():
+        return True
+    else:
+        return False

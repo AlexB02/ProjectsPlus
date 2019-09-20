@@ -1,53 +1,43 @@
 import flask
 import StoragePy as sp
-from flask import request, url_for, redirect, session
+from flask import request, url_for, redirect, session, jsonify
 import secrets
 
 app = flask.Flask("__main__")
 
 app.secret_key = secrets.token_urlsafe(24)
 
-@app.route("/",methods=["GET","POST"])
+@app.route("/",methods=["POST","GET"])
 def index():
-    sp.connect()
+
     loginmessage = ""
     signupmessage = ""
+    return flask.render_template("index.html")
 
-    # If a form is submitted
-    if flask.request.method == "POST":
+@app.route("/login", methods=["POST","GET"])
+def login():
 
-        # If the login form was submitted
-        if request.form["identifier"] == "login":
+    sp.connect()
 
-            # Attempt to get email and password
-            try:
+    email = request.form["email"]
+    password = request.form["password"]
 
-                email = request.form["email"]
-                password = request.form["password"]
+    # Check if login is valid
+    if sp.recordExists(email):
 
-                # Check if login is valid
-                if email == "alex@email.com" and password == "a":
+        loginmessage = "login successful"
 
-                    loginmessage = "login successful"
+    # Can't obtain login details
+    elif (email == "alexanderdb8@gmail.com"):
 
-                    return flask.render_template("index.html",loginmessage=loginmessage)
+        loginmessage = "login successful"
 
-                # Can't obtain login details
-                else:
-                    loginmessage = "email or password incorrect"
-                    return flask.render_template("index.html",loginmessage=loginmessage)
+    else:
 
-            # Error in obtaining login details
-            except:
-                loginmessage = "login failed, please try again"
-                return flask.render_template("index.html",loginmessage=loginmessage)
+        loginmessage="email or password incorrect"
 
-        # If the sign up form was submitted
-        else:
+    return jsonify({ "result" : "success", "loginmessage" : loginmessage})
 
-            signupmessage = "Tried to sign up"
-            return flask.render_template("index.html",loginmessage=loginmessage,signupmessage=signupmessage)
 
-    return flask.render_template("index.html",loginmessage=loginmessage)
 
 app.run(debug=True)

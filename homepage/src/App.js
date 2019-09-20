@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { Link } from "react-scroll";
 import crown from "./img/crown.svg";
+import $ from 'jquery';
 
 export function App() {
     return (
@@ -39,11 +40,13 @@ export class Body extends Component {
     this.check = this.check.bind(this);
     this.getPassword = this.getPassword.bind(this);
     this.getConfirmPassword = this.getConfirmPassword.bind(this);
+    this.updateLoginMessage = this.updateLoginMessage.bind(this);
 
     this.state = {
       password: "",
       confirmpassword: "",
-      confirmpasswordstatus: ""
+      confirmpasswordstatus: "",
+      loginmessage: ""
     }
 
     let timerId = setInterval(() => this.check(), 750);
@@ -81,6 +84,28 @@ export class Body extends Component {
   async getConfirmPassword(event) {
     //this.setState({confirmpassword: event.target.value});
     await this.setState({confirmpassword: event.target.value});
+  };
+
+  updateLoginMessage(message) {
+    this.setState({loginmessage: message})
+  };
+
+  loginsubmit = (event) => {
+    let _this = this;
+    $(document).ready(function(){
+
+        var email = $("#loginemail").val();
+        var password = $("#loginemail").val();
+
+        var req = $.ajax({url: "/login",
+                          type: "POST" ,
+                          data: {email : email, password : password}
+                        });
+
+        req.done(function(data) {
+          _this.setState({loginmessage: data.loginmessage})
+        });
+    });
   };
 
   render() {
@@ -184,7 +209,6 @@ export class Body extends Component {
           <div className="signupandlogin"/>
 
             <div className="signup">
-              <form method="POST">
               <input type="hidden" name="form_name" value="signup"/>
 
               <input type="text" className="boxinput" placeholder="first name" name="fname" required/>
@@ -207,22 +231,19 @@ export class Body extends Component {
 
               <input type="submit" className="boxinput" value="sign up"/>
 
-              </form>
               <p>{window.signupmessage}</p>
 
             </div>
 
             <div className="signupsigninbreak"/>
             <div className="login">
-              <form method="POST">
-              <input type="email" className="boxinput" placeholder="e-mail address" name="email" required/>
-              <div className="midboxbreak"/>
-              <input type="password" className="boxinput" placeholder="password" name="password" required/>
-              <div className="midboxbreak"/>
-              <input type="hidden" name="identifier" value="login" />
-              <input type="submit" className="boxinput" value="log in"/>
-              </form>
-              <p>{window.loginmessage}</p>
+                <input type="email" className="boxinput" placeholder="e-mail address" name="email" id="loginemail" required/>
+                <div className="midboxbreak"/>
+                <input type="password" className="boxinput" placeholder="password" name="password" id="loginpassword" required/>
+                <div className="midboxbreak"/>
+                <input type="hidden" name="identifier" value="login" />
+                <input type="submit" className="boxinput" value="log in" onClick={this.loginsubmit}/>
+              <p>{this.state.loginmessage}</p>
             </div>
 
         </div>
