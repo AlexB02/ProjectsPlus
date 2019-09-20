@@ -2,22 +2,46 @@ import sqlite3 as sql
 
 def connect():
 
-    conn = sql.connect('main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
+    c.execute("PRAGMA foreign_keys = ON")
     create(c)
 
 def create(c):
-    try:
-        c.execute("""CREATE TABLE members (id, firstname, lastname, email, passwordhash)""")
-    except:
-        pass
+    #try:
 
-    try:
-        c.execute("""CREATE TABLE skillslist (id, title)""")
-    except:
-        pass
+        c.execute("""CREATE TABLE IF NOT EXISTS members (
+                    id integer PRIMARY KEY,
+                    firstname text,
+                    lastname text,
+                    email text,
+                    passwordhash text
+        )""")
 
-    try:
-        c.execute("""CREATE TABLE efficiencylist (memberid, skillid, date, time, efficiency)""")
-    except:
-        pass
+    #except:
+        #print("Create member table error")
+        #pass
+
+    #try:
+        c.execute("""CREATE TABLE IF NOT EXISTS skillslist (
+                    id integer PRIMARY KEY,
+                    title text
+        )""")
+
+    #except:
+        #print("Create skillslist table error")
+        #pass
+
+    #try:
+        c.execute("""CREATE TABLE IF NOT EXISTS efficiencylist (
+                    date text,
+                    time text,
+                    efficiency real,
+                    FOREIGN KEY(memberid) REFERENCES members(id),
+                    FOREIGN KEY(skillid) REFERENCES skillslist(id),
+                    PRIMARY KEY (memberid, skillid, date, time)
+        )""")
+
+    #except:
+        #print("Create efficiencylist table error")
+        #pass
