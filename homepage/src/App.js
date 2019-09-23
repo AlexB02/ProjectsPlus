@@ -3,6 +3,7 @@ import './App.css';
 import { Link } from "react-scroll";
 import crown from "./img/crown.svg";
 import $ from 'jquery';
+import { AuthRoute } from "./auth/authroute";
 
 export function App() {
     return (
@@ -95,17 +96,32 @@ export class Body extends Component {
     $(document).ready(function(){
 
         var email = $("#loginemail").val();
-        var password = $("#loginemail").val();
+        var password = $("#loginpassword").val();
 
-        var req = $.ajax({url: "/login",
-                          type: "POST" ,
-                          data: {email : email, password : password}
-                        });
+        if (!email || !password) {
+          _this.setState({loginmessage: ""});
+          return;
+        }
+        else {
+          var req = $.ajax({url: "/login",
+                            type: "POST" ,
+                            data: {email : email, password : password}
+                          });
 
-        req.done(function(data) {
-          _this.setState({loginmessage: data.loginmessage})
-        });
+          req.done(function(data) {
+            _this.setState({loginmessage: data.loginmessage});
+          });
+        };
     });
+  };
+
+  removeformsubmit(event) {
+    if(event.preventDefault) {
+      event.preventDefault();
+    }
+    else {
+      event.returnValue = false;
+    }
   };
 
   render() {
@@ -116,6 +132,7 @@ export class Body extends Component {
       <b>
       <div id="about">
         <a className="bodytitle">strive for efficiency+</a>
+        <AuthRoute exact={true} path="/" />
         <p>Explore the data behind what makes your team work. Receive customised employee recommendations, that learns as you use the app.</p>
       </div>
 
@@ -210,6 +227,7 @@ export class Body extends Component {
 
             <div className="signup">
               <input type="hidden" name="form_name" value="signup"/>
+              <form onSubmit={this.removeformsubmit}>
 
               <input type="text" className="boxinput" placeholder="first name" name="fname" required/>
               <div className="midboxbreak"/>
@@ -230,19 +248,21 @@ export class Body extends Component {
               <input type="hidden" name="identifier" value="signup" />
 
               <input type="submit" className="boxinput" value="sign up"/>
-
+              </form>
               <p>{window.signupmessage}</p>
 
             </div>
 
             <div className="signupsigninbreak"/>
             <div className="login">
+            <form onSubmit={this.removeformsubmit}>
                 <input type="email" className="boxinput" placeholder="e-mail address" name="email" id="loginemail" required/>
                 <div className="midboxbreak"/>
                 <input type="password" className="boxinput" placeholder="password" name="password" id="loginpassword" required/>
                 <div className="midboxbreak"/>
                 <input type="hidden" name="identifier" value="login" />
                 <input type="submit" className="boxinput" value="log in" onClick={this.loginsubmit}/>
+                </form>
               <p>{this.state.loginmessage}</p>
             </div>
 
