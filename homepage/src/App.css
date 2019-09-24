@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: #D3D3D3;
+  background-color: #F3F3EF;
   min-height: calc(12px + 5vmin);
   display: flex;
   flex-direction: column;
@@ -43,6 +43,7 @@
   width: 100%;
   height: calc(50px + 1vmin);
   z-index: 1;
+  vertical-align: middle;
 }
 
 .NavBar a{
@@ -54,15 +55,16 @@
   margin-top: -5px;
   font-size: calc(10px + 1vmin);
   text-decoration: none;
+  vertical-align: middle;
 }
 
 .space2{
   padding: 45vh;
-  background-color: #D3D3D3;
+  background-color: #F3F3EF;
 }
 
 .Body{
-  background-color: #D3D3D3;
+  background-color: #F3F3EF;
   font-family: 'Source Sans Pro', sans-serif;
   min-height: 150vmin;
   text-align: center;
@@ -78,7 +80,7 @@
 
 .priceboxes{
   padding-top: 80px;
-  background-color: #D3D3D3;
+  background-color: #F3F3EF;
 }
 
 .silver{
@@ -186,18 +188,18 @@
 
 .boxspace{
   display: inline-block;
-  background-color: #D3D3D3;
+  background-color: #F3F3EF;
   padding-right: 60px;
 }
 
 .prepricebox{
   display: inline-block;
-  background-color: #D3D3D3;
+  background-color: #F3F3EF;
 }
 
 .postpricebox{
   display: inline-block;
-  background-color: #D3D3D3;
+  background-color: #F3F3EF;
 }
 
 .paybox{
@@ -299,7 +301,7 @@
 }
 
 .footer{
-  background-color: #D3D3D3;
+  background-color: #F3F3EF;
   text-align: center;
   font-family: 'Heebo', sans-serif;
   padding-bottom: 20px;
