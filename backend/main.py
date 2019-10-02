@@ -9,33 +9,24 @@ app = flask.Flask("__main__")
 
 app.secret_key = secrets.token_urlsafe(24)
 
+sp.storePassword("alexanderdb8@gmail.com","a")
+
 def verifypassword(password,storedpassword):
     print("calling to verify")
+    storedpassword = storedpassword[0][0]
 
-    #for saltpoint in range(1,186):
-        #saltpoint = 32
-        #storedkey = str(storedpassword)[saltpoint:187].encode("utf-8")
-        #storedsalt = str(storedpassword)[2:saltpoint].encode("utf-8")
+    salt = storedpassword[:32]
+    print("Salt: "+str(salt))
+    passwordhash = hashlib.pbkdf2_hmac('sha256', password.encode(encoding='utf-8'), salt, 400000)
+    passwordhash = salt + str(passwordhash)
 
-        #verifykey = str(hashlib.pbkdf2_hmac('sha256', password.encode(encoding='utf-8'), storedsalt, 400000))[saltpoint:187].encode("utf-8")
-
-        #print("trying new saltpoint: "+str(saltpoint))
-
-        #print("Stored key: "+str(storedkey))
-        #print("Calculated key: "+str(verifykey))
-
-        #if storedkey == verifykey:
-            #return True
-        #else:
-    #return False
-
-    if password == storedpassword:
-        print(password)
-        print(storedpassword)
+    if passwordhash == storedpassword:
+        print("\nHashed password:"+passwordhash)
+        print("\nStored password: "+storedpassword)
         return True
     else:
-        print(password)
-        print(storedpassword)
+        print("\nHashed password:"+str(passwordhash))
+        print("\nStored password: "+str(storedpassword))
         return False
 
 
@@ -56,12 +47,10 @@ def login():
 
         # Check if login is valid
         if sp.recordExists(email) and verifypassword(password,sp.getStoredPassword(email)):
-
             loginmessage = "login successful"
 
         # Can't obtain login details
         else:
-
             loginmessage="email or password incorrect"
 
         return jsonify({ "result" : "success", "loginmessage" : loginmessage})

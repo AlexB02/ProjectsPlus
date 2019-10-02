@@ -57,6 +57,7 @@ def recordExists(email):
     c.execute("""SELECT email FROM members WHERE email=?""",(email,))
 
     if c.fetchone():
+        c.close()
         return True
     else:
         return False
@@ -73,3 +74,22 @@ def hashpassword(password):
     salt = os.urandom(32)
     key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 400000)
     return salt+key
+
+def storePassword(email,password):
+
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+
+    salt = os.urandom(32)
+    print("Actual salt: "+str(salt))
+    key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 400000)
+
+    store = salt+key
+
+    c.execute("""update members
+                set passwordhash=?
+                where email=?
+    """,(store,email,))
+
+    conn.commit()
+    conn.close()
