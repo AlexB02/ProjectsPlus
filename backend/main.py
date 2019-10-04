@@ -10,7 +10,7 @@ app = flask.Flask("__main__")
 app.secret_key = secrets.token_urlsafe(24)
 
 sp.storePassword("alexanderdb8@gmail.com","a")
-sp.storePassword("leaviolette@outlook.com","violette")
+sp.storePassword("danniaviva@hotmail.co.uk","dogs")
 
 def verifypassword(password,storedpassword):
     print("calling to verify")

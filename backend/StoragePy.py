@@ -86,12 +86,13 @@ def storePassword(email,password):
 
     store = salt+key
 
-    try:
-        c.execute("""update members
-                    set passwordhash=?
-                    where email=?
-        """,(store,email,))
-    except:
+    if not (recordExists(email)):
+        try:
+            c.execute("""update members
+                        set passwordhash=?
+                        where email=?
+            """,(store,email,))
+    else:
         c.execute("""insert into members (id,firstname,lastname,email,passwordhash) values (?,?)""",(2,"lea","lea",email,store,))
 
     conn.commit()
