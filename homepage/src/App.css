@@ -269,6 +269,15 @@
   align-items: center;
 }
 
+.confirmpasswordstatus {
+  margin: 0px;
+  padding: 0px;
+  font-size: 1.5vh;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  color: #ff3333;
+}
+
 .signup p {
   padding: 0;
   margin-top: 1vh;
@@ -277,11 +286,6 @@
   text-align: left;
   position: relative;
   left: 1vw;
-}
-
-.confirmpasswordstatus {
-  margin: 0px;
-  padding: 0px;
 }
 
 .signupsigninbreak{

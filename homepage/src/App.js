@@ -36,36 +36,46 @@ export function NavBar() {
 
 export class Body extends Component {
 
+///////////////////////////////////////////////////////////////////
+// Initialisation function/////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
   constructor(props) {
+
     super(props);
+    // Bind all the functions to the component
     this.check = this.check.bind(this);
     this.getPassword = this.getPassword.bind(this);
     this.getConfirmPassword = this.getConfirmPassword.bind(this);
-    this.updateLoginMessage = this.updateLoginMessage.bind(this);
 
+    // Setup all state variables for the body
     this.state = {
       password: "",
       confirmpassword: "",
       confirmpasswordstatus: "",
-      loginmessage: ""
+      loginmessage: "",
+      signupmessage: ""
     }
 
+    // Interval for checking if confirm password is equal to password
     let timerId = setInterval(() => this.check(), 750);
 
-    this.setState({signupmessage: window.signupmessage});
+    //this.setState({signupmessage: window.signupmessage});
   }
 
-
+///////////////////////////////////////////////////////////////////////
+// Checking if confirm password box is the same as password box ///////
+///////////////////////////////////////////////////////////////////////
 
   check() {
     try {
 
-      if (this.state.password == this.state.confirmpassword) {
-        if (this.state.password == "") {
+      if (this.state.password === this.state.confirmpassword) {
+        if (this.state.password === "") {
           this.setState({confirmpasswordstatus: ""});
         }
         else {
-          this.setState({confirmpasswordstatus: "passwords match"});
+          this.setState({confirmpasswordstatus: ""});
         }
       }
       else {
@@ -87,9 +97,11 @@ export class Body extends Component {
     await this.setState({confirmpassword: event.target.value});
   };
 
-  updateLoginMessage(message) {
-    this.setState({loginmessage: message})
-  };
+/////////////////////////////////////////////////////////////////////////
+// Changing the login message to show the relevent information //////////
+/////////////////////////////////////////////////////////////////////////
+
+// login submit function, called when the submit button is pressed
 
   loginsubmit = (event) => {
     let _this = this;
@@ -243,13 +255,13 @@ export class Body extends Component {
 
               <input type="password" className="boxinput" placeholder="confirm password" name="confirmpassword" id="confirmpassword" value={this.state.confirmpassword} onChange={this.getConfirmPassword} required/>
 
-              <p className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</p>
+              <div className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</div>
 
               <input type="hidden" name="identifier" value="signup" />
 
               <input type="submit" className="boxinput" value="sign up"/>
               </form>
-              <p>{window.signupmessage}</p>
+              <p>{this.state.signupmessage}</p>
 
             </div>
 

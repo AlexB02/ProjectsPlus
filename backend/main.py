@@ -9,25 +9,21 @@ app = flask.Flask("__main__")
 
 app.secret_key = secrets.token_urlsafe(24)
 
-sp.storePassword("alexanderdb8@gmail.com","a")
-sp.storePassword("danniaviva@hotmail.co.uk","dogs")
+#sp.addUser("Alex","Bainbridge","alexanderdb8@gmail.com","a")
+#sp.addUser("Daniella","Alexander","danniaviva@hotmail.co.uk","dogs")
+#sp.addUser("Lance","Gonzales","lanceG777@yahoo.co.uk","Lumastya0991")
+#sp.addUser("Robert","Martin","dev@robertxmartin.com","robert123")
 
 def verifypassword(password,storedpassword):
-    print("calling to verify")
     storedpassword = storedpassword[0][0]
 
     salt = storedpassword[:32]
-    print("Salt: "+str(salt))
     passwordhash = hashlib.pbkdf2_hmac('sha256', password.encode(encoding='utf-8'), salt, 400000)
     passwordhash = salt + passwordhash
 
     if str(passwordhash) == str(storedpassword):
-        print("\nHashed password: "+str(passwordhash))
-        print("\nStored password: "+str(storedpassword))
         return True
     else:
-        print("\nHashed password: "+str(passwordhash))
-        print("\nStored password: "+str(storedpassword))
         return False
 
 

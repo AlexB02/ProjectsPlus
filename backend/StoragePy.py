@@ -75,7 +75,7 @@ def hashpassword(password):
     key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 400000)
     return salt+key
 
-def storePassword(email,password):
+def addUser(firstname,lastname,email,password):
 
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
@@ -86,14 +86,19 @@ def storePassword(email,password):
 
     store = salt+key
 
-    if not (recordExists(email)):
+    if (recordExists(email)):
         try:
             c.execute("""update members
                         set passwordhash=?
                         where email=?
             """,(store,email,))
+        except:
+            print("Failed to update login information")
     else:
-        c.execute("""insert into members (id,firstname,lastname,email,passwordhash) values (?,?)""",(2,"lea","lea",email,store,))
+        try:
+            c.execute("""insert into members (id,firstname,lastname,email,passwordhash) values (NULL,?,?,?,?)""",(firstname,lastname,email,store,))
+        except:
+            print("Failed to add user")
 
     conn.commit()
     conn.close()
