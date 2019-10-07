@@ -81,7 +81,7 @@ def addUser(firstname,lastname,email,password):
     c = conn.cursor()
 
     salt = os.urandom(32)
-    print("Actual salt: "+str(salt))
+    #print("Actual salt: "+str(salt))
     key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 400000)
 
     store = salt+key
