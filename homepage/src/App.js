@@ -127,6 +127,32 @@ export class Body extends Component {
     });
   };
 
+  signupsubmit = (event) => {
+    let _this = this;
+    $(document).ready(function(){
+
+      var firstname = $("#fname").val();
+      var lastname = $("#lname").val();
+      var email = $("#email").val();
+      var password = $("#password").val();
+
+      if (!firstname || !lastname || !email || !password) {
+        _this.setState({signupmessage: ""});
+        return;
+      }
+      else {
+        var req = $.ajax({url: "/signup",
+                          type:"POST",
+                          data: {fname: firstname, lname: lastname, email: email, password: password}
+                        });
+
+        req.done(function(data){
+          _this.setState({signupmessage: data.signupmessage})
+        });
+      };
+    });
+  };
+
   removeformsubmit(event) {
     if(event.preventDefault) {
       event.preventDefault();
@@ -259,7 +285,7 @@ export class Body extends Component {
 
               <input type="hidden" name="identifier" value="signup" />
 
-              <input type="submit" className="boxinput" value="sign up"/>
+              <input type="submit" className="boxinput" value="sign up" onClick={this.signupsubmit}/>
               </form>
               <p>{this.state.signupmessage}</p>
 

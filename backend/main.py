@@ -14,6 +14,8 @@ app.secret_key = secrets.token_urlsafe(24)
 #sp.addUser("Lance","Gonzales","lanceG777@yahoo.co.uk","Lumastya0991")
 #sp.addUser("Robert","Martin","dev@robertxmartin.com","robert123")
 #sp.addUser("Mr", "Alex Sucks", "stupidalex@skrt.yeah", "stinky")
+#sp.addUser("lydiwhore","phd","lydia.miles@virginmedia.com","uwu")
+#sp.addUser("sinead","mcdonald","sineadmcdonald02@gmail.com","poop")
 
 def verifypassword(password,storedpassword):
     storedpassword = storedpassword[0][0]
@@ -55,6 +57,21 @@ def login():
     except:
         return flask.redirect("/")
 
+@app.route("/signup", methods=["POST","GET"])
+def signup():
+    try:
 
+        sp.connect()
+        print("Went to signup")
+
+        firstname = request.form["fname"]
+        lastname = request.form["lname"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        print(firstname,lastname,email,password)
+
+    except:
+        print("Signup error")
 
 app.run(debug=True)
