@@ -13,6 +13,7 @@ app.secret_key = secrets.token_urlsafe(24)
 #sp.addUser("Daniella","Alexander","danniaviva@hotmail.co.uk","dogs")
 #sp.addUser("Lance","Gonzales","lanceG777@yahoo.co.uk","Lumastya0991")
 #sp.addUser("Robert","Martin","dev@robertxmartin.com","robert123")
+#sp.addUser("Mr", "Alex Sucks", "stupidalex@skrt.yeah", "stinky")
 
 def verifypassword(password,storedpassword):
     storedpassword = storedpassword[0][0]
