@@ -62,14 +62,20 @@ def signup():
     try:
 
         sp.connect()
-        print("Went to signup")
 
         firstname = request.form["fname"]
         lastname = request.form["lname"]
         email = request.form["email"]
         password = request.form["password"]
 
-        print(firstname,lastname,email,password)
+        if sp.recordExists(email):
+
+            signupmessage = "Account already exists, try logging in"
+            return jsonify({"result": "success", "signupmessage":signupmessage})
+
+        signupmessage = "Tried to sign up"
+
+        return jsonify({"result": "success", "signupmessage":signupmessage})
 
     except:
         print("Signup error")

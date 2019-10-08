@@ -288,6 +288,24 @@
   left: 1vw;
 }
 
+.signupmessage{
+  margin: 0px;
+  padding: 0px;
+  font-size: 1.5vh;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  color: #ff3333;
+}
+
+.signupmessage{
+  margin: 0px;
+  padding: 0px;
+  font-size: 1.5vh;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  color: #ff3333;
+}
+
 .signupsigninbreak{
   display: inline-block;
   padding: 10vh;

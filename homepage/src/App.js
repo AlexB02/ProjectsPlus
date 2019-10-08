@@ -128,13 +128,25 @@ export class Body extends Component {
   };
 
   signupsubmit = (event) => {
+    console.log("Sign up submit");
     let _this = this;
     $(document).ready(function(){
-
+      console.log("Ready function");
       var firstname = $("#fname").val();
       var lastname = $("#lname").val();
       var email = $("#email").val();
       var password = $("#password").val();
+      var confirmpassword = $("#confirmpassword").val();
+
+      console.log("Firstname: "+firstname);
+      console.log("Lastname: "+lastname);
+      console.log("Email: "+email);
+      console.log("Password: "+password);
+
+      if (!(confirmpassword === password)) {
+        _this.setState({signupmessage: ""});
+        return;
+      }
 
       if (!firstname || !lastname || !email || !password) {
         _this.setState({signupmessage: ""});
@@ -267,13 +279,13 @@ export class Body extends Component {
               <input type="hidden" name="form_name" value="signup"/>
               <form onSubmit={this.removeformsubmit}>
 
-              <input type="text" className="boxinput" placeholder="first name" name="fname" required/>
+              <input type="text" className="boxinput" placeholder="first name" name="fname" id="fname" required/>
               <div className="midboxbreak"/>
 
-              <input type="text" className="boxinput" placeholder="last name" name="lname" required/>
+              <input type="text" className="boxinput" placeholder="last name" name="lname" id="lname" required/>
               <div className="midboxbreak"/>
 
-              <input type="email" className="boxinput" placeholder="e-mail address" name="email" required/>
+              <input type="email" className="boxinput" placeholder="e-mail address" name="email" id="email" required/>
               <div className="midboxbreak"/>
 
               <input type="password" className="boxinput" placeholder="create password" name="password" id="password" value={this.state.password} onChange={this.getPassword} required/>
@@ -287,7 +299,7 @@ export class Body extends Component {
 
               <input type="submit" className="boxinput" value="sign up" onClick={this.signupsubmit}/>
               </form>
-              <p>{this.state.signupmessage}</p>
+              <div class="signupmessage">{this.state.signupmessage}</div>
 
             </div>
 
@@ -301,9 +313,8 @@ export class Body extends Component {
                 <input type="hidden" name="identifier" value="login" />
                 <input type="submit" className="boxinput" value="log in" onClick={this.loginsubmit}/>
                 </form>
-              <p>{this.state.loginmessage}</p>
+              <div class="signupmessage">{this.state.loginmessage}</div>
             </div>
-
         </div>
       </b>
       </body>
