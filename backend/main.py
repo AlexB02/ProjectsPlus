@@ -4,18 +4,21 @@ from flask import request, url_for, redirect, session, jsonify
 import secrets
 import os
 import hashlib
+import flask_login as fl
 
 app = flask.Flask("__main__")
 
-app.secret_key = secrets.token_urlsafe(24)
+# Create login manager
+loginmanager = fl.LoginManager()
+# Initialise app for flask login manager
+loginmanager.init_app(app)
+loginmanager.login_view = ""
 
-#sp.addUser("Alex","Bainbridge","alexanderdb8@gmail.com","a")
-#sp.addUser("Daniella","Alexander","danniaviva@hotmail.co.uk","dogs")
-#sp.addUser("Lance","Gonzales","lanceG777@yahoo.co.uk","Lumastya0991")
-#sp.addUser("Robert","Martin","dev@robertxmartin.com","robert123")
-#sp.addUser("Mr", "Alex Sucks", "stupidalex@skrt.yeah", "stinky")
-#sp.addUser("lydiwhore","phd","lydia.miles@virginmedia.com","uwu")
-#sp.addUser("sinead","mcdonald","sineadmcdonald02@gmail.com","poop")
+@loginmanager.user_loader
+def load_user(id):
+    return sp.userObj(id)
+
+app.secret_key = secrets.token_urlsafe(24)
 
 def verifypassword(password,storedpassword):
     storedpassword = storedpassword[0][0]
@@ -28,6 +31,10 @@ def verifypassword(password,storedpassword):
         return True
     else:
         return False
+
+def redirectToDashboard():
+
+    return flask.redirect("/dashboard")
 
 
 @app.route("/",methods=["POST","GET"])
@@ -47,7 +54,24 @@ def login():
 
         # Check if login is valid
         if sp.recordExists(email) and verifypassword(password,sp.getStoredPassword(email)):
-            loginmessage = "login successful"
+
+            loginmessage = "Valid login"
+            try:
+                if fl.login_user(sp.userObj(sp.getIDbyEmail(email)),remember=True,force=True):
+
+                    fl.login_user(sp.userObj(sp.getIDbyEmail(email)),remember=True,force=True)
+
+                    loginmessage = "login successful"
+                    loginmessage = str(fl.current_user.is_authenticated)
+
+                    if fl.current_user.is_authenticated:
+
+                        return flask.redirect(flask.url_for('dashboard'))
+
+                else:
+                    loginmessage = "Failed to authenticate"
+            except Exception as e:
+                loginmessage = str(e)
 
         # Can't obtain login details
         else:
@@ -73,11 +97,26 @@ def signup():
             signupmessage = "Account already exists, try logging in"
             return jsonify({"result": "success", "signupmessage":signupmessage})
 
-        signupmessage = "Tried to sign up"
+        try:
+            sp.addUser(firstname,lastname,email,password)
+        except:
+            pass
+        signupmessage = "Account created successfully"
 
         return jsonify({"result": "success", "signupmessage":signupmessage})
 
     except:
-        print("Signup error")
+
+        return flask.redirect("/")
+
+@app.route("/dashboard")
+@fl.login_required
+def dashboard():
+    print("Dashboard")
+    return "Dashboard"
+
+@loginmanager.unauthorized_handler
+def requires_login():
+    return "Logged in as: "+str(fl.current_user.get_id())
 
 app.run(debug=True)

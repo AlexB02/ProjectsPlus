@@ -1,6 +1,7 @@
 import sqlite3 as sql
 import os
 import hashlib
+from flask_login import UserMixin
 
 def connect():
 
@@ -61,6 +62,54 @@ def recordExists(email):
         return True
     else:
         return False
+
+def existsByID(userid):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+
+    c.execute("""SELECT id FROM members WHERE id=?""",(userid,))
+
+    if c.fetchone():
+        c.close()
+        return True
+    else:
+        return False
+
+def getIDbyEmail(email):
+
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    c.execute("""SELECT id FROM members WHERE email=?""",(email,))
+
+    return c.fetchall()[0][0]
+
+###########################################################
+# User Class for login authentication #####################
+###########################################################
+class User(UserMixin):
+    def __init__(self,c,userid):
+        self.userid = userid
+        self.firstname = c.execute("""SELECT firstname FROM members WHERE id=?""",(userid,))
+        self.lastname = c.execute("""SELECT lastname FROM members WHERE id=?""",(userid,))
+        self.email = c.execute("""SELECT email FROM members WHERE id=?""",(userid,))
+        #self.is_authenticated = True
+        #self.is_active = True
+        #self.is_anonymous = False
+
+    def get_id(self):
+        return chr(self.userid)
+
+def userObj(userid):
+
+    if existsByID(userid):
+
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+
+        return User(c,userid)
+
+    else:
+        return None
 
 def getStoredPassword(email):
     conn = sql.connect('sqlite3/main.db')

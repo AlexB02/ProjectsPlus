@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: #F3F3EF;
+  background-color: white;
   min-height: calc(12px + 5vmin);
   display: flex;
   flex-direction: column;
@@ -14,6 +14,7 @@
 
 .space1{
   padding: 18vmin;
+  background-color: white;
 }
 
 .title {
@@ -44,6 +45,7 @@
   height: calc(50px + 1vmin);
   z-index: 1;
   vertical-align: middle;
+  box-shadow: 0px 0px 5px #707070;
 }
 
 .NavBar a{
@@ -61,10 +63,12 @@
 .space2{
   padding: 45vh;
   background-color: #F3F3EF;
+  background-color: white;
 }
 
 .Body{
   background-color: #F3F3EF;
+  background-color: white;
   font-family: 'Source Sans Pro', sans-serif;
   min-height: 150vmin;
   text-align: center;
@@ -81,11 +85,12 @@
 .priceboxes{
   padding-top: 80px;
   background-color: #F3F3EF;
+  background-color: white;
   height: 10vh;
 }
 
 .silver{
-  transition: box-shadow 0.2s;
+  transition: all 0s;
   display: inline-block;
   vertical-align: top;
   padding: 30px;
@@ -97,10 +102,14 @@
   border-radius: 10px;
   font-size: 15px;
   color: black;
+  border-radius: 10px;
+  border-color: #dbdbdb;
+  border-width: medium;
+  border-style: dashed;
 }
 
 .gold{
-  transition: box-shadow 0.2s;
+  transition: all 0s;
   display: inline-block;
   vertical-align: top;
   padding: 30px;
@@ -112,15 +121,18 @@
   border-radius: 10px;
   font-size: 15px;
   color: black;
+  border-radius: 10px;
+  border-color: #dbdbdb;
+  border-width: medium;
+  border-style: dashed;
 }
 
 .diamond{
-  transition: box-shadow 0.2s;
+  transition: all 0s;
   display: inline-block;
   vertical-align: top;
   padding: 30px;
   padding-bottom: 0px;
-  height: 640%;
   width: 120px;
   margin-top: -28px;
   margin-bottom: -28px;
@@ -131,7 +143,7 @@
   font-size: 15px;
   border-color: #FFA500;
   border-width: medium;
-  border-style: solid;
+  border-style: dashed;
   z-index: 0;
   color: black;
 }
@@ -155,7 +167,7 @@
 }
 
 .platinum{
-  transition: box-shadow 0.2s;
+  transition: all 0s;
   display: inline-block;
   vertical-align: top;
   padding: 30px;
@@ -167,19 +179,26 @@
   border-radius: 10px;
   font-size: 15px;
   color: black;
+  border-radius: 10px;
+  border-color: #dbdbdb;
+  border-width: medium;
+  border-style: dashed;
 }
 
 .silver:hover{
-  box-shadow: 0px 0px 11px #707070;
+  border-style: solid;
+  border-color: #ababab;
 }
 .gold:hover{
-  box-shadow: 0px 0px 11px #707070;
+  border-style: solid;
+  border-color: #ababab;
 }
 .diamond:hover{
-  box-shadow: 0px 0px 11px #707070;
+  border-style: solid;
 }
 .platinum:hover{
-  box-shadow: 0px 0px 11px #707070;
+  border-style: solid;
+  border-color: #ababab;
 }
 
 .boxtitle{
@@ -204,6 +223,7 @@
 
 .paybox{
   background-color: #32CD32;
+  background-color: white;
   height: 60px;
   width: 100px;
   border-radius: 10px;
@@ -240,7 +260,7 @@
 
 .boxinput{
   padding: 15px;
-  background-color: #E8E8E8;
+  background-color: white;
   transition-property: background-color, outline;
   transition-duration: 0.3s, 0.2s;
   border: 1px;
@@ -314,7 +334,7 @@
 }
 
 .footer{
-  background-color: #F3F3EF;
+  background-color: white;
   text-align: center;
   font-family: 'Heebo', sans-serif;
   padding-bottom: 20px;

@@ -3,7 +3,6 @@ import './App.css';
 import { Link } from "react-scroll";
 import crown from "./img/crown.svg";
 import $ from 'jquery';
-import { AuthRoute } from "./auth/authroute";
 
 export function App() {
     return (
@@ -115,14 +114,23 @@ export class Body extends Component {
           return;
         }
         else {
+          console.log("Posting login details to flask");
           var req = $.ajax({url: "/login",
                             type: "POST" ,
                             data: {email : email, password : password}
                           });
 
-          req.done(function(data) {
-            _this.setState({loginmessage: data.loginmessage});
-          });
+          try {
+            console.log("Attempting to get login message");
+            req.done(function(data) {
+              _this.setState({loginmessage: data.loginmessage});
+            });
+            console.log("Set login message to: "+_this.loginmessage);
+          }
+          catch (e) {
+            console.log("Failed to get login message");
+          };
+          
         };
     });
   };
@@ -182,7 +190,6 @@ export class Body extends Component {
       <b>
       <div id="about">
         <a className="bodytitle">strive for efficiency+</a>
-        <AuthRoute exact={true} path="/" />
         <p>Explore the data behind what makes your team work. Receive customised employee recommendations, that learns as you use the app.</p>
       </div>
 
