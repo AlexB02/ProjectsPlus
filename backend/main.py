@@ -6,6 +6,7 @@ import os
 import hashlib
 import flask_login as fl
 import flask_session as fs
+from datetime import timedelta
 
 app = flask.Flask("__main__")
 
@@ -23,6 +24,7 @@ def load_user(id):
 
 # Set the secret key of the site to a randomly generated string of letters, numbers and characters
 app.secret_key = secrets.token_urlsafe(32)
+app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(seconds=5)
 
 def verifypassword(password,storedpassword):
     storedpassword = storedpassword[0][0]
@@ -67,12 +69,13 @@ def login():
                     fl.login_user(sp.userObj(sp.getIDbyEmail(email)),remember=True,force=True)
 
                     loginmessage = "login successful"
-                    loginmessage = str(fl.current_user.is_authenticated)
 
                     if fl.current_user.is_authenticated:
 
-                        session["authenticated"] = True
-                        return jsonify({ "result" : "success", "is_authenticated" : str(session["authenticated"]), "id":ord(fl.current_user.get_id())})
+                        session["authenticated"] = "True"
+                        session["email"] = email
+                        session.permanent = True
+                        return jsonify({ "result" : "success", "is_authenticated":session["authenticated"], "id":ord(fl.current_user.get_id()),"loginmessage":loginmessage})
 
                 else:
                     loginmessage = "Failed to authenticate"
@@ -118,11 +121,16 @@ def signup():
 @app.route("/dashboard")
 def dashboard():
     try:
-        if str(session["authenticated"]) == "True":
-            return "Dashboard"
+        if session["authenticated"] == "True":
+            email = session["email"]
+            user = sp.userObj(sp.getIDbyEmail(email))
+
+            fl.login_user(user,remember=True,force=True)
+
+            return "Welcome, "+str(user.firstname)+" "+str(user.lastname)+": "+str(user.email)
         else:
             return flask.redirect("/")
-    except:
+    except Exception as e:
         return flask.redirect("/")
 
 @loginmanager.unauthorized_handler
