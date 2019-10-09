@@ -1,0 +1,64 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: white;
+  min-height: calc(12px + 5vmin);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+  color: black;
+}
+
+.title {
+  font-size: calc(10px + 5vmin);
+  padding-top: 20px;
+  width: 100%;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+  text-align: center;
+}
+
+
+.Body{
+  background-color: #F3F3EF;
+  background-color: white;
+  font-family: 'Source Sans Pro', sans-serif;
+  min-height: 150vmin;
+  text-align: center;
+}
+
+.bodytitle{
+  font-size: calc(20px + 2vmin);
+  color: #202020;
+  margin-top: 0;
+  padding-top: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.boxinput{
+  padding: 15px;
+  background-color: white;
+  transition-property: background-color, outline;
+  transition-duration: 0.3s, 0.2s;
+  border: 1px;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #C0C0C0;
+  box-shadow: none;
+  width: 135%;
+  outline: none;
+  align-content: center;
+  float: none;
+  box-sizing:border-box;
+}
+
+.footer{
+  background-color: white;
+  text-align: center;
+  font-family: 'Heebo', sans-serif;
+  padding-bottom: 20px;
+}

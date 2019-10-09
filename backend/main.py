@@ -127,7 +127,7 @@ def dashboard():
 
             fl.login_user(user,remember=True,force=True)
 
-            return "Welcome, "+str(user.firstname)+" "+str(user.lastname)+": "+str(user.email)
+            return flask.render_template("dashboard.html",username=user.firstname)
         else:
             return flask.redirect("/")
     except Exception as e:
