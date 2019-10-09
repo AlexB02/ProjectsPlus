@@ -12,13 +12,16 @@ app = flask.Flask("__main__")
 loginmanager = fl.LoginManager()
 # Initialise app for flask login manager
 loginmanager.init_app(app)
+# Set the login page to the homepage
 loginmanager.login_view = ""
 
+# Identify the user loader, set the user to the User class from StoragePy
 @loginmanager.user_loader
 def load_user(id):
     return sp.userObj(id)
 
-app.secret_key = secrets.token_urlsafe(24)
+# Set the secret key of the site to a randomly generated string of letters, numbers and characters
+app.secret_key = secrets.token_urlsafe(32)
 
 def verifypassword(password,storedpassword):
     storedpassword = storedpassword[0][0]
