@@ -5,6 +5,7 @@ import secrets
 import os
 import hashlib
 import flask_login as fl
+import flask_session as fs
 
 app = flask.Flask("__main__")
 
@@ -42,7 +43,7 @@ def redirectToDashboard():
 
 @app.route("/",methods=["POST","GET"])
 def index():
-
+    session["authenticated"] = False
     loginmessage = ""
     signupmessage = ""
     return flask.render_template("index.html")
@@ -51,6 +52,7 @@ def index():
 def login():
     try:
         sp.connect()
+        session["authenticated"] = False
 
         email = request.form["email"]
         password = request.form["password"]
@@ -69,7 +71,8 @@ def login():
 
                     if fl.current_user.is_authenticated:
 
-                        return jsonify({ "result" : "success", "is_authenticated" : True})
+                        session["authenticated"] = True
+                        return jsonify({ "result" : "success", "is_authenticated" : str(session["authenticated"]), "id":ord(fl.current_user.get_id())})
 
                 else:
                     loginmessage = "Failed to authenticate"
