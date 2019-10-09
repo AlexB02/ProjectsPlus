@@ -122,10 +122,10 @@ export class Body extends Component {
 
           try {
             req.done(function(data) {
-              _this.setState({loginmessage: data.id});
+              _this.setState({loginmessage: data.loginmessage});
               if (data.is_authenticated === "True") {
-                return
-                //window.location.href = "dashboard";
+                window.location.href = "dashboard";
+                return;
               }
             });
           }
