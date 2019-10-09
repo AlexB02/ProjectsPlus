@@ -66,7 +66,7 @@ def login():
 
                     if fl.current_user.is_authenticated:
 
-                        return flask.redirect(flask.url_for('dashboard'))
+                        return jsonify({ "result" : "success", "is_authenticated" : True})
 
                 else:
                     loginmessage = "Failed to authenticate"
