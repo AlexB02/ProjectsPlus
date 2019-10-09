@@ -121,16 +121,15 @@ export class Body extends Component {
                           });
 
           try {
-            console.log("Attempting to get login message");
             req.done(function(data) {
               _this.setState({loginmessage: data.loginmessage});
+              if (data.is_authenticated === True) {
+                window.location.href = "dashboard";
+              }
             });
-            console.log("Set login message to: "+_this.loginmessage);
           }
-          catch (e) {
-            console.log("Failed to get login message");
-          };
-          
+          catch (e) {};
+
         };
     });
   };
