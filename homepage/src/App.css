@@ -264,7 +264,7 @@
   transition-property: background-color, outline;
   transition-duration: 0.3s, 0.2s;
   border: 1px;
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 6px 6px 6px 6px;
   border-style: solid;
   border-color: #C0C0C0;
   box-shadow: none;
