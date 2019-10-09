@@ -116,10 +116,14 @@ def signup():
         return flask.redirect("/")
 
 @app.route("/dashboard")
-@fl.login_required
 def dashboard():
-    print("Dashboard")
-    return "Dashboard"
+    try:
+        if str(session["authenticated"]) == "True":
+            return "Dashboard"
+        else:
+            return flask.redirect("/")
+    except:
+        return flask.redirect("/")
 
 @loginmanager.unauthorized_handler
 def requires_login():
