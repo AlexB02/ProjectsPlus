@@ -202,7 +202,6 @@ export class Body extends Component {
           <div className="priceboxes">
 
             <div className="prepricebox"></div>
-
             <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
             <div className="silver">
               <a className="boxtitle">Silver</a>
