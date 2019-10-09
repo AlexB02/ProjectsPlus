@@ -89,9 +89,12 @@ def getIDbyEmail(email):
 class User(UserMixin):
     def __init__(self,c,userid):
         self.userid = userid
-        self.firstname = c.execute("""SELECT firstname FROM members WHERE id=?""",(userid,))
-        self.lastname = c.execute("""SELECT lastname FROM members WHERE id=?""",(userid,))
-        self.email = c.execute("""SELECT email FROM members WHERE id=?""",(userid,))
+        c.execute("""SELECT firstname FROM members WHERE id=?""",(userid,))
+        self.firstname = c.fetchall()[0][0]
+        c.execute("""SELECT lastname FROM members WHERE id=?""",(userid,))
+        self.lastname = c.fetchall()[0][0]
+        c.execute("""SELECT email FROM members WHERE id=?""",(userid,))
+        self.email = c.fetchall()[0][0]
         #self.is_authenticated = True
         #self.is_active = True
         #self.is_anonymous = False
