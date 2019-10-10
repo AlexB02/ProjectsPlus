@@ -155,8 +155,8 @@ def dashboard():
     except Exception as e:
         return flask.redirect("/")
 
-@loginmanager.unauthorized_handler
-def requires_login():
-    return "Logged in as: "+str(fl.current_user.get_id())
+@app.errorhandler(404)
+def page_not_found(e):
+    return flask.redirect("/"), 404
 
 app.run(debug=True)
