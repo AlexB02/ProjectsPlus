@@ -114,7 +114,6 @@ export class Body extends Component {
           return;
         }
         else {
-          console.log("Posting login details to flask");
           var req = $.ajax({url: "/login",
                             type: "POST" ,
                             data: {email : email, password : password}
@@ -136,24 +135,26 @@ export class Body extends Component {
   };
 
   signupsubmit = (event) => {
-    console.log("Sign up submit");
     let _this = this;
     $(document).ready(function(){
-      console.log("Ready function");
       var firstname = $("#fname").val();
       var lastname = $("#lname").val();
       var email = $("#email").val();
       var password = $("#password").val();
       var confirmpassword = $("#confirmpassword").val();
 
-      console.log("Firstname: "+firstname);
-      console.log("Lastname: "+lastname);
-      console.log("Email: "+email);
-      console.log("Password: "+password);
-
       if (!(confirmpassword === password)) {
         _this.setState({signupmessage: ""});
         return;
+      }
+
+      if (password.length < 8) {
+        _this.setState({signupmessage: "Password must be at least 8 characters long"});
+        return;
+      }
+
+      for (var i=0; i<password.length; i++){
+        console.log(password[i]);
       }
 
       if (!firstname || !lastname || !email || !password) {

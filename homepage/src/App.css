@@ -292,7 +292,7 @@
 .confirmpasswordstatus {
   margin: 0px;
   padding: 0px;
-  font-size: 2.5vh;
+  font-size: 90%;
   margin-top: 1vw;
   margin-bottom: 1vw;
   color: #ff3333;
@@ -311,7 +311,7 @@
 .signupmessage{
   margin: 0px;
   padding: 0px;
-  font-size: 2.5vh;
+  font-size: 90%;
   margin-top: 1vw;
   margin-bottom: 1vw;
   color: #ff3333;
