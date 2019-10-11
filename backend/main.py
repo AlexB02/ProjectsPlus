@@ -7,6 +7,7 @@ import hashlib
 import flask_login as fl
 import flask_session as fs
 from datetime import timedelta
+import re
 
 app = flask.Flask("__main__")
 
@@ -126,13 +127,18 @@ def signup():
         if sp.recordExists(email):
 
             signupmessage = "Account already exists, try logging in"
+
             return jsonify({"result": "success", "signupmessage":signupmessage})
 
-        try:
-            sp.addUser(firstname,lastname,email,password)
-        except:
-            pass
-        signupmessage = "Account created successfully"
+
+        if re.search(r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$",email):
+            try:
+                sp.addUser(firstname,lastname,email,password)
+            except:
+                pass
+            signupmessage = "Account created successfully"
+        else:
+            signupmessage=""
 
         return jsonify({"result": "success", "signupmessage":signupmessage})
 
@@ -157,6 +163,7 @@ def dashboard():
 
 @app.errorhandler(404)
 def page_not_found(e):
+    session["authenticated"] == "False"
     return flask.redirect("/"), 404
 
 app.run(debug=True)
