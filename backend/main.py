@@ -8,6 +8,7 @@ import flask_login as fl
 import flask_session as fs
 from datetime import timedelta
 import re
+import random
 
 app = flask.Flask("__main__")
 
@@ -133,10 +134,34 @@ def signup():
 
         if re.search(r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$",email):
             try:
+                firstname = firstname.capitalize()
+                lastname = lastname.capitalize()
                 sp.addUser(firstname,lastname,email,password)
+
+                try:
+                    if fl.login_user(sp.userObj(sp.getIDbyEmail(email)),remember=True,force=True):
+
+                        fl.login_user(sp.userObj(sp.getIDbyEmail(email)),remember=True,force=True)
+
+                        # Change the signup message to account created successfully to show that they will be created as a user successfully upon reaching the dashboard so they may continue
+                        signupmessage = "Account created successfully"
+
+                        # Ensure the user is authenticated correctly
+                        if fl.current_user.is_authenticated:
+
+                            # Set the authentication cookie to True
+                            session["authenticated"] = "True"
+                            # Set the email cookie to the email address of login
+                            session["email"] = email
+                            # Set the session to permanent
+                            session.permanent = True
+                            return jsonify({ "result" : "success", "is_authenticated":session["authenticated"], "id":ord(fl.current_user.get_id()),"signupmessage":signupmessage})
+                except:
+                    signupmessage="Account creation error"
+                    return jsonify({"result": "success", "signupmessage":signupmessage})
             except:
-                pass
-            signupmessage = "Account created successfully"
+                signupmessage="Account creation error"
+                return jsonify({"result": "success", "signupmessage":signupmessage})
         else:
             signupmessage=""
 
@@ -148,22 +173,42 @@ def signup():
 
 @app.route("/dashboard")
 def dashboard():
+    sp.addSkill("Python")
+    sp.addSkill("React")
+    sp.addSkill("Flask")
+    sp.addSkill("HTML")
+    sp.addSkill("CSS")
     try:
         if session["authenticated"] == "True":
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
 
+            sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),random.randint(1,4))
+
             fl.login_user(user,remember=True,force=True)
 
-            return flask.render_template("dashboard.html",username=user.firstname)
+            return flask.render_template("dashboard.html")
         else:
             return flask.redirect("/")
     except Exception as e:
+        return str(e)#flask.redirect("/")
+
+@app.route("/getuser",methods=["POST","GET"])
+def getUser():
+    try:
+        if session["authenticated"] == "True":
+            email = session["email"]
+            userid = sp.getIDbyEmail(email)
+            user = sp.userObj(userid)
+            username=user.firstname
+            timeEfficiencies = sp.getEfficiencies(userid,"time")
+            return jsonify({"username":username,"efficiencies":timeEfficiencies})
+    except:
         return flask.redirect("/")
 
 @app.errorhandler(404)
 def page_not_found(e):
-    session["authenticated"] == "False"
+    session["authenticated"] = "False"
     return flask.redirect("/"), 404
 
 app.run(debug=True)
