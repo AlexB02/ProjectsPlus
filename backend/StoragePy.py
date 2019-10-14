@@ -2,6 +2,7 @@ import sqlite3 as sql
 import os
 import hashlib
 from flask_login import UserMixin
+from datetime import datetime
 
 def connect():
 
@@ -16,7 +17,7 @@ def create(c):
     try:
 
         c.execute("""CREATE TABLE IF NOT EXISTS members (
-                    id integer PRIMARY KEY,
+                    memberid integer PRIMARY KEY,
                     firstname text,
                     lastname text,
                     email text,
@@ -29,7 +30,7 @@ def create(c):
 
     try:
         c.execute("""CREATE TABLE IF NOT EXISTS skillslist (
-                    id integer PRIMARY KEY,
+                    skillid integer PRIMARY KEY,
                     title text
         )""")
 
@@ -41,9 +42,12 @@ def create(c):
         c.execute("""CREATE TABLE IF NOT EXISTS efficiencylist (
                     date text,
                     time text,
+                    type text,
                     efficiency real,
-                    FOREIGN KEY(memberid) REFERENCES members(id),
-                    FOREIGN KEY(skillid) REFERENCES skillslist(id),
+                    memberid integer,
+                    skillid integer,
+                    FOREIGN KEY (memberid) REFERENCES members(memberid),
+                    FOREIGN KEY (skillid) REFERENCES skillslist(skillid),
                     PRIMARY KEY (memberid, skillid, date, time)
         )""")
 
@@ -67,7 +71,7 @@ def existsByID(userid):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
 
-    c.execute("""SELECT id FROM members WHERE id=?""",(userid,))
+    c.execute("""SELECT memberid FROM members WHERE memberid=?""",(userid,))
 
     if c.fetchone():
         c.close()
@@ -79,7 +83,7 @@ def getIDbyEmail(email):
 
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
-    c.execute("""SELECT id FROM members WHERE email=?""",(email,))
+    c.execute("""SELECT memberid FROM members WHERE email=?""",(email,))
 
     return c.fetchall()[0][0]
 
@@ -89,11 +93,11 @@ def getIDbyEmail(email):
 class User(UserMixin):
     def __init__(self,c,userid):
         self.userid = userid
-        c.execute("""SELECT firstname FROM members WHERE id=?""",(userid,))
+        c.execute("""SELECT firstname FROM members WHERE memberid=?""",(userid,))
         self.firstname = c.fetchall()[0][0]
-        c.execute("""SELECT lastname FROM members WHERE id=?""",(userid,))
+        c.execute("""SELECT lastname FROM members WHERE memberid=?""",(userid,))
         self.lastname = c.fetchall()[0][0]
-        c.execute("""SELECT email FROM members WHERE id=?""",(userid,))
+        c.execute("""SELECT email FROM members WHERE memberid=?""",(userid,))
         self.email = c.fetchall()[0][0]
         #self.is_authenticated = True
         #self.is_active = True
@@ -148,9 +152,50 @@ def addUser(firstname,lastname,email,password):
             print("Failed to update login information")
     else:
         try:
-            c.execute("""insert into members (id,firstname,lastname,email,passwordhash) values (NULL,?,?,?,?)""",(firstname,lastname,email,store,))
+            c.execute("""insert into members (memberid,firstname,lastname,email,passwordhash) values (NULL,?,?,?,?)""",(firstname,lastname,email,store,))
         except:
             print("Failed to add user")
 
     conn.commit()
     conn.close()
+
+def addSkill(skill):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    c.execute("""SELECT title FROM skillslist WHERE title=?""",(skill,))
+    if not c.fetchone():
+        c.execute("""insert into skillslist (skillid,title) values (NULL,?)""",(skill,))
+    conn.commit()
+    conn.close()
+
+def addEfficiency(type,efficiency,memberid,skillid):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    now = datetime.now()
+    date = str(now.day)+":"+str(now.month)+":"+str(now.year)
+    time = str(now.hour)+":"+str(now.minute)+":"+str(now.second)+":"+str(now.microsecond)
+    c.execute("""insert into efficiencylist (date,time,type,efficiency,memberid,skillid) values (?,?,?,?,?,?)""",(date,time,type,efficiency,memberid,skillid,))
+    conn.commit()
+    conn.close()
+
+def getEfficiencies(memberid,type):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    efficiencies = {}
+    c.execute("""SELECT skillid FROM efficiencylist WHERE memberid=?""",(memberid,))
+    skills = c.fetchall()
+    c.execute("""SELECT efficiency FROM efficiencylist WHERE memberid=? and type=?""",(memberid,type,))
+    efficienciesFromDB = c.fetchall()
+
+    if len(skills) > 0:
+        for i in range(len(skills)):
+            efficiencies[skills[i][0]] = []
+        for i in range(len(skills)):
+            try:
+                efficiencies[skills[i][0]].append(efficienciesFromDB[i][0])
+            except:
+                return {"ERROR":"ERROR"}
+    else:
+        return {"no skills":"no skills"}
+
+    return efficiencies
