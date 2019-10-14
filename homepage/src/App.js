@@ -70,9 +70,11 @@ export class Body extends Component {
     try {
 
       if (this.state.password === this.state.confirmpassword) {
+        // Both blank
         if (this.state.password === "") {
           this.setState({confirmpasswordstatus: ""});
         }
+        // Both the same
         else {
           this.setState({confirmpasswordstatus: ""});
         }
@@ -83,6 +85,60 @@ export class Body extends Component {
     }
     catch (e) {
       console.log("Error")
+    }
+    if (!(this.state.password === "")) {
+      var password = this.state.password;
+      if (password.length < 8) {
+        this.setState({signupmessage: "Password must be at least 8 characters long"});
+        return;
+      }
+
+      var symbols = 0;
+      var lowercase = 0;
+      var uppercase = 0;
+      var numbers = 0;
+      for (var i=0; i<password.length; i++){
+        if ("abcdefghijklmnopqrstuvwxyz".includes(password[i])) {
+          lowercase += 1;
+        }
+        else if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(password[i])) {
+          uppercase += 1;
+        }
+        else if ("1234567890".includes(password[i])) {
+          numbers += 1;
+        }
+        else if ("!-_<>.&$£".includes(password[i])) {
+          symbols += 1;
+        }
+        else {
+          this.setState({signupmessage: "Passwords may only contain letters, numbers and the following symbols: '!-_<>.&$£'"});
+          return;
+        }
+      }
+      if (!((symbols > 0) && (lowercase > 0) && (uppercase > 0) && (numbers > 0))){
+        if (symbols == 0) {
+          this.setState({signupmessage: "Passwords must contain at least 1 allowed symbol: '!-_<>.&$£'"});
+          return;
+        }
+        else if (lowercase == 0) {
+          this.setState({signupmessage: "Passwords must contain at least one lowercase letter"});
+          return;
+        }
+        else if (uppercase == 0) {
+          this.setState({signupmessage: "Passwords must contain at least one uppercase letter"});
+          return;
+        }
+        else if (numbers == 0) {
+          this.setState({signupmessage: "Passwords must contain at least one number"});
+          return;
+        }
+      }
+      else if ((!(this.state.signupmessage === "Account creation error")) || (!(this.state.signupmessage === "Account created successfully") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
+        this.setState({signupmessage: ""});
+      }
+    }
+    else if ((!(this.state.signupmessage === "Account creation error")) || (!(this.state.signupmessage === "Account created successfully") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
+      this.setState({signupmessage: ""});
     }
   }
 
@@ -143,34 +199,83 @@ export class Body extends Component {
       var password = $("#password").val();
       var confirmpassword = $("#confirmpassword").val();
 
+      if (!firstname || !lastname || !email || !password) {
+        _this.setState({signupmessage: ""});
+        return;
+      }
+
       if (!(confirmpassword === password)) {
         _this.setState({signupmessage: ""});
         return;
       }
 
-      if (password.length < 8) {
-        _this.setState({signupmessage: "Password must be at least 8 characters long"});
-        return;
-      }
+      if (!(password === "")) {
 
-      for (var i=0; i<password.length; i++){
-        console.log(password[i]);
-      }
+        if (password.length < 8) {
+          _this.setState({signupmessage: "Password must be at least 8 characters long"});
+          return;
+        }
 
-      if (!firstname || !lastname || !email || !password) {
+        var symbols = 0;
+        var lowercase = 0;
+        var uppercase = 0;
+        var numbers = 0;
+        for (var i=0; i<password.length; i++){
+          if ("abcdefghijklmnopqrstuvwxyz".includes(password[i])) {
+            lowercase += 1;
+          }
+          else if ("ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(password[i])) {
+            uppercase += 1;
+          }
+          else if ("1234567890".includes(password[i])) {
+            numbers += 1;
+          }
+          else if ("!-_<>.&$£".includes(password[i])) {
+            symbols += 1;
+          }
+          else {
+            _this.setState({signupmessage: "Passwords may only contain letters, numbers and the following symbols: '!-_<>.&$£'"});
+            return;
+          }
+        }
+        if (!((symbols > 0) && (lowercase > 0) && (uppercase > 0) && (numbers > 0))){
+          if (symbols == 0) {
+            _this.setState({signupmessage: "Passwords must contain at least 1 allowed symbol: '!-_<>.&$£'"});
+            return;
+          }
+          else if (lowercase == 0) {
+            _this.setState({signupmessage: "Passwords must contain at least one lowercase letter"});
+            return;
+          }
+          else if (uppercase == 0) {
+            _this.setState({signupmessage: "Passwords must contain at least one uppercase letter"});
+            return;
+          }
+          else if (numbers == 0) {
+            _this.setState({signupmessage: "Passwords must contain at least one number"});
+            return;
+          }
+        }
+        else if ((!(_this.state.signupmessage === "Account creation error")) || (!(_this.state.signupmessage === "Account created successfully") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
+          _this.setState({signupmessage: ""});
+        }
+      }
+      else if ((!(_this.state.signupmessage === "Account creation error")) || (!(_this.state.signupmessage === "Account created successfully") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
         _this.setState({signupmessage: ""});
-        return;
-      }
-      else {
-        var req = $.ajax({url: "/signup",
-                          type:"POST",
-                          data: {fname: firstname, lname: lastname, email: email, password: password}
-                        });
-
-        req.done(function(data){
-          _this.setState({signupmessage: data.signupmessage})
-        });
       };
+
+      var req = $.ajax({url: "/signup",
+                        type:"POST",
+                        data: {fname: firstname, lname: lastname, email: email, password: password}
+                      });
+
+      req.done(function(data){
+        _this.setState({signupmessage: data.signupmessage})
+        if (data.is_authenticated === "True") {
+          window.location.href = "dashboard";
+          return;
+        };
+      });
     });
   };
 
@@ -263,6 +368,7 @@ export class Body extends Component {
               <p>Unlimited team members</p>
               <p>Unlimited active tasks</p>
               <p>Unlimited tasks in the critical path</p>
+              <p>Extra stuff for payinmg more - filler point</p>
               <div className="payboxgap"></div>
               <div className="paybox">
               <div className="price">£15.89</div>
