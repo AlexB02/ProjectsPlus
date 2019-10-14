@@ -248,6 +248,9 @@
 
 .signup{
   padding-bottom: 50%;
+  width: 18vw;
+  display: inline-block;
+  align-items: center;
 }
 
 .texttoinputbreak{
@@ -284,11 +287,6 @@
   outline: none;
 }
 
-.signup {
-  display: inline-block;
-  align-items: center;
-}
-
 .confirmpasswordstatus {
   margin: 0px;
   padding: 0px;
@@ -315,6 +313,7 @@
   margin-top: 1vw;
   margin-bottom: 1vw;
   color: #ff3333;
+  text-align: left;
 }
 
 .signupsigninbreak{
@@ -327,6 +326,7 @@
   align-items: center;
   vertical-align: top;
   text-align: center;
+  width: 18vw;
 }
 
 .dropdown{
