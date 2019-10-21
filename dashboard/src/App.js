@@ -6,11 +6,11 @@ class EfficienciesWidget extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {"title":"","data":[],"presentableData":""};
+    this.state = {"title":"","data":[],"presentableData":"","length":5};
     this.setState({"data":props.data});
     this.setState({"presentableData": this.dataToPresent(props.data)});
     this.state.title = props.title;
-
+    this.setState({"length":props.length});
   };
 
   componentWillReceiveProps(nextProps) {
@@ -38,11 +38,11 @@ class EfficienciesWidget extends React.Component {
     }
     else {
       try {
-        if (data.length <= 5) {
+        if (data.length <= this.state.length) {
           presentable = data.slice(0,data.length);
         }
         else {
-          presentable = data.slice(0,5);
+          presentable = data.slice(0,this.state.length);
         }
       }
       catch (e) {}
@@ -112,8 +112,8 @@ export class Body extends Component {
       <html>
       <h1 className="title"><b>Welcome, {this.state.username}</b></h1>
       <body className="Body">
-      <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} />
-      <EfficienciesWidget title="Worst Min Time Efficiencies" data={this.state.timeEfficienciesMin} />
+      <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length=5 />
+      <EfficienciesWidget title="Worst Min Time Efficiencies" data={this.state.timeEfficienciesMin} length=5 />
       </body>
 
       <footer className="footer">
