@@ -56,10 +56,27 @@ class EfficienciesWidget extends React.Component {
     );
   };
 
+  increaseLength = () => {
+    if (this.state.length < this.state.data.length) {
+      this.setState({"length":this.state.length+=1});
+      this.setState({"presentableData": this.dataToPresent(this.state.data)});
+    }
+  }
+  decreaseLength = () => {
+    if (this.state.length > 1) {
+      this.setState({"length":this.state.length-=1});
+      this.setState({"presentableData": this.dataToPresent(this.state.data)});
+    }
+  }
+
   render() {
     return (
       <html>
-      <p>{this.state.title}</p>
+      <div id="EfficiencyWidgetTitleBar">
+        <p>{this.state.title}</p>
+        <button onClick={this.increaseLength}>Up</button>
+        <button onClick={this.decreaseLength}>Down</button>
+      </div>
       <p>{this.state.presentableData}</p>
       </html>
     )
@@ -112,8 +129,8 @@ export class Body extends Component {
       <html>
       <h1 className="title"><b>Welcome, {this.state.username}</b></h1>
       <body className="Body">
-      <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length=5 />
-      <EfficienciesWidget title="Worst Min Time Efficiencies" data={this.state.timeEfficienciesMin} length=5 />
+      <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+      <EfficienciesWidget title="Worst Min Time Efficiencies" data={this.state.timeEfficienciesMin} length={5} />
       </body>
 
       <footer className="footer">
