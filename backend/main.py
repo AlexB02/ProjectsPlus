@@ -27,7 +27,7 @@ def load_user(id):
 # Set the secret key of the site to a randomly generated string of letters, numbers and characters
 app.secret_key = secrets.token_urlsafe(32)
 # Set the time for a valid login (test value)
-app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(seconds=5)
+app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(seconds=1800)
 
 # Function to test the given password against the password stored for the entered email
 def verifypassword(password,storedpassword):
@@ -183,7 +183,7 @@ def dashboard():
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
 
-            sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),random.randint(1,4))
+            sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),random.randint(0,20))
 
             fl.login_user(user,remember=True,force=True)
 
@@ -191,7 +191,7 @@ def dashboard():
         else:
             return flask.redirect("/")
     except Exception as e:
-        return str(e)#flask.redirect("/")
+        return flask.redirect("/")
 
 @app.route("/getuser",methods=["POST","GET"])
 def getUser():
@@ -201,8 +201,9 @@ def getUser():
             userid = sp.getIDbyEmail(email)
             user = sp.userObj(userid)
             username=user.firstname
-            timeEfficiencies = sp.getEfficiencies(userid,"time")
-            return jsonify({"username":username,"efficiencies":timeEfficiencies})
+            timeEfficienciesMax = sp.getEfficiencies(userid,"time","max")
+            timeEfficienciesMin = sp.getEfficiencies(userid,"time","min")
+            return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin})
     except:
         return flask.redirect("/")
 

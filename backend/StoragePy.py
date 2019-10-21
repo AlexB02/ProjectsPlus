@@ -3,6 +3,7 @@ import os
 import hashlib
 from flask_login import UserMixin
 from datetime import datetime
+import time
 
 def connect():
 
@@ -42,13 +43,14 @@ def create(c):
         c.execute("""CREATE TABLE IF NOT EXISTS efficiencylist (
                     date text,
                     time text,
+                    timesec real,
                     type text,
                     efficiency real,
                     memberid integer,
                     skillid integer,
                     FOREIGN KEY (memberid) REFERENCES members(memberid),
                     FOREIGN KEY (skillid) REFERENCES skillslist(skillid),
-                    PRIMARY KEY (memberid, skillid, date, time)
+                    PRIMARY KEY (memberid, skillid, timesec)
         )""")
 
     except:
@@ -173,12 +175,14 @@ def addEfficiency(type,efficiency,memberid,skillid):
     c = conn.cursor()
     now = datetime.now()
     date = str(now.day)+":"+str(now.month)+":"+str(now.year)
-    time = str(now.hour)+":"+str(now.minute)+":"+str(now.second)+":"+str(now.microsecond)
-    c.execute("""insert into efficiencylist (date,time,type,efficiency,memberid,skillid) values (?,?,?,?,?,?)""",(date,time,type,efficiency,memberid,skillid,))
+    timestore = str(now.hour)+":"+str(now.minute)+":"+str(now.second)+":"+str(now.microsecond)
+    t = datetime(now.year,now.month,now.day,now.hour,now.minute,now.second)
+    timesec = time.mktime(t.timetuple())
+    c.execute("""insert into efficiencylist (date,time,timesec,type,efficiency,memberid,skillid) values (?,?,?,?,?,?,?)""",(date,timestore,timesec,type,efficiency,memberid,skillid,))
     conn.commit()
     conn.close()
 
-def getEfficiencies(memberid,type):
+def getEfficiencies(memberid,type,place):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     efficiencies = {}
@@ -187,15 +191,66 @@ def getEfficiencies(memberid,type):
     c.execute("""SELECT efficiency FROM efficiencylist WHERE memberid=? and type=?""",(memberid,type,))
     efficienciesFromDB = c.fetchall()
 
-    if len(skills) > 0:
-        for i in range(len(skills)):
-            efficiencies[skills[i][0]] = []
-        for i in range(len(skills)):
-            try:
-                efficiencies[skills[i][0]].append(efficienciesFromDB[i][0])
-            except:
-                return {"ERROR":"ERROR"}
-    else:
-        return {"no skills":"no skills"}
+    if place == "max":
 
-    return efficiencies
+        if len(skills) > 0:
+
+            for i in range(len(skills)):
+                efficiencies[skills[i][0]] = []
+
+            for i in range(len(skills)):
+                try:
+                    efficiencies[skills[i][0]].append(efficienciesFromDB[i][0])
+                except:
+                    return {"ERROR":"ERROR"}
+
+
+            efficienciesavg = []
+            for skill in efficiencies.keys():
+                skillavg = {}
+                esum = 0
+                efflist = efficiencies[skill]
+                for e in efflist:
+                    esum += e
+                esumavg = round((esum)/(len(efflist)),2)
+
+                skillavg["skill"] = skill
+                skillavg["avg"] = esumavg
+                efficienciesavg.append(skillavg)
+
+            return sorted(efficienciesavg, reverse=True ,key=lambda i: i["avg"])
+        else:
+            return [{"no skills":"no skills"}]
+
+    elif place == "min":
+
+        if len(skills) > 0:
+
+            for i in range(len(skills)):
+                efficiencies[skills[i][0]] = []
+
+            for i in range(len(skills)):
+                try:
+                    efficiencies[skills[i][0]].append(efficienciesFromDB[i][0])
+                except:
+                    return {"ERROR":"ERROR"}
+
+
+            efficienciesavg = []
+            for skill in efficiencies.keys():
+                skillavg = {}
+                esum = 0
+                efflist = efficiencies[skill]
+                for e in efflist:
+                    esum += e
+                esumavg = round((esum)/(len(efflist)),2)
+
+                skillavg["skill"] = skill
+                skillavg["avg"] = esumavg
+                efficienciesavg.append(skillavg)
+
+            return sorted(efficienciesavg, key=lambda i: i["avg"])
+        else:
+            return [{"no skills":"no skills"}]
+
+    return effifienciesavg

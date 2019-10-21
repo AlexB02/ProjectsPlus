@@ -39,6 +39,10 @@
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+.EfficienciesWidget {
+  background-color: black;
+}
+
 .boxinput{
   padding: 15px;
   background-color: white;
