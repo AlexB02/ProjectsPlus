@@ -40,6 +40,7 @@ class EfficienciesWidget extends React.Component {
       try {
         if (data.length <= this.state.length) {
           presentable = data.slice(0,data.length);
+
         }
         else {
           presentable = data.slice(0,this.state.length);
@@ -72,11 +73,11 @@ class EfficienciesWidget extends React.Component {
   render() {
     return (
       <html>
-      <div id="EfficiencyWidgetTitleBar">
-        <p>{this.state.title}</p>
+      <span class="EfficiencyWidgetTitleBar">
+        <b>{this.state.title}</b>
         <button onClick={this.increaseLength}>Up</button>
         <button onClick={this.decreaseLength}>Down</button>
-      </div>
+      </span>
       <p>{this.state.presentableData}</p>
       </html>
     )
@@ -112,7 +113,6 @@ export class Body extends Component {
   constructor(props) {
 
     super(props);
-    // Bind all the functions to the component
 
     // Setup all state variables for the body
     this.state = {

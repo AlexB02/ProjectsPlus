@@ -48,6 +48,7 @@ def create(c):
                     efficiency real,
                     memberid integer,
                     skillid integer,
+                    projectid integer,
                     FOREIGN KEY (memberid) REFERENCES members(memberid),
                     FOREIGN KEY (skillid) REFERENCES skillslist(skillid),
                     PRIMARY KEY (memberid, skillid, timesec)
@@ -170,7 +171,7 @@ def addSkill(skill):
     conn.commit()
     conn.close()
 
-def addEfficiency(type,efficiency,memberid,skillid):
+def addEfficiency(type,efficiency,memberid,skillid,projectid):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     now = datetime.now()
@@ -178,7 +179,7 @@ def addEfficiency(type,efficiency,memberid,skillid):
     timestore = str(now.hour)+":"+str(now.minute)+":"+str(now.second)+":"+str(now.microsecond)
     t = datetime(now.year,now.month,now.day,now.hour,now.minute,now.second)
     timesec = time.mktime(t.timetuple())
-    c.execute("""insert into efficiencylist (date,time,timesec,type,efficiency,memberid,skillid) values (?,?,?,?,?,?,?)""",(date,timestore,timesec,type,efficiency,memberid,skillid,))
+    c.execute("""insert into efficiencylist (date,time,timesec,type,efficiency,memberid,skillid,projectid) values (?,?,?,?,?,?,?,?)""",(date,timestore,timesec,type,efficiency,memberid,skillid,projectid,))
     conn.commit()
     conn.close()
 

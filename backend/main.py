@@ -182,8 +182,8 @@ def dashboard():
         if session["authenticated"] == "True":
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
-
-            sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),random.randint(0,20))
+            # (type,efficiency,memberid,skillid,projectid)
+            sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),random.randint(0,20),1)
 
             fl.login_user(user,remember=True,force=True)
 
