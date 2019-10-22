@@ -6,11 +6,11 @@ class EfficienciesWidget extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {"title":"","data":[],"presentableData":""};
+    this.state = {"title":"","data":[],"presentableData":"","length":5};
     this.setState({"data":props.data});
     this.setState({"presentableData": this.dataToPresent(props.data)});
     this.state.title = props.title;
-
+    this.setState({"length":props.length});
   };
 
   componentWillReceiveProps(nextProps) {
@@ -38,11 +38,12 @@ class EfficienciesWidget extends React.Component {
     }
     else {
       try {
-        if (data.length <= 5) {
+        if (data.length <= this.state.length) {
           presentable = data.slice(0,data.length);
+
         }
         else {
-          presentable = data.slice(0,5);
+          presentable = data.slice(0,this.state.length);
         }
       }
       catch (e) {}
@@ -56,10 +57,27 @@ class EfficienciesWidget extends React.Component {
     );
   };
 
+  increaseLength = () => {
+    if (this.state.length < this.state.data.length) {
+      this.setState({"length":this.state.length+=1});
+      this.setState({"presentableData": this.dataToPresent(this.state.data)});
+    }
+  }
+  decreaseLength = () => {
+    if (this.state.length > 1) {
+      this.setState({"length":this.state.length-=1});
+      this.setState({"presentableData": this.dataToPresent(this.state.data)});
+    }
+  }
+
   render() {
     return (
       <html>
-      <p>{this.state.title}</p>
+      <span class="EfficiencyWidgetTitleBar">
+        <b>{this.state.title}</b>
+        <button onClick={this.increaseLength}>Up</button>
+        <button onClick={this.decreaseLength}>Down</button>
+      </span>
       <p>{this.state.presentableData}</p>
       </html>
     )
@@ -95,7 +113,6 @@ export class Body extends Component {
   constructor(props) {
 
     super(props);
-    // Bind all the functions to the component
 
     // Setup all state variables for the body
     this.state = {
@@ -112,8 +129,8 @@ export class Body extends Component {
       <html>
       <h1 className="title"><b>Welcome, {this.state.username}</b></h1>
       <body className="Body">
-      <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} />
-      <EfficienciesWidget title="Worst Min Time Efficiencies" data={this.state.timeEfficienciesMin} />
+      <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+      <EfficienciesWidget title="Worst Min Time Efficiencies" data={this.state.timeEfficienciesMin} length={5} />
       </body>
 
       <footer className="footer">
