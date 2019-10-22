@@ -203,7 +203,8 @@ def getUser():
             username=user.firstname
             timeEfficienciesMax = sp.getEfficiencies(userid,"time","max")
             timeEfficienciesMin = sp.getEfficiencies(userid,"time","min")
-            return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin})
+            scheduleEfficienciesMax = sp.getEfficiencies(userid,"time","max")
+            return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin,"scheduleEfficienciesMax":scheduleEfficienciesMax})
     except:
         return flask.redirect("/")
 

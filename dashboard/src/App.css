@@ -12,6 +12,31 @@
   color: black;
 }
 
+.NavBar{
+  font-family: 'Roboto', sans-serif;
+  background-color: #FFFFFF;
+  text-align: right;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: calc(50px + 1vmin);
+  z-index: 1;
+  vertical-align: middle;
+  box-shadow: 0 0 12px 2px #bebebe;
+}
+
+.NavBar a{
+  float: center;
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px;
+  margin-top: calc((50px+1vmin)/10);
+  font-size: calc(10px + 1vmin);
+  text-decoration: none;
+  vertical-align: middle;
+}
+
 .title {
   font-size: calc(10px + 5vmin);
   padding-top: 20px;
@@ -41,6 +66,32 @@
 
 .EfficienciesWidget {
   background-color: black;
+}
+
+.widgets {
+  padding-top: calc(100px + 1vmin);
+  display: inline-flex;
+}
+
+.widget {
+  padding: 10px;
+  border-radius: 6px;
+  border-color: #bebebe;
+  border-width: medium;
+  border-style: solid;
+  height: max-content;
+}
+
+.widgets-column {
+  display: block;
+}
+
+.horizontalWidgetGap {
+  padding-left: 3vw;
+}
+
+.verticalWidgetGap {
+  padding-bottom: 3vw;
 }
 
 .boxinput{

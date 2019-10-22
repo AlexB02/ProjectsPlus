@@ -417,6 +417,7 @@ export class Body extends Component {
             </div>
 
             <div className="signupsigninbreak"/>
+
             <div className="login">
             <form onSubmit={this.removeformsubmit}>
                 <input type="email" className="boxinput" placeholder="e-mail address" name="email" id="loginemail" required/>

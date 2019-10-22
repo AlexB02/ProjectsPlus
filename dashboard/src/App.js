@@ -1,6 +1,60 @@
 import React, { Component } from 'react';
+import styled from "styled-components";
 import './App.css';
 import $ from 'jquery';
+
+const Tracker = styled.div`
+  width: 100%;
+  height: 20px;
+  margin: 15px auto;
+  background: #FFFFFF;
+  border-radius: 10px;
+  border-color: #bebebe;
+  border-style: solid;
+  align-items: left;
+`
+
+const ProgressFillUp = styled.div`
+  width: ${props => props.percentage}%;
+  height: 20px;
+  background: #00CC66;
+  border-radius: 6px;
+`
+
+class ProgressBar extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {"fillup":(props.efficiency/200)*100};
+  }
+
+  render() {
+    return (
+      <html>
+      <Tracker>
+      <ProgressFillUp percentage={this.state.fillup}/>
+      </Tracker>
+      </html>
+    )
+  }
+}
+
+class EfficiencyProgress extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {"text":props.text,"efficiency":props.efficiency};
+  }
+
+  render() {
+    return (
+      <html>
+      <div><ProgressBar efficiency={this.state.efficiency}/></div>
+      <div>{this.state.text}</div>
+      </html>
+    )
+  }
+}
 
 class EfficienciesWidget extends React.Component {
 
@@ -38,9 +92,9 @@ class EfficienciesWidget extends React.Component {
     }
     else {
       try {
-        if (data.length <= this.state.length) {
+        if (data.length < this.state.length) {
+          this.setState({"length":data.length});
           presentable = data.slice(0,data.length);
-
         }
         else {
           presentable = data.slice(0,this.state.length);
@@ -50,9 +104,10 @@ class EfficienciesWidget extends React.Component {
     }
 
     return (
+
       <div>
       {presentable && presentable.length &&
-        presentable.map((skill, i) => React.createElement("div", {}, "Skill: "+skill["skill"]+" with efficiency: "+skill["avg"]))}
+        presentable.map((skill, i) => React.createElement(EfficiencyProgress, {"text":"Skill: "+skill["skill"]+" with efficiency: "+skill["avg"],"efficiency":skill["avg"]}))}
       </div>
     );
   };
@@ -72,9 +127,9 @@ class EfficienciesWidget extends React.Component {
 
   render() {
     return (
-      <html>
+      <html className="widget">
       <span class="EfficiencyWidgetTitleBar">
-        <b>{this.state.title}</b>
+        <b>{this.state.title} </b>
         <button onClick={this.increaseLength}>Up</button>
         <button onClick={this.decreaseLength}>Down</button>
       </span>
@@ -84,7 +139,35 @@ class EfficienciesWidget extends React.Component {
   };
 };
 
-export class Body extends Component {
+class NavBar extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {"username":""};
+    this.setState({"username":props.username});
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({"username":props.username});
+  }
+
+  logOut = () => {
+    window.location.href = "/";
+  }
+
+  render () {
+    return (
+      <html>
+      <div className="NavBar">
+      <b><a>Welcome, {this.state.username}</a></b>
+      <b><a><button onClick={this.logOut}>Log Out</button></a></b>
+      </div>
+      </html>
+  )
+  }
+}
+
+export class Body extends React.Component {
 
 ///////////////////////////////////////////////////////////////////
 // Initialisation function/////////////////////////////////////////
@@ -104,6 +187,7 @@ export class Body extends Component {
           _this.setState({username: data.username});
           _this.setState({timeEfficienciesMax: data.timeEfficienciesMax});
           _this.setState({timeEfficienciesMin: data.timeEfficienciesMin});
+          _this.setState({scheduleEfficienciesMax: data.scheduleEfficienciesMax});
         });
       }
       catch (e) {};
@@ -118,7 +202,8 @@ export class Body extends Component {
     this.state = {
       username: "",
       timeEfficienciesMax: {},
-      timeEfficienciesMin: {}
+      timeEfficienciesMin: {},
+      scheduleEfficienciesMax: {}
     }
     this.getUserData();
 
@@ -127,10 +212,33 @@ export class Body extends Component {
   render() {
       return (
       <html>
-      <h1 className="title"><b>Welcome, {this.state.username}</b></h1>
+      <NavBar className="NavBar" username={this.state.username} />
       <body className="Body">
-      <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
-      <EfficienciesWidget title="Worst Min Time Efficiencies" data={this.state.timeEfficienciesMin} length={5} />
+      <div className="widgets">
+        <div className="widgets-column">
+          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+          <div className="verticalWidgetGap"/>
+          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+          <div className="verticalWidgetGap"/>
+          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+        </div>
+        <div className="horizontalWidgetGap" />
+        <div className="widgets-column">
+          <EfficienciesWidget title="Worst Min Time Efficiencies" data={this.state.timeEfficienciesMin} length={5} />
+          <div className="verticalWidgetGap"/>
+          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+          <div className="verticalWidgetGap"/>
+          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+        </div>
+        <div className="horizontalWidgetGap" />
+        <div className="widgets-column">
+          <EfficienciesWidget title="Best Max Schedule Efficiencies" data={this.state.scheduleEfficienciesMax} length={5} />
+          <div className="verticalWidgetGap"/>
+          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+          <div className="verticalWidgetGap"/>
+          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
+        </div>
+      </div>
       </body>
 
       <footer className="footer">

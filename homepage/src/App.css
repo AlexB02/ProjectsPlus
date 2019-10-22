@@ -316,9 +316,9 @@
   text-align: left;
 }
 
-.signupsigninbreak{
+.signupsigninbreak {
   display: inline-block;
-  padding: 10vh;
+  padding-right: 10vw;
 }
 
 .login {
