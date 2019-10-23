@@ -58,6 +58,53 @@ def create(c):
         print("Create efficiencylist table error")
         pass
 
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS projectslist (
+                    projectid integer PRIMARY KEY,
+                    projecttitle text,
+                    icon text,
+        )""")
+
+    except:
+        print("Create projectslist table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS projectmembers (
+                    memberid integer,
+                    projectid integer,
+                    PRIMARY KEY (memberid, projectid)
+        )""")
+
+    except:
+        print("Create projectmembers table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS tasks (
+                    projectid integer,
+                    taskid integer,
+                    title text,
+                    description text,
+                    PRIMARY KEY (projectid,taskid)
+        )""")
+
+    except:
+        print("Create tasks table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS membertasks (
+                    memberid integer,
+                    taskid integer,
+                    status text,
+                    PRIMARY KEY (memberid,taskid)
+        )""")
+
+    except:
+        print("Create membertasks table error")
+        pass
+
 def recordExists(email):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
@@ -140,7 +187,6 @@ def addUser(firstname,lastname,email,password):
     c = conn.cursor()
 
     salt = os.urandom(32)
-    #print("Actual salt: "+str(salt))
     key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 400000)
 
     store = salt+key
