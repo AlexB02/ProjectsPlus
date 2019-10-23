@@ -217,7 +217,7 @@ def addSkill(skill):
     conn.commit()
     conn.close()
 
-def addEfficiency(type,efficiency,memberid,skillid,projectid):
+def addEfficiency(type,efficiency,memberid,skill,projectid):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     now = datetime.now()
@@ -225,7 +225,7 @@ def addEfficiency(type,efficiency,memberid,skillid,projectid):
     timestore = str(now.hour)+":"+str(now.minute)+":"+str(now.second)+":"+str(now.microsecond)
     t = datetime(now.year,now.month,now.day,now.hour,now.minute,now.second)
     timesec = time.mktime(t.timetuple())
-    c.execute("""insert into efficiencylist (date,time,timesec,type,efficiency,memberid,skillid,projectid) values (?,?,?,?,?,?,?,?)""",(date,timestore,timesec,type,efficiency,memberid,skillid,projectid,))
+    c.execute("""insert into efficiencylist (date,time,timesec,type,efficiency,memberid,skill,projectid) values (?,?,?,?,?,?,?,?)""",(date,timestore,timesec,type,efficiency,memberid,skill,projectid,))
     conn.commit()
     conn.close()
 

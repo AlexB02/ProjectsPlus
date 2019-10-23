@@ -49,8 +49,8 @@ class EfficiencyProgress extends React.Component {
   render() {
     return (
       <html>
-      <div><ProgressBar efficiency={this.state.efficiency}/></div>
       <div>{this.state.text}</div>
+      <div><ProgressBar efficiency={this.state.efficiency}/></div>
       </html>
     )
   }
