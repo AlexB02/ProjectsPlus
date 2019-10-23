@@ -402,17 +402,17 @@ export class Body extends Component {
               <div className="midboxbreak"/>
 
               <input type="password" className="boxinput" placeholder="create password" name="password" id="password" value={this.state.password} onChange={this.getPassword} required/>
+              <div class="signupmessage">{this.state.signupmessage}</div>
+
               <div className="midboxbreak"/>
 
               <input type="password" className="boxinput" placeholder="confirm password" name="confirmpassword" id="confirmpassword" value={this.state.confirmpassword} onChange={this.getConfirmPassword} required/>
-
               <div className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</div>
 
               <input type="hidden" name="identifier" value="signup" />
 
               <input type="submit" className="boxinput" value="sign up" onClick={this.signupsubmit}/>
               </form>
-              <div class="signupmessage">{this.state.signupmessage}</div>
 
             </div>
 
