@@ -31,8 +31,10 @@ def create(c):
 
     try:
         c.execute("""CREATE TABLE IF NOT EXISTS skillslist (
-                    skillid integer PRIMARY KEY,
-                    title text
+                    title text PRIMARY KEY,
+                    iconlocation text,
+                    abbrv text
+
         )""")
 
     except:
@@ -62,7 +64,7 @@ def create(c):
         c.execute("""CREATE TABLE IF NOT EXISTS projectslist (
                     projectid integer PRIMARY KEY,
                     projecttitle text,
-                    icon text,
+                    iconlocation text,
         )""")
 
     except:
@@ -86,6 +88,7 @@ def create(c):
                     taskid integer,
                     title text,
                     description text,
+                    targetCompletionDate real,
                     PRIMARY KEY (projectid,taskid)
         )""")
 
@@ -98,11 +101,34 @@ def create(c):
                     memberid integer,
                     taskid integer,
                     status text,
+                    inProgressDate real,
                     PRIMARY KEY (memberid,taskid)
         )""")
 
     except:
         print("Create membertasks table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS projectmembers (
+                    memberid integer,
+                    projectid integer,
+                    PRIMARY KEY (memberid,projectid)
+        )""")
+
+    except:
+        print("Create projectmembers table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS taskskills (
+                    taskid integer,
+                    skillid integer,
+                    PRIMARY KEY (taskid,skillid)
+        )""")
+
+    except:
+        print("Create taskskills table error")
         pass
 
 def recordExists(email):
