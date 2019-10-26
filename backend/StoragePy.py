@@ -31,8 +31,10 @@ def create(c):
 
     try:
         c.execute("""CREATE TABLE IF NOT EXISTS skillslist (
-                    skillid integer PRIMARY KEY,
-                    title text
+                    title text PRIMARY KEY,
+                    iconlocation text,
+                    abbrv text
+
         )""")
 
     except:
@@ -56,6 +58,77 @@ def create(c):
 
     except:
         print("Create efficiencylist table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS projectslist (
+                    projectid integer PRIMARY KEY,
+                    projecttitle text,
+                    iconlocation text,
+        )""")
+
+    except:
+        print("Create projectslist table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS projectmembers (
+                    memberid integer,
+                    projectid integer,
+                    PRIMARY KEY (memberid, projectid)
+        )""")
+
+    except:
+        print("Create projectmembers table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS tasks (
+                    projectid integer,
+                    taskid integer,
+                    title text,
+                    description text,
+                    targetCompletionDate real,
+                    PRIMARY KEY (projectid,taskid)
+        )""")
+
+    except:
+        print("Create tasks table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS membertasks (
+                    memberid integer,
+                    taskid integer,
+                    status text,
+                    inProgressDate real,
+                    PRIMARY KEY (memberid,taskid)
+        )""")
+
+    except:
+        print("Create membertasks table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS projectmembers (
+                    memberid integer,
+                    projectid integer,
+                    PRIMARY KEY (memberid,projectid)
+        )""")
+
+    except:
+        print("Create projectmembers table error")
+        pass
+
+    try:
+        c.execute("""CREATE TABLE IF NOT EXISTS taskskills (
+                    taskid integer,
+                    skillid integer,
+                    PRIMARY KEY (taskid,skillid)
+        )""")
+
+    except:
+        print("Create taskskills table error")
         pass
 
 def recordExists(email):
@@ -140,7 +213,6 @@ def addUser(firstname,lastname,email,password):
     c = conn.cursor()
 
     salt = os.urandom(32)
-    #print("Actual salt: "+str(salt))
     key = hashlib.pbkdf2_hmac('sha256', password.encode('utf-8'), salt, 400000)
 
     store = salt+key
@@ -171,7 +243,7 @@ def addSkill(skill):
     conn.commit()
     conn.close()
 
-def addEfficiency(type,efficiency,memberid,skillid,projectid):
+def addEfficiency(type,efficiency,memberid,skill,projectid):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     now = datetime.now()
@@ -179,7 +251,7 @@ def addEfficiency(type,efficiency,memberid,skillid,projectid):
     timestore = str(now.hour)+":"+str(now.minute)+":"+str(now.second)+":"+str(now.microsecond)
     t = datetime(now.year,now.month,now.day,now.hour,now.minute,now.second)
     timesec = time.mktime(t.timetuple())
-    c.execute("""insert into efficiencylist (date,time,timesec,type,efficiency,memberid,skillid,projectid) values (?,?,?,?,?,?,?,?)""",(date,timestore,timesec,type,efficiency,memberid,skillid,projectid,))
+    c.execute("""insert into efficiencylist (date,time,timesec,type,efficiency,memberid,skill,projectid) values (?,?,?,?,?,?,?,?)""",(date,timestore,timesec,type,efficiency,memberid,skill,projectid,))
     conn.commit()
     conn.close()
 
