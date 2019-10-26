@@ -55,6 +55,7 @@ def index():
     # Set both the login and signup messages to blank to clear the form messages & make the site look clean
     loginmessage = ""
     signupmessage = ""
+    sp.connect()
     # Show the user the index (home) page
     return flask.render_template("index.html")
 
