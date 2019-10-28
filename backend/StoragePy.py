@@ -49,26 +49,27 @@ def create(c):
                     type text,
                     efficiency real,
                     memberid integer,
-                    skillid integer,
+                    skill text,
                     projectid integer,
-                    FOREIGN KEY (memberid) REFERENCES members(memberid),
-                    FOREIGN KEY (skillid) REFERENCES skillslist(skillid),
-                    PRIMARY KEY (memberid, skillid, timesec)
+                    PRIMARY KEY (memberid, skill, timesec)
         )""")
 
-    except:
+    except Exception as e:
         print("Create efficiencylist table error")
+        print(str(e))
         pass
 
     try:
         c.execute("""CREATE TABLE IF NOT EXISTS projectslist (
-                    projectid integer PRIMARY KEY,
+                    projectid integer,
                     projecttitle text,
                     iconlocation text,
+                    PRIMARY KEY (projectid)
         )""")
 
-    except:
+    except Exception as e:
         print("Create projectslist table error")
+        print(str(e))
         pass
 
     try:
@@ -234,12 +235,12 @@ def addUser(firstname,lastname,email,password):
     conn.commit()
     conn.close()
 
-def addSkill(skill):
+def addSkill(skill,abbrv):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("""SELECT title FROM skillslist WHERE title=?""",(skill,))
     if not c.fetchone():
-        c.execute("""insert into skillslist (skillid,title) values (NULL,?)""",(skill,))
+        c.execute("""insert into skillslist (title,iconlocation,abbrv) values (?,?,?)""",(skill,"/",abbrv,))
     conn.commit()
     conn.close()
 
@@ -259,7 +260,7 @@ def getEfficiencies(memberid,type,place):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     efficiencies = {}
-    c.execute("""SELECT skillid FROM efficiencylist WHERE memberid=?""",(memberid,))
+    c.execute("""SELECT skill FROM efficiencylist WHERE memberid=?""",(memberid,))
     skills = c.fetchall()
     c.execute("""SELECT efficiency FROM efficiencylist WHERE memberid=? and type=?""",(memberid,type,))
     efficienciesFromDB = c.fetchall()
@@ -287,7 +288,8 @@ def getEfficiencies(memberid,type,place):
                     esum += e
                 esumavg = round((esum)/(len(efflist)),2)
 
-                skillavg["skill"] = skill
+                skillavg["skillAbbrv"] = getSkillAbbrv(skill)
+                skillavg["skillTitle"] = skill
                 skillavg["avg"] = esumavg
                 efficienciesavg.append(skillavg)
 
@@ -318,7 +320,8 @@ def getEfficiencies(memberid,type,place):
                     esum += e
                 esumavg = round((esum)/(len(efflist)),2)
 
-                skillavg["skill"] = skill
+                skillavg["skillAbbrv"] = getSkillAbbrv(skill)
+                skillavg["skillTitle"] = skill
                 skillavg["avg"] = esumavg
                 efficienciesavg.append(skillavg)
 
@@ -327,3 +330,19 @@ def getEfficiencies(memberid,type,place):
             return [{"no skills":"no skills"}]
 
     return effifienciesavg
+
+def getSkillsList():
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    skills = []
+    c.execute("""SELECT title FROM skillslist""")
+    for skill in c.fetchall():
+        skills.append(skill[0])
+
+    return skills
+
+def getSkillAbbrv(skill):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    c.execute("""SELECT abbrv FROM skillslist where title=?""",(skill,))
+    return c.fetchone()[0]

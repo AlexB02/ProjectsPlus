@@ -174,25 +174,29 @@ def signup():
 
 @app.route("/dashboard")
 def dashboard():
-    sp.addSkill("Python")
-    sp.addSkill("React")
-    sp.addSkill("Flask")
-    sp.addSkill("HTML")
-    sp.addSkill("CSS")
+    sp.addSkill("Python 3.7","Python")
+    sp.addSkill("React","React")
+    sp.addSkill("Flask","Flask")
+    sp.addSkill("HTML","HTML")
+    sp.addSkill("CSS","CSS")
+    sp.addSkill("Microsoft Word","Word")
+    sp.addSkill("Microsoft Powerpoint","Powerpoint")
+    sp.addSkill("Microsoft Excel","Excel")
+    sp.addSkill("Microsoft Publisher","Publisher")
     try:
         if session["authenticated"] == "True":
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
-            # (type,efficiency,memberid,skillid,projectid)
-            sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),"Python",1)
+            # (type,efficiency,memberid,skill,projectid)
+            skills = sp.getSkillsList()
+            sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),skills[random.randint(0,len(skills)-1)],1)
 
             fl.login_user(user,remember=True,force=True)
-
             return flask.render_template("dashboard.html")
         else:
             return flask.redirect("/")
     except Exception as e:
-        return flask.redirect("/")
+        return str(e)#flask.redirect("/")
 
 @app.route("/getuser",methods=["POST","GET"])
 def getUser():
