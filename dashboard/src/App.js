@@ -6,11 +6,10 @@ import $ from 'jquery';
 const Tracker = styled.div`
   width: 100%;
   height: 20px;
-  margin: 15px auto;
   background: #FFFFFF;
-  border-radius: 10px;
   border-color: #bebebe;
   border-style: solid;
+  border-radius: 4px;
   align-items: left;
 `
 
@@ -18,7 +17,7 @@ const ProgressFillUp = styled.div`
   width: ${props => props.percentage}%;
   height: 20px;
   background: #00CC66;
-  border-radius: 6px;
+  border-radius: 1px;
 `
 
 class ProgressBar extends React.Component {
@@ -43,14 +42,22 @@ class EfficiencyProgress extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {"text":props.text,"efficiency":props.efficiency};
+    this.state = {"skillAbbrv":props.skillAbbrv,"skillTitle":props.skillTitle,"efficiency":props.efficiency,"percentageEfficiency":Math.round((props.efficiency/200)*100)};
   }
 
   render() {
     return (
       <html>
-      <div>{this.state.text}</div>
-      <div><ProgressBar efficiency={this.state.efficiency}/></div>
+        <div class="efficiencyWidgetTooltip">
+          <div class="progressBarEfficiencyValue">{this.state.percentageEfficiency}%</div>
+          <table class="EfficienciesTable" align="centre">
+            <tr>
+              <td class="progressBarSkillTD"><div class="progressBarSkill">{this.state.skillAbbrv}</div></td>
+              <td class="progressBarBarTD"><div class="progressBarBar"><ProgressBar efficiency={this.state.efficiency}/></div></td>
+            </tr>
+          </table>
+          </div>
+          <span class="efficiencyWidgetTooltipText">{this.state.skillTitle}: {this.state.efficiency}/200</span>
       </html>
     )
   }
@@ -106,8 +113,7 @@ class EfficienciesWidget extends React.Component {
     return (
 
       <div>
-      {presentable && presentable.length &&
-        presentable.map((skill, i) => React.createElement(EfficiencyProgress, {"text":"Skill: "+skill["skill"]+" with efficiency: "+skill["avg"],"efficiency":skill["avg"]}))}
+      {presentable && presentable.length && presentable.map((skill, i) => React.createElement(EfficiencyProgress, {"skillTitle":skill["skillTitle"],"skillAbbrv":skill["skillAbbrv"],"efficiency":skill["avg"]}))}
       </div>
     );
   };
@@ -128,12 +134,12 @@ class EfficienciesWidget extends React.Component {
   render() {
     return (
       <html className="widget">
-      <span class="EfficiencyWidgetTitleBar">
-        <b>{this.state.title} </b>
-        <button onClick={this.increaseLength}>Up</button>
-        <button onClick={this.decreaseLength}>Down</button>
-      </span>
-      <p>{this.state.presentableData}</p>
+        <span class="EfficiencyWidgetTitleBar">
+          <b>{this.state.title} </b>
+          <button onClick={this.increaseLength}>Up</button>
+          <button onClick={this.decreaseLength}>Down</button>
+        </span>
+        <div class="efficiencyWidgetData">{this.state.presentableData}</div>
       </html>
     )
   };
@@ -143,12 +149,14 @@ class NavBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {"username":""};
+    this.state = {"username":"","page":""};
     this.setState({"username":props.username});
+    this.setState({"page":props.page});
   }
 
   componentWillReceiveProps(props) {
     this.setState({"username":props.username});
+    this.setState({"page":props.page});
   }
 
   logOut = () => {
@@ -159,6 +167,7 @@ class NavBar extends React.Component {
     return (
       <html>
       <div className="NavBar">
+      <a class="pageStateNavBar">{this.state.page}</a>
       <b><a>Welcome, {this.state.username}</a></b>
       <b><a><button onClick={this.logOut}>Log Out</button></a></b>
       </div>
@@ -167,7 +176,7 @@ class NavBar extends React.Component {
   }
 }
 
-export class Body extends React.Component {
+class Profile extends React.Component {
 
 ///////////////////////////////////////////////////////////////////
 // Initialisation function/////////////////////////////////////////
@@ -212,7 +221,7 @@ export class Body extends React.Component {
   render() {
       return (
       <html>
-      <NavBar className="NavBar" username={this.state.username} />
+      <NavBar className="NavBar" username={this.state.username} page="Your Profile"/>
       <body className="Body">
       <div className="widgets">
         <div className="widgets-column">
@@ -230,14 +239,6 @@ export class Body extends React.Component {
           <div className="verticalWidgetGap"/>
           <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
         </div>
-        <div className="horizontalWidgetGap" />
-        <div className="widgets-column">
-          <EfficienciesWidget title="Best Max Schedule Efficiencies" data={this.state.scheduleEfficienciesMax} length={5} />
-          <div className="verticalWidgetGap"/>
-          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
-          <div className="verticalWidgetGap"/>
-          <EfficienciesWidget title="Best Max Time Efficiencies" data={this.state.timeEfficienciesMax} length={5} />
-        </div>
       </div>
       </body>
 
@@ -248,3 +249,11 @@ export class Body extends React.Component {
     );
   };
 };
+
+export class Body extends React.Component {
+  render() {
+    return (
+      <Profile />
+    )
+  }
+}
