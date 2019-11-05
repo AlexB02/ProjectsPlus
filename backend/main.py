@@ -10,7 +10,7 @@ from datetime import timedelta
 import re
 import random
 
-app = flask.Flask("__main__",template_folder=(os.path.dirname(os.path.realpath(__file__))+"/templatefolder"))
+app = flask.Flask("__main__",template_folder=(os.path.dirname(os.path.realpath(__file__))+"/templatefolder") static_folder=(os.path.dirname(os.path.realpath(__file__))+"/static"))
 
 # Create login manager
 loginmanager = fl.LoginManager()
