@@ -63,6 +63,7 @@ def index():
     try:
         return flask.render_template("index.html")
     except:
+        print("Failed to render index")
         return "Failed to render index"
 
 # Login route, takes post and get methods for login value transfer
