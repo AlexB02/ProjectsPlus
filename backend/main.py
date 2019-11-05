@@ -29,6 +29,8 @@ app.secret_key = secrets.token_urlsafe(32)
 # Set the time for a valid login (test value)
 app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(seconds=1800)
 
+app.EXPLAIN_TEMPLATE_LOADING = True
+
 # Function to test the given password against the password stored for the entered email
 def verifypassword(password,storedpassword):
     # Get the stored password
