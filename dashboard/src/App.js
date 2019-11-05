@@ -266,12 +266,9 @@ class EfficienciesWidget extends React.Component {
 
 class DropdownMenu extends React.Component {
   constructor(props) {
-    console.log("Creating new dropdownmenu");
     super(props);
     this.state = {"title":props.title || "title",
                   "items":props.items};
-
-    console.log("Initial items prop: "+JSON.stringify(props.items));
   }
 
   componentWillReceiveProps(props) {
@@ -286,8 +283,6 @@ class DropdownMenu extends React.Component {
 
   selectChange = (event) => {
 
-    console.log("Change page event");
-
     for(var i = 0; i < this.props.items.length; i++) {
 
       if(this.props.items[i]["title"] === event.target.value) {
@@ -301,9 +296,7 @@ class DropdownMenu extends React.Component {
   }
 
   render() {
-    console.log("this.state.title: "+this.state.title);
     if (this.state.title === "Your Profile") {
-      console.log("Is profile");
       return (
         <html>
           <select id="ProjectViewDropdown" class="ProjectViewDropdown" onChange={this.selectChange}>
@@ -314,9 +307,7 @@ class DropdownMenu extends React.Component {
       )
     }
     else {
-      console.log("Not profile");
       var projectid = this.props.projectid;
-      console.log("Projectid: "+projectid);
       return (
         <html>
           <select id="ProjectViewDropdown" class="ProjectViewDropdown" onChange={this.selectChange}>
@@ -458,7 +449,6 @@ class ProfilePage extends React.Component {
 class ProjectPage extends React.Component {
 
   constructor(props) {
-    console.log("Project page");
     super(props);
 
     // Setup all state variables for the body
@@ -496,7 +486,7 @@ class ProjectPage extends React.Component {
 
   render() {
     return (
-      <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.state.projectid}/>
+      <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid}/>
     )
   }
 }
@@ -509,16 +499,12 @@ export class Body extends React.Component {
   }
 
   updatePage = (page,projectid) => {
-      console.log("set state to: "+page);
       this.setState({"page":page});
-      this.setState({"projectid":projectid});
-      console.log("Projectid: "+projectid);
-      console.log("Projectid state: "+this.state.projectid);
+      this.state.projectid = projectid;
   }
 
   render() {
     if (this.state.page === "profile") {
-      console.log("Profile page");
       return (
         <ProfilePage triggerParentUpdate={this.updatePage}/>
       )
