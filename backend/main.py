@@ -11,7 +11,6 @@ import re
 import random
 
 app = flask.Flask("__main__")
-print("Wa hey I'm being built")
 
 # Create login manager
 loginmanager = fl.LoginManager()
@@ -57,8 +56,9 @@ def index():
     loginmessage = ""
     signupmessage = ""
     sp.connect()
+    print("Getting index template")
     # Show the user the index (home) page
-    return flask.render_template("templates/index.html")
+    return flask.render_template("index.html")
 
 # Login route, takes post and get methods for login value transfer
 @app.route("/login", methods=["POST","GET"])
