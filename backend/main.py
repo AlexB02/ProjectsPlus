@@ -62,7 +62,7 @@ def index():
     # Show the user the index (home) page
     try:
         return flask.render_template("index.html")
-    except Exception as e:
+    except ImportError as e:
         print("Failed to render index")
         return "Error is: "+str(e)
 
