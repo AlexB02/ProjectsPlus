@@ -61,7 +61,7 @@ def index():
     print("Getting index template")
     # Show the user the index (home) page
     try:
-        return flask.render_template("index.html")
+        return flask.render_template(url_for("index.html"))
     except:
         print("Failed to render index")
         return "Failed to render index"
