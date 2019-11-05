@@ -276,7 +276,6 @@ class DropdownMenu extends React.Component {
       this.setState({"title":props.title});
     }
     if (props.items) {
-      console.log("Received new items prop: "+JSON.stringify(props.items));
       this.setState({"items":props.items});
     }
   }
@@ -417,7 +416,6 @@ class ProfilePage extends React.Component {
   };
 
   render() {
-    console.log(this.state.projects);
       return (
       <html>
       <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={"Your Profile"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0}/>
