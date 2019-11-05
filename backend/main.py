@@ -58,7 +58,7 @@ def index():
     signupmessage = ""
     sp.connect()
     # Show the user the index (home) page
-    return flask.render_template("index.html")
+    return flask.render_template("templates/index.html")
 
 # Login route, takes post and get methods for login value transfer
 @app.route("/login", methods=["POST","GET"])
