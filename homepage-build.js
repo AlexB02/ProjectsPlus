@@ -16,7 +16,7 @@ try {
   require('../homepage/config/env');
 }
 catch (e) {
-  require('../config/env')
+  require('../config/env');
 }
 
 
