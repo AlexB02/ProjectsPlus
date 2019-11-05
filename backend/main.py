@@ -11,6 +11,7 @@ import re
 import random
 
 app = flask.Flask("__main__")
+print("Wa hey I'm being built")
 
 # Create login manager
 loginmanager = fl.LoginManager()
@@ -237,7 +238,7 @@ def GetUserProject():
                 user = sp.userObj(userid)
                 username=user.firstname
                 projects = sp.getProjectNames(userid)
-                
+
                 title = sp.getProjectTitle(request.json["projectid"])
                 print("Project Title: "+title)
                 return jsonify({"username":username,"projects":projects,"title":title})
