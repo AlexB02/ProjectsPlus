@@ -12,7 +12,12 @@ process.on('unhandledRejection', err => {
 });
 
 // Ensure environment variables are read.
-require('../homepage/config/env');
+try {
+  require('../homepage/config/env');
+}
+catch (e) {
+  require('../config/env')
+}
 
 
 const path = require('path');
