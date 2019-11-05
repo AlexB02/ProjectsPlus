@@ -61,10 +61,10 @@ def index():
     print("Getting index template")
     # Show the user the index (home) page
     try:
-        return flask.render_template(url_for("index"))
-    except:
+        return flask.render_template("index.html")
+    except Exception as e:
         print("Failed to render index")
-        return "Failed to render index"
+        return str(e)
 
 # Login route, takes post and get methods for login value transfer
 @app.route("/login", methods=["POST","GET"])
