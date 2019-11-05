@@ -10,7 +10,7 @@ from datetime import timedelta
 import re
 import random
 
-app = flask.Flask("__main__")
+app = flask.Flask("__main__",template_folder="../backend/templates")
 
 # Create login manager
 loginmanager = fl.LoginManager()
@@ -62,7 +62,7 @@ def index():
     # Show the user the index (home) page
     try:
         return flask.render_template("index.html")
-    except ImportError as e:
+    except Exception as e:
         print("Failed to render index")
         return "Error is: "+str(e)
 
