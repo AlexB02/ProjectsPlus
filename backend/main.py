@@ -86,7 +86,7 @@ def login():
                     fl.login_user(sp.userObj(sp.getIDbyEmail(email)),remember=True,force=True)
 
                     # Change the login message to login successful to show that they will be created as a user successfully upon reaching the dashboard so they may continue
-                    loginmessage = "login successful"
+                    loginmessage = ""
 
                     # Ensure the user is authenticated correctly
                     if fl.current_user.is_authenticated:
@@ -174,22 +174,31 @@ def signup():
 
 @app.route("/dashboard")
 def dashboard():
-    sp.addSkill("Python 3.7","Python")
+    sp.addSkill("Python 3.7","Pythn")
     sp.addSkill("React","React")
     sp.addSkill("Flask","Flask")
-    sp.addSkill("HTML","HTML")
-    sp.addSkill("CSS","CSS")
-    sp.addSkill("Microsoft Word","Word")
-    sp.addSkill("Microsoft Powerpoint","Powerpoint")
+    sp.addSkill("HTML","HTML ")
+    sp.addSkill("CSS","CSS  ")
+    sp.addSkill("Microsoft Word","Word ")
+    sp.addSkill("Microsoft Powerpoint","Pwrpt")
     sp.addSkill("Microsoft Excel","Excel")
-    sp.addSkill("Microsoft Publisher","Publisher")
+    sp.addSkill("Microsoft Publisher","Pblsh")
+    sp.addSkill("Mac OSX","MacOS")
+    sp.addSkill("Windows 10","Wndws")
+    sp.addSkill("Windows 7","Wndws")
+    sp.addSkill("Javascript","JS   ")
+    sp.addSkill("Ruby","Ruby ")
+    sp.addSkill("Adobe Illustrator","Ilstr")
+    sp.addSkill("Sony Vegas Pro","Vegas")
+    sp.addSkill("Adobe Premier Pro CC 2019","Premr")
+    #sp.addProject("MyProject")
     try:
         if session["authenticated"] == "True":
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
-            # (type,efficiency,memberid,skill,projectid)
             skills = sp.getSkillsList()
-            sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),skills[random.randint(0,len(skills)-1)],1)
+
+            #sp.addMemberToProject(int(sp.getIDbyEmail(email)),1)
 
             fl.login_user(user,remember=True,force=True)
             return flask.render_template("dashboard.html")
@@ -198,18 +207,51 @@ def dashboard():
     except Exception as e:
         return str(e)#flask.redirect("/")
 
-@app.route("/getuser",methods=["POST","GET"])
-def getUser():
+@app.route("/getuserprofile",methods=["POST","GET"])
+def getuserprofile():
     try:
+        email = session["email"]
+        userid = sp.getIDbyEmail(email)
+        user = sp.userObj(userid)
+        username=user.firstname
+        timeEfficienciesMax = sp.getEfficiencies(userid,"time","max")
+        timeEfficienciesMin = sp.getEfficiencies(userid,"time","min")
+        scheduleEfficienciesMax = sp.getEfficiencies(userid,"time","max")
+        projects = sp.getProjectNames(userid)
+        return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin,"scheduleEfficienciesMax":scheduleEfficienciesMax,"projects":projects})
+    except:
+        print("Error")
+        return flask.redirect("/")
+
+@app.route("/getuserproject",methods=["POST","GET"])
+def GetUserProject():
+    try:
+        print("Get user project")
         if session["authenticated"] == "True":
-            email = session["email"]
-            userid = sp.getIDbyEmail(email)
-            user = sp.userObj(userid)
-            username=user.firstname
-            timeEfficienciesMax = sp.getEfficiencies(userid,"time","max")
-            timeEfficienciesMin = sp.getEfficiencies(userid,"time","min")
-            scheduleEfficienciesMax = sp.getEfficiencies(userid,"time","max")
-            return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin,"scheduleEfficienciesMax":scheduleEfficienciesMax})
+            if request.method == "POST":
+                print("Post method")
+                email = session["email"]
+
+                userid = sp.getIDbyEmail(email)
+
+                user = sp.userObj(userid)
+                username=user.firstname
+                projects = sp.getProjectNames(userid)
+                
+                title = sp.getProjectTitle(request.json["projectid"])
+                print("Project Title: "+title)
+                return jsonify({"username":username,"projects":projects,"title":title})
+    except:
+        return flask.redirect("/")
+
+@app.route("/addefficiency",methods=["POST","GET"])
+def addefficiency():
+    try:
+        email = session["email"]
+        userid = sp.getIDbyEmail(email)
+        skills = sp.getSkillsList()
+        sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),skills[random.randint(0,len(skills)-1)],1)
+        return jsonify({})
     except:
         return flask.redirect("/")
 
