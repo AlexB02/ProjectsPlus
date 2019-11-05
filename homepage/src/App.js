@@ -133,11 +133,11 @@ export class Body extends Component {
           return;
         }
       }
-      else if ((!(this.state.signupmessage === "Account creation error")) || (!(this.state.signupmessage === "Account created successfully") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
+      else if ((!(this.state.signupmessage === "Account creation error")) || (!(this.state.signupmessage === "") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
         this.setState({signupmessage: ""});
       }
     }
-    else if ((!(this.state.signupmessage === "Account creation error")) || (!(this.state.signupmessage === "Account created successfully") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
+    else if ((!(this.state.signupmessage === "Account creation error")) || (!(this.state.signupmessage === "") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
       this.setState({signupmessage: ""});
     }
   }
@@ -256,11 +256,11 @@ export class Body extends Component {
             return;
           }
         }
-        else if ((!(_this.state.signupmessage === "Account creation error")) || (!(_this.state.signupmessage === "Account created successfully") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
+        else if ((!(_this.state.signupmessage === "Account creation error")) || (!(_this.state.signupmessage === "") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
           _this.setState({signupmessage: ""});
         }
       }
-      else if ((!(_this.state.signupmessage === "Account creation error")) || (!(_this.state.signupmessage === "Account created successfully") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
+      else if ((!(_this.state.signupmessage === "Account creation error")) || (!(_this.state.signupmessage === "") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
         _this.setState({signupmessage: ""});
       };
 
