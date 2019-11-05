@@ -264,72 +264,37 @@ def getEfficiencies(memberid,type,place):
     skills = c.fetchall()
     c.execute("""SELECT efficiency FROM efficiencylist WHERE memberid=? and type=?""",(memberid,type,))
     efficienciesFromDB = c.fetchall()
+    if len(skills) > 0:
 
-    if place == "max":
+        for i in range(len(skills)):
+            efficiencies[skills[i][0]] = []
 
-        if len(skills) > 0:
-
-            for i in range(len(skills)):
-                efficiencies[skills[i][0]] = []
-
-            for i in range(len(skills)):
-                try:
-                    efficiencies[skills[i][0]].append(efficienciesFromDB[i][0])
-                except:
-                    return {"ERROR":"ERROR"}
+        for i in range(len(skills)):
+            try:
+                efficiencies[skills[i][0]].append(efficienciesFromDB[i][0])
+            except:
+                return {"ERROR":"ERROR"}
 
 
-            efficienciesavg = []
-            for skill in efficiencies.keys():
-                skillavg = {}
-                esum = 0
-                efflist = efficiencies[skill]
-                for e in efflist:
-                    esum += e
-                esumavg = round((esum)/(len(efflist)),2)
+        efficienciesavg = []
+        for skill in efficiencies.keys():
+            skillavg = {}
+            esum = 0
+            efflist = efficiencies[skill]
+            for e in efflist:
+                esum += e
+            esumavg = round((esum)/(len(efflist)),2)
 
-                skillavg["skillAbbrv"] = getSkillAbbrv(skill)
-                skillavg["skillTitle"] = skill
-                skillavg["avg"] = esumavg
-                efficienciesavg.append(skillavg)
+            skillavg["skillAbbrv"] = getSkillAbbrv(skill)
+            skillavg["skillTitle"] = skill
+            skillavg["avg"] = esumavg
+            efficienciesavg.append(skillavg)
 
+        if place == "max":
             return sorted(efficienciesavg, reverse=True ,key=lambda i: i["avg"])
-        else:
-            return [{"no skills":"no skills"}]
-
-    elif place == "min":
-
-        if len(skills) > 0:
-
-            for i in range(len(skills)):
-                efficiencies[skills[i][0]] = []
-
-            for i in range(len(skills)):
-                try:
-                    efficiencies[skills[i][0]].append(efficienciesFromDB[i][0])
-                except:
-                    return {"ERROR":"ERROR"}
-
-
-            efficienciesavg = []
-            for skill in efficiencies.keys():
-                skillavg = {}
-                esum = 0
-                efflist = efficiencies[skill]
-                for e in efflist:
-                    esum += e
-                esumavg = round((esum)/(len(efflist)),2)
-
-                skillavg["skillAbbrv"] = getSkillAbbrv(skill)
-                skillavg["skillTitle"] = skill
-                skillavg["avg"] = esumavg
-                efficienciesavg.append(skillavg)
-
+        elif place == "min":
             return sorted(efficienciesavg, key=lambda i: i["avg"])
-        else:
-            return [{"no skills":"no skills"}]
-
-    return effifienciesavg
+    return []
 
 def getSkillsList():
     conn = sql.connect('sqlite3/main.db')
@@ -346,3 +311,46 @@ def getSkillAbbrv(skill):
     c = conn.cursor()
     c.execute("""SELECT abbrv FROM skillslist where title=?""",(skill,))
     return c.fetchone()[0]
+
+def addProject(projecttitle):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    c.execute("""insert into projectslist (projectid,projecttitle,iconlocation) values (NULL,?,?)""",(projecttitle,"/"))
+    conn.commit()
+    conn.close()
+
+def addMemberToProject(userid,projectid):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    try:
+        c.execute("""insert into projectmembers (memberid,projectid) values (?,?)""",(userid,projectid,))
+    except Exception as e:
+        return(str(e))
+    conn.commit()
+    conn.close()
+
+def getProjectNames(userid):
+    projects = []
+    projectids = []
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+    c.execute("""SELECT projectid FROM projectmembers where memberid=?""",(userid,))
+
+    for project in c.fetchall():
+        projectids.append(project[0])
+
+    for id in projectids:
+        c.execute("""select projecttitle from projectslist where projectid=?""",(id,))
+        title = c.fetchone()[0]
+        projects.append({"id":id,"title":title})
+        print("Projects: "+str(projects))
+    return projects
+
+def getProjectTitle(projectid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT projecttitle FROM projectslist where projectid=?""",(projectid,))
+        return c.fetchone()[0]
+    except:
+        return "none"
