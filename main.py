@@ -10,7 +10,7 @@ from datetime import timedelta
 import re
 import random
 
-app = flask.Flask("__main__",template_folder="templates")
+app = flask.Flask("__main__")
 
 # Create login manager
 loginmanager = fl.LoginManager()
