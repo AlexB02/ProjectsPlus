@@ -59,7 +59,8 @@ def index():
     signupmessage = ""
     sp.connect()
     print("Getting index template")
-    print(app.template_folder)
+    for i in os.scandir(app.root_path):
+        print(i.path)
     print(os.listdir())
     # Show the user the index (home) page
     try:
