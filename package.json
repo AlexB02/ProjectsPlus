@@ -6,7 +6,4 @@
     "node": "12.13.0",
     "npm": "6.x"
   },
-  "scripts": {
-    "homepage-build": "node homepage-build.js"
-  }
 }
