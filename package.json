@@ -7,6 +7,6 @@
     "npm": "6.x"
   },
   "scripts": {
-    "homepage-build": "node homepage-build.js",
+    "homepage-build": "node homepage-build.js"
   }
 }
