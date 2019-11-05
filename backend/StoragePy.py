@@ -7,7 +7,7 @@ import time
 
 def connect():
 
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("PRAGMA foreign_keys = ON")
     create(c)
@@ -133,7 +133,7 @@ def create(c):
         pass
 
 def recordExists(email):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
 
     c.execute("""SELECT email FROM members WHERE email=?""",(email,))
@@ -145,7 +145,7 @@ def recordExists(email):
         return False
 
 def existsByID(userid):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
 
     c.execute("""SELECT memberid FROM members WHERE memberid=?""",(userid,))
@@ -158,7 +158,7 @@ def existsByID(userid):
 
 def getIDbyEmail(email):
 
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("""SELECT memberid FROM members WHERE email=?""",(email,))
 
@@ -187,7 +187,7 @@ def userObj(userid):
 
     if existsByID(userid):
 
-        conn = sql.connect('backend/sqlite3/main.db')
+        conn = sql.connect('sqlite3/main.db')
         c = conn.cursor()
 
         return User(c,userid)
@@ -196,7 +196,7 @@ def userObj(userid):
         return None
 
 def getStoredPassword(email):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
 
     c.execute("""SELECT passwordhash FROM members WHERE email=?""",(email,))
@@ -210,7 +210,7 @@ def hashpassword(password):
 
 def addUser(firstname,lastname,email,password):
 
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
 
     salt = os.urandom(32)
@@ -236,7 +236,7 @@ def addUser(firstname,lastname,email,password):
     conn.close()
 
 def addSkill(skill,abbrv):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("""SELECT title FROM skillslist WHERE title=?""",(skill,))
     if not c.fetchone():
@@ -245,7 +245,7 @@ def addSkill(skill,abbrv):
     conn.close()
 
 def addEfficiency(type,efficiency,memberid,skill,projectid):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     now = datetime.now()
     date = str(now.day)+":"+str(now.month)+":"+str(now.year)
@@ -257,7 +257,7 @@ def addEfficiency(type,efficiency,memberid,skill,projectid):
     conn.close()
 
 def getEfficiencies(memberid,type,place):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     efficiencies = {}
     c.execute("""SELECT skill FROM efficiencylist WHERE memberid=?""",(memberid,))
@@ -297,7 +297,7 @@ def getEfficiencies(memberid,type,place):
     return []
 
 def getSkillsList():
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     skills = []
     c.execute("""SELECT title FROM skillslist""")
@@ -307,20 +307,20 @@ def getSkillsList():
     return skills
 
 def getSkillAbbrv(skill):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("""SELECT abbrv FROM skillslist where title=?""",(skill,))
     return c.fetchone()[0]
 
 def addProject(projecttitle):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("""insert into projectslist (projectid,projecttitle,iconlocation) values (NULL,?,?)""",(projecttitle,"/"))
     conn.commit()
     conn.close()
 
 def addMemberToProject(userid,projectid):
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     try:
         c.execute("""insert into projectmembers (memberid,projectid) values (?,?)""",(userid,projectid,))
@@ -332,7 +332,7 @@ def addMemberToProject(userid,projectid):
 def getProjectNames(userid):
     projects = []
     projectids = []
-    conn = sql.connect('backend/sqlite3/main.db')
+    conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("""SELECT projectid FROM projectmembers where memberid=?""",(userid,))
 
@@ -348,7 +348,7 @@ def getProjectNames(userid):
 
 def getProjectTitle(projectid):
     try:
-        conn = sql.connect('backend/sqlite3/main.db')
+        conn = sql.connect('sqlite3/main.db')
         c = conn.cursor()
         c.execute("""SELECT projecttitle FROM projectslist where projectid=?""",(projectid,))
         return c.fetchone()[0]
