@@ -59,6 +59,7 @@ def index():
     signupmessage = ""
     sp.connect()
     print("Getting index template")
+    print(os.listdir())
     # Show the user the index (home) page
     try:
         return flask.render_template("index.html")
