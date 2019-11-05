@@ -10,7 +10,7 @@ from datetime import timedelta
 import re
 import random
 
-app = flask.Flask("__main__",template_folder="backend/templatefolder")
+app = flask.Flask("__main__",template_folder=(os.path.dirname(os.path.realpath(__file__))+"/backend/templates")
 
 # Create login manager
 loginmanager = fl.LoginManager()
@@ -59,9 +59,9 @@ def index():
     signupmessage = ""
     sp.connect()
     print("Getting index template")
-    for i in os.scandir(app.root_path):
-        print(i.path)
+
     print(os.listdir())
+    print(app.template_folder)
     # Show the user the index (home) page
     try:
         return flask.render_template("index.html")
