@@ -63,7 +63,6 @@ def index():
     try:
         return flask.render_template("index.html")
     except Exception as e:
-        os.mkdir("TemplatesLOL")
         print("Failed to render index")
         return "Error is: "+str(e)
 
