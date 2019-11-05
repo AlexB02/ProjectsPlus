@@ -58,7 +58,10 @@ def index():
     sp.connect()
     print("Getting index template")
     # Show the user the index (home) page
-    return flask.render_template("index.html")
+    try:
+        return flask.render_template("index.html")
+    except:
+        return "Failed to render index"
 
 # Login route, takes post and get methods for login value transfer
 @app.route("/login", methods=["POST","GET"])
