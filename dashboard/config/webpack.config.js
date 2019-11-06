@@ -502,7 +502,7 @@ module.exports = function(webpackEnv) {
           {
             inject: true,
             template: paths.appHtml,
-            filename: "../../templates/dashboard.html",
+            filename: "../../templatefolder/dashboard.html",
             favicon: "./src/img/favicon.ico"
           },
           isEnvProduction
