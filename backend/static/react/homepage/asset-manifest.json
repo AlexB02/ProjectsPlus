@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/homepage/react/css/main.efe1e35c.chunk.css",
-    "main.js": "/static/homepage/react/js/main.af7caa5f.chunk.js",
-    "main.js.map": "/static/homepage/react/js/main.af7caa5f.chunk.js.map",
-    "runtime~main.js": "/static/homepage/react/js/runtime~main.7dedda67.js",
-    "runtime~main.js.map": "/static/homepage/react/js/runtime~main.7dedda67.js.map",
-    "js/2.299d2e07.chunk.js": "/static/homepage/react/js/2.299d2e07.chunk.js",
-    "js/2.299d2e07.chunk.js.map": "/static/homepage/react/js/2.299d2e07.chunk.js.map",
-    "../../templatefolder/index.html": "/static/homepage/react/../../templatefolder/index.html",
-    "css/main.efe1e35c.chunk.css.map": "/static/homepage/react/css/main.efe1e35c.chunk.css.map",
-    "favicon.ico": "/static/homepage/react/favicon.ico",
-    "media/crown.svg": "/static/homepage/react/media/crown.82939c39.svg",
-    "precache-manifest.4e97b8349e4350ab12985ec04e4723c4.js": "/static/homepage/react/precache-manifest.4e97b8349e4350ab12985ec04e4723c4.js",
-    "service-worker.js": "/static/homepage/react/service-worker.js"
+    "main.css": "/static/react/homepage/css/main.efe1e35c.chunk.css",
+    "main.js": "/static/react/homepage/js/main.af7caa5f.chunk.js",
+    "main.js.map": "/static/react/homepage/js/main.af7caa5f.chunk.js.map",
+    "runtime~main.js": "/static/react/homepage/js/runtime~main.60e2f3bb.js",
+    "runtime~main.js.map": "/static/react/homepage/js/runtime~main.60e2f3bb.js.map",
+    "js/2.299d2e07.chunk.js": "/static/react/homepage/js/2.299d2e07.chunk.js",
+    "js/2.299d2e07.chunk.js.map": "/static/react/homepage/js/2.299d2e07.chunk.js.map",
+    "../../templatefolder/index.html": "/static/react/homepage/../../templatefolder/index.html",
+    "css/main.efe1e35c.chunk.css.map": "/static/react/homepage/css/main.efe1e35c.chunk.css.map",
+    "favicon.ico": "/static/react/homepage/favicon.ico",
+    "media/crown.svg": "/static/react/homepage/media/crown.82939c39.svg",
+    "precache-manifest.bfb7c3c69aabe7da1e346b4ab78f43ca.js": "/static/react/homepage/precache-manifest.bfb7c3c69aabe7da1e346b4ab78f43ca.js",
+    "service-worker.js": "/static/react/homepage/service-worker.js"
   }
 }
