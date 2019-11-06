@@ -60,7 +60,10 @@ export class Body extends Component {
 
     // Interval for checking if confirm password is equal to password
     let timerId = setInterval(() => this.check(), 750);
-
+    setTimeout(
+      function() {
+        this.forceUpdate()
+      }.bind(this), 200);
     //this.setState({signupmessage: window.signupmessage});
   }
 
@@ -73,9 +76,7 @@ export class Body extends Component {
 
       if (this.state.password === this.state.confirmpassword) {
         // Both blank
-        if (this.state.password === "") {
-          this.setState({confirmpasswordstatus: ""});
-        }
+        if (this.state.password === "") {}
         // Both the same
         else {
           this.setState({confirmpasswordstatus: ""});
@@ -140,7 +141,7 @@ export class Body extends Component {
       }
     }
     else if ((!(this.state.signupmessage === "Account creation error")) || (!(this.state.signupmessage === "") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
-      this.setState({signupmessage: ""});
+      //this.setState({signupmessage: ""});
     }
   }
 
@@ -291,7 +292,6 @@ export class Body extends Component {
   };
 
   render() {
-    console.log("rerendering");
       return (
       <html>
       <div className="space2"></div>
@@ -301,7 +301,7 @@ export class Body extends Component {
         <a className="bodytitle">strive for efficiency+</a>
         <p>Understand what makes your team work, and uncover where they fall down.</p>
         <p>Using a series of advanced algorithms, Projects Plus learns the strengths and weaknesses of each individual member, showing the data on a simple easy-to-use dashboard.</p>
-        <EfficienciesWidget title="Example Widget" data={[{"skillAbbrv":"Skill 1 abv","skillTitle":"Skill 1 title","avg":101.23},{"skillAbbrv":"Skill 2 abv","skillTitle":"Skill 2 title","avg":89.45},{"skillAbbrv":"Skill 3 abv","skillTitle":"Skill 3 title","avg":76.74}]} length={3}/>
+        <EfficienciesWidget title="Example Widget" data={[{"skillAbbrv":"Skill 1","skillTitle":"Skill 1 Full Title","avg":169.84},{"skillAbbrv":"Skill 2","skillTitle":"Skill 2 Full Title","avg":101.23},{"skillAbbrv":"Skill 3","skillTitle":"Skill 3 Full Title","avg":89.45},{"skillAbbrv":"Skill 4","skillTitle":"Skill 4 Full Title","avg":76.74},{"skillAbbrv":"Skill 5","skillTitle":"Skill 5 Full Title","avg":34.87}]} length={4}/>
       </div>
 
       <div className="space2"></div>
