@@ -19,6 +19,7 @@ loginmanager.init_app(app)
 # Set the login page to the homepage
 loginmanager.login_view = ""
 
+
 # Identify the user loader, set the user to the User class from StoragePy
 @loginmanager.user_loader
 def load_user(id):
