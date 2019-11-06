@@ -12,6 +12,7 @@ process.on('unhandledRejection', err => {
 });
 
 // Ensure environment variables are read.
+console.log("THIS RAN AND I PUT THIS HERE");
 try {
   require('../homepage/config/env');
 }
