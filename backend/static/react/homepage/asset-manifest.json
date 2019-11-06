@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/react/homepage/css/main.7eea6a82.chunk.css",
-    "main.js": "/static/react/homepage/js/main.a36e02b4.chunk.js",
-    "main.js.map": "/static/react/homepage/js/main.a36e02b4.chunk.js.map",
+    "main.css": "/static/react/homepage/css/main.512422a9.chunk.css",
+    "main.js": "/static/react/homepage/js/main.8c085f83.chunk.js",
+    "main.js.map": "/static/react/homepage/js/main.8c085f83.chunk.js.map",
     "runtime~main.js": "/static/react/homepage/js/runtime~main.60e2f3bb.js",
     "runtime~main.js.map": "/static/react/homepage/js/runtime~main.60e2f3bb.js.map",
     "js/2.9eef4c7e.chunk.js": "/static/react/homepage/js/2.9eef4c7e.chunk.js",
     "js/2.9eef4c7e.chunk.js.map": "/static/react/homepage/js/2.9eef4c7e.chunk.js.map",
     "../../templatefolder/index.html": "/static/react/homepage/../../templatefolder/index.html",
-    "css/main.7eea6a82.chunk.css.map": "/static/react/homepage/css/main.7eea6a82.chunk.css.map",
+    "css/main.512422a9.chunk.css.map": "/static/react/homepage/css/main.512422a9.chunk.css.map",
     "favicon.ico": "/static/react/homepage/favicon.ico",
     "media/crown.svg": "/static/react/homepage/media/crown.82939c39.svg",
     "media/dashboardpicture1.png": "/static/react/homepage/media/dashboardpicture1.048f7f75.png",
     "media/down-arrow.svg": "/static/react/homepage/media/down-arrow.852e4fbe.svg",
     "media/up-arrow.svg": "/static/react/homepage/media/up-arrow.305e2626.svg",
-    "precache-manifest.9b5400f328899ed00ebcaff16028be70.js": "/static/react/homepage/precache-manifest.9b5400f328899ed00ebcaff16028be70.js",
+    "precache-manifest.4c229d6a9c46c70f468e7e32577efe97.js": "/static/react/homepage/precache-manifest.4c229d6a9c46c70f468e7e32577efe97.js",
     "service-worker.js": "/static/react/homepage/service-worker.js"
   }
 }

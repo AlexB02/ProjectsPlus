@@ -81,6 +81,10 @@
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+.Body p {
+  font-size: calc(3px + 2vmin);
+}
+
 .widget {
   font-family: 'Karla', sans-serif;
   padding: 10px;
@@ -89,8 +93,8 @@
   width: 30vw;
   background-color: white;
   transition: all 0.2s;
-  z-index: 0;
   margin: auto;
+  margin-bottom: 5vh;
 }
 
 .widget:hover {
@@ -114,7 +118,6 @@
   width: fit-content;
   margin-left: auto;
   margin-right: 0px;
-  z-index: 0;
 }
 
 .progressBarSkill {
