@@ -62,8 +62,7 @@
 
 .space2{
   padding: 45vh;
-  background-color: #F3F3EF;
-  background-color: white;
+  background-color: transparent;
 }
 
 .Body{
@@ -80,6 +79,121 @@
   margin-top: 0;
   padding-top: 0;
   font-family: 'Source Sans Pro', sans-serif;
+}
+
+.widget {
+  font-family: 'Karla', sans-serif;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0 0 3px 0.5px #bebebe;
+  width: 40vw;
+  background-color: white;
+  transition: all 0.2s;
+  z-index: 0;
+  margin: auto;
+}
+
+.ArrowButton {
+  width: min-content;
+  border: 0;
+  border-radius: 4px;
+  padding: 5px;
+  background-color: Transparent;
+}
+
+.arrowsvg {
+  width: 10px;
+}
+
+.efficiencyWidgetData {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: 0px;
+  z-index: 0;
+}
+
+.progressBarSkill {
+  display: table-cell;
+  padding-right: 10px;
+  font-family: 'Karla', sans-serif;
+  cursor: pointer;
+  border: 0;
+  background-color: Transparent;
+  outline: none;
+  font-size: 2.5vh;
+  white-space: pre-wrap;
+}
+
+.progressBarEfficiencyValue {
+  text-align: right;
+  margin-right: 5vw;
+  font-family: 'Karla', sans-serif;
+  cursor: default;
+}
+
+.EfficienciesTable {
+  border-spacing: 0px;
+  margin-left: auto;
+  margin-right: 5vw;
+  cursor: default;
+}
+
+.progressBarSkill {
+  display: table-cell;
+  padding-right: 10px;
+  font-family: 'Karla', sans-serif;
+  cursor: pointer;
+  border: 0;
+  background-color: Transparent;
+  outline: none;
+  font-size: 2.5vh;
+  white-space: pre-wrap;
+}
+
+.progressBarSkillTD {
+  width: 30%;
+  text-align: -webkit-center;
+}
+
+.progressBarBar {
+  display: table-cell;
+  width: 25vw;
+  margin-left: auto;
+  margin-right: 0px;
+}
+
+.progressBarBarTD {
+  width: 70%;
+}
+
+.ArrowButton:focus {
+  outline: 0;
+}
+
+.efficiencyWidgetTooltip {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  z-index: 0;
+}
+
+.efficiencyWidgetTooltipText {
+  visibility: visible;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  margin-left: 15vw;
+  margin-bottom: 5vh;
+  padding: 5px;
+  position: relative;
+  z-index: 0;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.infoToggle:checked ~ .efficiencyWidgetTooltipText {
+  opacity: 1;
 }
 
 .priceboxes{
@@ -327,6 +441,12 @@
   vertical-align: top;
   text-align: center;
   width: 18vw;
+}
+
+.loginsignuptitle {
+  position: relative;
+  bottom: 2vh;
+  left: 2.5vw;
 }
 
 .dropdown{

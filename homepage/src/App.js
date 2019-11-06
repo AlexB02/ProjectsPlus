@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { EfficienciesWidget } from "./EfficienciesWidget.js";
 import './App.css';
 import { Link } from "react-scroll";
 import crown from "./img/crown.svg";
+import dashboardpicture1 from "./img/dashboardpicture1.png";
 import $ from 'jquery';
 
 export function App() {
@@ -289,6 +291,7 @@ export class Body extends Component {
   };
 
   render() {
+    console.log("rerendering");
       return (
       <html>
       <div className="space2"></div>
@@ -296,7 +299,9 @@ export class Body extends Component {
       <b>
       <div id="about">
         <a className="bodytitle">strive for efficiency+</a>
-        <p>Explore the data behind what makes your team work. Receive customised employee recommendations, that learns as you use the app.</p>
+        <p>Understand what makes your team work, and uncover where they fall down.</p>
+        <p>Using a series of advanced algorithms, Projects Plus learns the strengths and weaknesses of each individual member, showing the data on a simple easy-to-use dashboard.</p>
+        <EfficienciesWidget title="Example Widget" data={[{"skillAbbrv":"Skill 1 abv","skillTitle":"Skill 1 title","avg":101.23},{"skillAbbrv":"Skill 2 abv","skillTitle":"Skill 2 title","avg":89.45},{"skillAbbrv":"Skill 3 abv","skillTitle":"Skill 3 title","avg":76.74}]} length={3}/>
       </div>
 
       <div className="space2"></div>
@@ -391,7 +396,7 @@ export class Body extends Component {
             <div className="signup">
               <input type="hidden" name="form_name" value="signup"/>
               <form onSubmit={this.removeformsubmit}>
-
+              <span class="loginsignuptitle">sign up</span>
               <input type="text" className="boxinput" placeholder="first name" name="fname" id="fname" required/>
               <div className="midboxbreak"/>
 
@@ -420,6 +425,7 @@ export class Body extends Component {
 
             <div className="login">
             <form onSubmit={this.removeformsubmit}>
+              <span class="loginsignuptitle">login</span>
                 <input type="email" className="boxinput" placeholder="e-mail address" name="email" id="loginemail" required/>
                 <div className="midboxbreak"/>
                 <input type="password" className="boxinput" placeholder="password" name="password" id="loginpassword" required/>
