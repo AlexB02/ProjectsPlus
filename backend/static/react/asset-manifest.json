@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/dashboard/css/main.d420afb4.chunk.css",
-    "main.js": "/dashboard/js/main.056d53c1.chunk.js",
-    "main.js.map": "/dashboard/js/main.056d53c1.chunk.js.map",
-    "runtime~main.js": "/dashboard/js/runtime~main.a1705bb5.js",
-    "runtime~main.js.map": "/dashboard/js/runtime~main.a1705bb5.js.map",
-    "js/2.c6df7272.chunk.js": "/dashboard/js/2.c6df7272.chunk.js",
-    "js/2.c6df7272.chunk.js.map": "/dashboard/js/2.c6df7272.chunk.js.map",
-    "../../templatefolder/dashboard.html": "/dashboard/../../templatefolder/dashboard.html",
-    "css/main.d420afb4.chunk.css.map": "/dashboard/css/main.d420afb4.chunk.css.map",
-    "favicon.ico": "/dashboard/favicon.ico",
-    "media/down-arrow.svg": "/dashboard/media/down-arrow.852e4fbe.svg",
-    "media/up-arrow.svg": "/dashboard/media/up-arrow.305e2626.svg",
-    "precache-manifest.042558e6ec241f24363376e59a8d9a61.js": "/dashboard/precache-manifest.042558e6ec241f24363376e59a8d9a61.js",
-    "service-worker.js": "/dashboard/service-worker.js"
+    "main.css": "/static/react/css/main.d420afb4.chunk.css",
+    "main.js": "/static/react/js/main.056d53c1.chunk.js",
+    "main.js.map": "/static/react/js/main.056d53c1.chunk.js.map",
+    "runtime~main.js": "/static/react/js/runtime~main.5e2fdba1.js",
+    "runtime~main.js.map": "/static/react/js/runtime~main.5e2fdba1.js.map",
+    "js/2.b1787991.chunk.js": "/static/react/js/2.b1787991.chunk.js",
+    "js/2.b1787991.chunk.js.map": "/static/react/js/2.b1787991.chunk.js.map",
+    "../../templatefolder/dashboard.html": "/static/react/../../templatefolder/dashboard.html",
+    "css/main.d420afb4.chunk.css.map": "/static/react/css/main.d420afb4.chunk.css.map",
+    "favicon.ico": "/static/react/favicon.ico",
+    "media/down-arrow.svg": "/static/react/media/down-arrow.852e4fbe.svg",
+    "media/up-arrow.svg": "/static/react/media/up-arrow.305e2626.svg",
+    "precache-manifest.369546730732893a3454c0e06cf1b44f.js": "/static/react/precache-manifest.369546730732893a3454c0e06cf1b44f.js",
+    "service-worker.js": "/static/react/service-worker.js"
   }
 }
