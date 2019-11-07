@@ -98,7 +98,7 @@
 }
 
 .widget:hover {
-  box-shadow: 0 0 16px 6px #b6b6b6;
+  box-shadow: 0 0 10px 5px #b6b6b6;
   background-color: #f6f6f6;
 }
 

@@ -163,7 +163,7 @@ class ProfilePage extends React.Component {
       <button onClick={this.addEfficiency} />
       <div className="widgets">
         <div className="widgets-column">
-          <EfficienciesWidget title="Your best skills - Time Left" data={this.state.timeEfficienciesMax} length={this.state.timeEfficienciesMax.length} />
+          <EfficienciesWidget title="Your best skills - Time Left" data={this.state.timeEfficienciesMax} length={5} />
           <div className="verticalWidgetGap"/>
           <EfficienciesWidget title="Your worst skills - Time Left" data={this.state.timeEfficienciesMin} length={5} />
         </div>

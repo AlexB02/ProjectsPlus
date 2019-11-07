@@ -27,7 +27,7 @@ export function NavBar() {
       <b>
       <Link to="home" smooth={true} activeClass="active"><a href="#">home</a></Link>
       <Link to="about" smooth={true} activeClass="active" offset={-75}><a href="#">about</a></Link>
-      <Link to="pricing" smooth={true} activeClass="active" offset={-55}><a href="#">pricing</a></Link>
+      <Link to="pricing" smooth={true} activeClass="active" offset={-65}><a href="#">pricing</a></Link>
       <Link to="signupsection" smooth={true} activeClass="active" offset={-75}><a href="#">sign up + log in</a></Link>
       </b>
       </div>
