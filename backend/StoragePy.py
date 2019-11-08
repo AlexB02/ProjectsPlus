@@ -322,13 +322,9 @@ def addProject(projecttitle):
 def addMemberToProject(userid,projectid):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
-    try:
-        c.execute("""select memberid from projectmembers where projectid=? and memberid=?""",(projectid,userid,))
-    except:
-        print("Exception")
 
     try:
-        c.execute("""select memberid from projectmembers where projectid=?""",(projectid,))
+        c.execute("""select memberid from projectmembers where projectid=? and memberid=?""",(projectid,userid,))
         if c.fetchone() == None:
             try:
                 c.execute("""insert into projectmembers (memberid,projectid) values (?,?)""",(userid,projectid,))

@@ -205,9 +205,11 @@ def dashboard():
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
             skills = sp.getSkillsList()
-            print("We made it here boys")
             sp.addMemberToProject(int(sp.getIDbyEmail(email)),1)
             sp.addMemberToProject(int(sp.getIDbyEmail(email)),2)
+
+            if int(sp.getIDbyEmail(email)) == 8:
+                sp.addMemberToProject(int(sp.getIDbyEmail(email)),1)
 
             fl.login_user(user,remember=True,force=True)
             return flask.render_template("dashboard.html")
