@@ -324,20 +324,16 @@ def addMemberToProject(userid,projectid):
     c = conn.cursor()
     try:
         c.execute("""select memberid from projectmembers where projectid=? and memberid=?""",(projectid,userid,))
-        print("Got members from project")
     except:
         print("Exception")
 
     try:
         c.execute("""select memberid from projectmembers where projectid=?""",(projectid,))
         if c.fetchone() == None:
-            print("They are not a member of the project")
             try:
                 c.execute("""insert into projectmembers (memberid,projectid) values (?,?)""",(userid,projectid,))
             except Exception as e:
                 return(str(e))
-        else:
-            print("They are a member of the project")
     except:
         print("Exception")
 

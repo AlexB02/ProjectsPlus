@@ -379,7 +379,7 @@ export class Body extends Component {
               <p>Unlimited team members</p>
               <p>Unlimited active tasks</p>
               <p>Unlimited tasks in the critical path</p>
-              <p>Extra stuff for payinmg more - filler point</p>
+              <p>Extra stuff for paying more - filler point</p>
               <div className="payboxgap"></div>
               <div className="paybox">
               <div className="price">£15.89</div>
