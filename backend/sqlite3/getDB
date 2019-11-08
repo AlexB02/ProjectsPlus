@@ -1,3 +1,0 @@
-#!/bin/bash
-heroku login
-heroku ps:copy backend/sqlite3/main.db -o github/ProjectsPlus/backend/sqlite3/mainDownload.db -a projectsplus
