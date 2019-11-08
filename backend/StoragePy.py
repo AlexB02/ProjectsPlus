@@ -323,9 +323,30 @@ def addMemberToProject(userid,projectid):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     try:
-        c.execute("""insert into projectmembers (memberid,projectid) values (?,?)""",(userid,projectid,))
-    except Exception as e:
-        return(str(e))
+        c.execute("""select memberid from projectmembers where projectid=? and memberid=?""",(projectid,userid,))
+    except:
+        print("Exception")
+    print("Here now lol")
+
+    try:
+        c.fetchone()
+    except:
+        print("Exception here lol")
+
+    if (c.fetchone()[0] == userid):
+        print("Here now lol 2")
+        try:
+            c.execute("""insert into projectmembers (memberid,projectid) values (?,?)""",(userid,projectid,))
+        except Exception as e:
+            return(str(e))
+    else:
+
+        print("Nah i came here")
+        c.execute("""select memberid from projectmembers where projectid=?""",(projectid,))
+        print(c.fetchone()[0])
+        print("Already member if project: "+str(projectid))
+
+
     conn.commit()
     conn.close()
 
@@ -343,7 +364,6 @@ def getProjectNames(userid):
         c.execute("""select projecttitle from projectslist where projectid=?""",(id,))
         title = c.fetchone()[0]
         projects.append({"id":id,"title":title})
-        print("Projects: "+str(projects))
     return projects
 
 def getProjectTitle(projectid):

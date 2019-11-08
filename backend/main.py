@@ -198,21 +198,23 @@ def dashboard():
     sp.addSkill("Adobe Illustrator","Illustrator")
     sp.addSkill("Sony Vegas Pro","Vegas")
     sp.addSkill("Adobe Premier Pro CC 2019","Premier Pro")
-    #sp.addProject("MyProject")
+    sp.addProject("MyProject")
+    sp.addProject("Homework List")
     try:
         if session["authenticated"] == "True":
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
             skills = sp.getSkillsList()
-
-            #sp.addMemberToProject(int(sp.getIDbyEmail(email)),1)
+            print("We made it here boys")
+            sp.addMemberToProject(int(sp.getIDbyEmail(email)),1)
+            sp.addMemberToProject(int(sp.getIDbyEmail(email)),2)
 
             fl.login_user(user,remember=True,force=True)
             return flask.render_template("dashboard.html")
         else:
             return flask.redirect("/")
     except Exception as e:
-        return str(e)#flask.redirect("/")
+        return flask.redirect("/")
 
 @app.route("/getuserprofile",methods=["POST","GET"])
 def getuserprofile():
@@ -236,7 +238,6 @@ def GetUserProject():
         print("Get user project")
         if session["authenticated"] == "True":
             if request.method == "POST":
-                print("Post method")
                 email = session["email"]
 
                 userid = sp.getIDbyEmail(email)
@@ -246,7 +247,6 @@ def GetUserProject():
                 projects = sp.getProjectNames(userid)
 
                 title = sp.getProjectTitle(request.json["projectid"])
-                print("Project Title: "+title)
                 return jsonify({"username":username,"projects":projects,"title":title})
     except:
         return flask.redirect("/")

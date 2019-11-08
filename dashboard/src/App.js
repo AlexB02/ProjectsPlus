@@ -47,12 +47,18 @@ class DropdownMenu extends React.Component {
     }
     else {
       var projectid = this.props.projectid;
+      console.log("ProjectId: "+JSON.stringify(projectid));
+      for (var i = 0; i < this.props.items.length; i++) {
+        if (this.props.items[i]["title"] === this.state.title) {
+          this.props.items.splice(i,1);
+        }
+      }
       return (
         <html>
           <select id="ProjectViewDropdown" class="ProjectViewDropdown" onChange={this.selectChange}>
             <option value={this.state.title}>{this.state.title}</option>
             {this.state.items && this.state.items.length && this.state.items.map((project,i) => <option value={project["title"]}>{project["title"]}</option>)}
-            <option value="profile">Your profile</option>
+            <option value="profile">Your Profile</option>
           </select>
         </html>
       )
@@ -163,7 +169,7 @@ class ProfilePage extends React.Component {
       <button onClick={this.addEfficiency} />
       <div className="widgets">
         <div className="widgets-column">
-          <EfficienciesWidget title="Your best skills - Time Left" data={this.state.timeEfficienciesMax} length={5} />
+          <EfficienciesWidget title="Your best skills - Time Left" data={this.state.timeEfficienciesMax} length={7} />
           <div className="verticalWidgetGap"/>
           <EfficienciesWidget title="Your worst skills - Time Left" data={this.state.timeEfficienciesMin} length={5} />
         </div>
