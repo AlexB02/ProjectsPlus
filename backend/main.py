@@ -198,8 +198,8 @@ def dashboard():
     sp.addSkill("Adobe Illustrator","Illustrator")
     sp.addSkill("Sony Vegas Pro","Vegas")
     sp.addSkill("Adobe Premier Pro CC 2019","Premier Pro")
-    sp.addProject("MyProject")
-    sp.addProject("Homework List")
+    #sp.addProject("MyProject")
+    #sp.addProject("Homework List")
     try:
         if session["authenticated"] == "True":
             email = session["email"]
