@@ -47,7 +47,6 @@ class DropdownMenu extends React.Component {
     }
     else {
       var projectid = this.props.projectid;
-      console.log("ProjectId: "+JSON.stringify(projectid));
       for (var i = 0; i < this.props.items.length; i++) {
         if (this.props.items[i]["title"] === this.state.title) {
           this.props.items.splice(i,1);

@@ -46,8 +46,10 @@
 
 .ProjectViewDropdown {
   background-color: white;
-  border: none;
   font-size: calc(10px + 1vmin);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: none;
 }
 
 .ProjectViewDropdown:focus {
@@ -147,7 +149,7 @@
   font-family: 'Karla', sans-serif;
   padding: 10px;
   border-radius: 6px;
-  box-shadow: 0 0 3px 0.5px #bebebe;
+  box-shadow: 0 0 3px 0.5px #dadada;
   width: 90%;
   background-color: white;
   transition: all 0.2s;
@@ -155,8 +157,8 @@
 }
 
 .widget:hover {
-  box-shadow: 0 0 10px 5px #b6b6b6;
-  background-color: #f6f6f6;
+  box-shadow: 0 0 6px 1px #bebebe;
+  background-color: #fafafa;
 }
 
 .efficiencyWidgetData {
