@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import $ from 'jquery';
 import { EfficienciesWidget } from "./EfficienciesWidget.js";
+import { ViewProjectsWidget } from "./ViewProjectsWidget.js";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class DropdownMenu extends React.Component {
@@ -161,6 +162,7 @@ class ProfilePage extends React.Component {
   };
 
   render() {
+    console.log("Profile page this.state.projects: "+JSON.stringify(this.state.projects));
       return (
       <html>
       <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={"Your Profile"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0}/>
@@ -174,7 +176,7 @@ class ProfilePage extends React.Component {
         </div>
         <div className="horizontalWidgetGap" />
         <div className="widgets-column">
-          <EfficienciesWidget title="Gaps in your skills" data={this.state.timeEfficienciesMin} length={3} />
+          <ViewProjectsWidget title="Your projects" projects={this.state.projects}/>
           <div className="verticalWidgetGap"/>
           <EfficienciesWidget title="What you're good at" data={this.state.timeEfficienciesMax} length={9} />
         </div>
