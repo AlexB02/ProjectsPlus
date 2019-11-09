@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import $ from 'jquery';
 
 const Project = styled.div`
   background-color: #80b3ff;
@@ -47,6 +46,17 @@ const CreateProjectButton = styled.button`
   }
 `
 
+const EfficiencyTitleBar = styled.span`
+  font-family: 'Karla', sans-serif;
+  padding: 10px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  box-shadow: 0 0px #fff, 0 0 3px 0.5px #dadada;
+  background-color: ${props => props.colour};
+  transition: all 0.2s;
+  z-index: 1;
+`
+
 export class ViewProjectsWidget extends React.Component {
 
   constructor(props) {
@@ -71,10 +81,11 @@ export class ViewProjectsWidget extends React.Component {
   render() {
     return (
       <html class="widget">
-        <div><b>{this.props.title}</b></div>
+        <EfficiencyTitleBar colour="#E3DEFF"><b>{this.props.title}</b></EfficiencyTitleBar>
         <p/>
         {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage}>{project["title"]}</Project><p/></div>)}
         <CreateProjectBox><CreateProjectButton onClick={this.props.triggerCreateProject}>Create Project</CreateProjectButton></CreateProjectBox>
+        <p/>
       </html>
     )
   }

@@ -147,10 +147,22 @@
 
 .widget {
   font-family: 'Karla', sans-serif;
-  padding: 10px;
   border-radius: 6px;
+  background-color: white;
   box-shadow: 0 0 3px 0.5px #dadada;
+  background-color: white;
+  transition: all 0.2s;
+  z-index: 0;
+  display: grid;
   width: 90%;
+}
+
+.efficiencywidgetdatawrapper {
+  font-family: 'Karla', sans-serif;
+  padding: 10px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 0px 0 white ,0 0 3px 0.5px #dadada;
   background-color: white;
   transition: all 0.2s;
   z-index: 0;

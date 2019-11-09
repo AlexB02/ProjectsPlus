@@ -300,15 +300,15 @@ class ProfilePage extends React.Component {
         <button onClick={this.addEfficiency} />
         <div className="widgets">
           <div className="widgets-column">
-            <EfficienciesWidget title="What you're good at" data={this.state.timeEfficienciesMax} length={7} />
+            <EfficienciesWidget title="Your best skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={7} colour="#DEFFE8"/>
             <div className="verticalWidgetGap"/>
-            <EfficienciesWidget title="Gaps in your skills" data={this.state.timeEfficienciesMin} length={5} />
+            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={5} colour="#DF8282"/>
           </div>
           <div className="horizontalWidgetGap" />
           <div className="widgets-column">
             <ViewProjectsWidget title="Your projects" projects={this.state.projects} triggerCreateProject={this.createNewProject} triggerParentUpdate={this.props.triggerParentUpdate}/>
             <div className="verticalWidgetGap"/>
-            <EfficienciesWidget title="What you're good at" data={this.state.timeEfficienciesMax} length={9} />
+            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMax} length={9} colour="#FFC5C5"/>
           </div>
         </div>
       </body>

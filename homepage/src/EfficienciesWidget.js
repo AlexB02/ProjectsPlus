@@ -248,15 +248,17 @@ export class EfficienciesWidget extends React.Component {
 
   render() {
     return (
-        <html className="widget">
-          <span>
-            <b>{this.state.title} </b>
-            {this.updateLength()}/{this.state.data.length}
-            <button class="ArrowButton" onClick={this.increaseLength} title="Show more"><img class="arrowsvg" src={downarrow} title="Show more"/></button>
-            <button class="ArrowButton" onClick={this.decreaseLength} title="Show less"><img class="arrowsvg" src={uparrow} title="Show less"/></button>
-          </span>
+      <html>
+        <span>
+          <b>{this.state.title}</b>
+          {this.updateLength()}lol/{this.state.data.length}
+          <button class="ArrowButton" onClick={this.increaseLength} title="Show more"><img class="arrowsvg" src={downarrow} title="Show more"/></button>
+          <button class="ArrowButton" onClick={this.decreaseLength} title="Show less"><img class="arrowsvg" src={uparrow} title="Show less"/></button>
+        </span>
+        <div className="widget">
           <div class="efficiencyWidgetData">{this.state.presentableData}</div>
-        </html>
+        </div>
+      </html>
     )
   };
 };
