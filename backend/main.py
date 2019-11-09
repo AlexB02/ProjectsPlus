@@ -252,8 +252,6 @@ def GetUserProject():
 def createproject():
     try:
         email = session["email"]
-        print("Start")
-        print(request.json["title"])
         projectid = sp.addProject(request.json["title"])
         sp.addMemberToProject(int(sp.getIDbyEmail(email)),projectid)
         return jsonify({})

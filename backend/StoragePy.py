@@ -317,11 +317,8 @@ def addProject(projecttitle):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("""insert into projectslist (projectid,projecttitle,iconlocation) values (NULL,?,?)""",(projecttitle,"/"))
-    print("1")
     c.execute("""select projectid from projectslist where projecttitle=?""",(projecttitle,))
-    print("2")
     projects = c.fetchall()
-    print(str(projects))
     conn.commit()
     conn.close()
 

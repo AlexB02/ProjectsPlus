@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Project = styled.div`
-  background-color: #80b3ff;
+  background-color: #b5bcff;
   width: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -81,7 +81,7 @@ export class ViewProjectsWidget extends React.Component {
   render() {
     return (
       <html class="widget">
-        <EfficiencyTitleBar colour="#E3DEFF"><b>{this.props.title}</b></EfficiencyTitleBar>
+        <EfficiencyTitleBar colour="#d3b5ff"><b>{this.props.title}</b></EfficiencyTitleBar>
         <p/>
         {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage}>{project["title"]}</Project><p/></div>)}
         <CreateProjectBox><CreateProjectButton onClick={this.props.triggerCreateProject}>Create Project</CreateProjectButton></CreateProjectBox>
