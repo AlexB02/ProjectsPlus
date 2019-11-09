@@ -25,6 +25,7 @@ const CreateProjectBox = styled.div`
   border-color: #dbdbdb;
   border-width: medium;
   border-style: dashed;
+  font-size: inherit;
 
   &:hover {
     border-style: solid;
