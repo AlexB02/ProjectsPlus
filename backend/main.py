@@ -248,6 +248,18 @@ def GetUserProject():
     except:
         return flask.redirect("/")
 
+@app.route("/createproject",methods=["POST","GET"])
+def createproject():
+    try:
+        email = session["email"]
+        print("Start")
+        print(request.json["title"])
+        projectid = sp.addProject(request.json["title"])
+        sp.addMemberToProject(int(sp.getIDbyEmail(email)),projectid)
+        return jsonify({})
+    except:
+        return flask.redirect("/")
+
 @app.route("/addefficiency",methods=["POST","GET"])
 def addefficiency():
     try:

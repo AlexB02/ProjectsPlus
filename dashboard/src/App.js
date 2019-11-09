@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { EfficienciesWidget } from "./EfficienciesWidget.js";
 import { ViewProjectsWidget } from "./ViewProjectsWidget.js";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import styled from 'styled-components';
 
 class DropdownMenu extends React.Component {
   constructor(props) {
@@ -103,6 +104,47 @@ class NavBar extends React.Component {
   }
 }
 
+const CreateProjectPopUp = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  visibility: ${props => props.visible};
+  padding: 40px;
+  width: 30vw;
+  position: absolute;
+  left: 50%;
+  margin-left: -20vw;
+  top: 50%;
+  margin-top: -50px;
+  z-index: 999;
+`
+
+const PageMask = styled.button`
+  visibility: ${props => props.visible};
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+`
+
+const DropDownSelect = styled.select`
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 10px;
+  text-align: centre;
+  text-align-last: center;
+
+  &:focus {
+    outline: none;
+  }
+`
+
 class ProfilePage extends React.Component {
 
 ///////////////////////////////////////////////////////////////////
@@ -140,8 +182,11 @@ class ProfilePage extends React.Component {
       username: "",
       projects: [],
       timeEfficienciesMax: [],
-      timeEfficienciesMin: []
+      timeEfficienciesMin: [],
+      CreateProjectPopUpVisibility: "hidden",
+      cancelClickOff: "False"
     }
+    this.setState({CreateProjectPopUpVisibility: "hidden"});
     this.getUserProfileData();
   }
 
@@ -161,26 +206,111 @@ class ProfilePage extends React.Component {
     window.location.reload();
   };
 
+  createNewProject = () => {
+    this.setState({CreateProjectPopUpVisibility: "visible"});
+  };
+
+  clickOffCreateProjectPopUp = () => {
+    if (this.state.cancelClickOff === "False") {
+      this.setState({CreateProjectPopUpVisibility: "hidden"});
+    }
+    else {
+      this.state.cancelClickOff = "False";
+    }
+  }
+
+  clickCreateProjectPopupCreateButton = () => {
+    this.state.cancelClickOff = "True";
+  }
+
+  clickCreateProjectPopupCancelButton = () => {
+    this.setState({CreateProjectPopUpVisibility: "hidden"});
+  }
+
+  submitNewProject = () => {
+    var projecttitle = $("#projecttitle").val()
+    var priceplan = $("#priceplan").val();
+
+    if (projecttitle === "") {
+      return;
+    }
+    if (priceplan === null) {
+      return;
+    }
+    // Submission is Valid
+    var project = {"title":projecttitle,"pricing":priceplan};
+    let _this = this;
+    $(document).ready(function(){
+      var req = $.ajax({url: "/createproject",
+                        type: "POST",
+                        data: JSON.stringify(project),
+                        dataType: "json",
+                        contentType: "application/json;charset=utf-8",
+                      });
+
+      try {
+        req.done(function(data) {
+          window.location.reload();
+        });
+      }
+      catch (e) {};
+    });
+  }
+
+  removeformsubmit(event) {
+    if(event.preventDefault) {
+      event.preventDefault();
+    }
+    else {
+      event.returnValue = false;
+    }
+  };
+
   render() {
-    console.log("Profile page this.state.projects: "+JSON.stringify(this.state.projects));
       return (
       <html>
       <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={"Your Profile"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0}/>
       <body className="Body">
-      <button onClick={this.addEfficiency} />
-      <div className="widgets">
-        <div className="widgets-column">
-          <EfficienciesWidget title="What you're good at" data={this.state.timeEfficienciesMax} length={7} />
-          <div className="verticalWidgetGap"/>
-          <EfficienciesWidget title="Gaps in your skills" data={this.state.timeEfficienciesMin} length={5} />
+        <PageMask visible={this.state.CreateProjectPopUpVisibility} onClick={this.clickOffCreateProjectPopUp}>
+          <CreateProjectPopUp visible={this.state.CreateProjectPopUpVisibility} onClick={this.clickCreateProjectPopupCreateButton}>
+            <div style={{"display":"grid"}}>
+              <div style={{"font-size":"2.5vh","padding-bottom":"3vh"}}><b>Create a new project</b></div>
+              <div>
+                <form style={{"display":"grid"}} onSubmit={this.removeformsubmit}>
+                  <input type="text" className="boxinput" placeholder="project title" name="projecttitle" id="projecttitle" onInput={this.clickCreateProjectPopupCreateButton} required style={{"margin-left":"auto","margin-right":"auto","width":"100%","text-align":"center"}}/>
+                  <p/>
+                  <DropDownSelect id="priceplan" required>
+                    <option value="" disabled selected>select price plan</option>
+                    <option value="silver">silver</option>
+                    <option value="gold">gold</option>
+                    <option value="diamond">diamond</option>
+                    <option value="platinum">platinum</option>
+                  </DropDownSelect>
+                  <p/>
+                  <div style={{"display":"inline-flex","margin-left":"auto","margin-right":"auto"}}>
+                    <input type="reset" value="Cancel" onClick={this.clickCreateProjectPopupCancelButton}/>
+                    <div style={{"padding-left":"14vw"}}/>
+                    <button onClick={this.submitNewProject}>Create</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </CreateProjectPopUp>
+        </PageMask>
+        <button onClick={this.addEfficiency} />
+        <div className="widgets">
+          <div className="widgets-column">
+            <EfficienciesWidget title="What you're good at" data={this.state.timeEfficienciesMax} length={7} />
+            <div className="verticalWidgetGap"/>
+            <EfficienciesWidget title="Gaps in your skills" data={this.state.timeEfficienciesMin} length={5} />
+          </div>
+          <div className="horizontalWidgetGap" />
+          <div className="widgets-column">
+            <ViewProjectsWidget title="Your projects" projects={this.state.projects} triggerParentUpdate={this.createNewProject}/>
+            <div className="verticalWidgetGap"/>
+            <EfficienciesWidget title="What you're good at" data={this.state.timeEfficienciesMax} length={9} />
+          </div>
         </div>
-        <div className="horizontalWidgetGap" />
-        <div className="widgets-column">
-          <ViewProjectsWidget title="Your projects" projects={this.state.projects}/>
-          <div className="verticalWidgetGap"/>
-          <EfficienciesWidget title="What you're good at" data={this.state.timeEfficienciesMax} length={9} />
-        </div>
-      </div>
       </body>
 
       <footer className="footer">

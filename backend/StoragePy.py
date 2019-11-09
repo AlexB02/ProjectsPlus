@@ -313,11 +313,20 @@ def getSkillAbbrv(skill):
     return c.fetchone()[0]
 
 def addProject(projecttitle):
+    print("Inside add project")
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
     c.execute("""insert into projectslist (projectid,projecttitle,iconlocation) values (NULL,?,?)""",(projecttitle,"/"))
+    print("1")
+    c.execute("""select projectid from projectslist where projecttitle=?""",(projecttitle,))
+    print("2")
+    projects = c.fetchall()
+    print(str(projects))
     conn.commit()
     conn.close()
+
+    print(projects[-1][0])
+    return projects[-1][0]
 
 def addMemberToProject(userid,projectid):
     conn = sql.connect('sqlite3/main.db')

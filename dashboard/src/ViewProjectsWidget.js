@@ -16,7 +16,6 @@ const Project = styled.div`
 `
 
 const CreateProjectBox = styled.div`
-  background-color: white;
   width: 54%;
   margin-left: auto;
   margin-right: auto;
@@ -52,18 +51,10 @@ export class ViewProjectsWidget extends React.Component {
   constructor(props) {
     super(props);
     this.state = {"projects": []};
-    console.log("ViewProjectsWidget constructor");
-    console.log("Constructor props: "+JSON.stringify(props));
   }
 
   componentWillReceiveProps(props) {
-    console.log("ViewProjectsWidget received new props")
     this.setState({"projects": props.projects});
-    console.log("Props: "+JSON.stringify(props));
-  }
-
-  createProject = () => {
-    console.log("Create project")
   }
 
   render() {
@@ -72,7 +63,7 @@ export class ViewProjectsWidget extends React.Component {
         <div><b>{this.props.title}</b></div>
         <p/>
         {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project>{project["title"]}</Project><p/></div>)}
-        <CreateProjectBox><CreateProjectButton onClick={this.createProject}>Create Project</CreateProjectButton></CreateProjectBox>
+        <CreateProjectBox><CreateProjectButton onClick={this.props.triggerParentUpdate}>Create Project</CreateProjectButton></CreateProjectBox>
       </html>
     )
   }
