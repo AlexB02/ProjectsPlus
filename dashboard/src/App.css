@@ -154,7 +154,7 @@
   transition: all 0.2s;
   z-index: 0;
   display: grid;
-  width: 90%;
+  width: auto;
 }
 
 .efficiencywidgetdatawrapper {
@@ -218,7 +218,7 @@
 }
 
 .horizontalWidgetGap {
-  padding-left: 1.5vw;
+  padding-left: 4vw;
 }
 
 .verticalWidgetGap {

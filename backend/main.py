@@ -205,7 +205,6 @@ def dashboard():
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
             skills = sp.getSkillsList()
-            sp.addMemberToProject(int(sp.getIDbyEmail(email)),1)
 
             fl.login_user(user,remember=True,force=True)
             return flask.render_template("dashboard.html")
