@@ -21,6 +21,7 @@ const CreateProjectBox = styled.div`
   margin-right: auto;
   border-radius: 6px;
   cursor: default;
+  background-color: white;
   border-color: #dbdbdb;
   border-width: medium;
   border-style: dashed;
@@ -34,7 +35,8 @@ const CreateProjectButton = styled.button`
   border: none;
   width: -webkit-fill-available;
   padding: 10px;
-  font-size: 2vh;
+  font-size: inherit;
+  background-color: white;
 
   &:hover {
     border: none;
@@ -85,7 +87,7 @@ export class ViewProjectsWidget extends React.Component {
           <EfficiencyTitleBar colour="#d3b5ff"><b>{this.props.title}</b></EfficiencyTitleBar>
           <p/>
           {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage}>{project["title"]}</Project><p/></div>)}
-          <CreateProjectBox><CreateProjectButton onClick={this.props.triggerCreateProject}>Create Project</CreateProjectButton></CreateProjectBox>
+          <CreateProjectBox><CreateProjectButton onClick={this.props.triggerCreateProject}>Create a project</CreateProjectButton></CreateProjectBox>
           <p/>
         </html>
       )
