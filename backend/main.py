@@ -206,10 +206,6 @@ def dashboard():
             user = sp.userObj(sp.getIDbyEmail(email))
             skills = sp.getSkillsList()
             sp.addMemberToProject(int(sp.getIDbyEmail(email)),1)
-            sp.addMemberToProject(int(sp.getIDbyEmail(email)),2)
-
-            if int(sp.getIDbyEmail(email)) == 8:
-                sp.addMemberToProject(int(sp.getIDbyEmail(email)),1)
 
             fl.login_user(user,remember=True,force=True)
             return flask.render_template("dashboard.html")
@@ -237,7 +233,6 @@ def getuserprofile():
 @app.route("/getuserproject",methods=["POST","GET"])
 def GetUserProject():
     try:
-        print("Get user project")
         if session["authenticated"] == "True":
             if request.method == "POST":
                 email = session["email"]
