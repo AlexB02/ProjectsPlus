@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import $ from 'jquery';
 
 const Project = styled.div`
   background-color: #80b3ff;
@@ -57,13 +58,23 @@ export class ViewProjectsWidget extends React.Component {
     this.setState({"projects": props.projects});
   }
 
+  updatePage = (event) => {
+
+    for (var index in this.state.projects) {
+      if (JSON.stringify(this.state.projects[index]["id"]) === event.target.id) {
+        this.props.triggerParentUpdate(JSON.stringify(this.state.projects[index]["title"]),event.target.id);
+      }
+    }
+
+  }
+
   render() {
     return (
       <html class="widget">
         <div><b>{this.props.title}</b></div>
         <p/>
-        {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project>{project["title"]}</Project><p/></div>)}
-        <CreateProjectBox><CreateProjectButton onClick={this.props.triggerParentUpdate}>Create Project</CreateProjectButton></CreateProjectBox>
+        {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage}>{project["title"]}</Project><p/></div>)}
+        <CreateProjectBox><CreateProjectButton onClick={this.props.triggerCreateProject}>Create Project</CreateProjectButton></CreateProjectBox>
       </html>
     )
   }

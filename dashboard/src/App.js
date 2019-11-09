@@ -114,7 +114,7 @@ const CreateProjectPopUp = styled.div`
   left: 50%;
   margin-left: -20vw;
   top: 50%;
-  margin-top: -50px;
+  margin-top: -20vh;
   z-index: 999;
 `
 
@@ -306,7 +306,7 @@ class ProfilePage extends React.Component {
           </div>
           <div className="horizontalWidgetGap" />
           <div className="widgets-column">
-            <ViewProjectsWidget title="Your projects" projects={this.state.projects} triggerParentUpdate={this.createNewProject}/>
+            <ViewProjectsWidget title="Your projects" projects={this.state.projects} triggerCreateProject={this.createNewProject} triggerParentUpdate={this.props.triggerParentUpdate}/>
             <div className="verticalWidgetGap"/>
             <EfficienciesWidget title="What you're good at" data={this.state.timeEfficienciesMax} length={9} />
           </div>
