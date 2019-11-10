@@ -16,7 +16,7 @@ const Project = styled.div`
 `
 
 const CreateProjectBox = styled.div`
-  width: 54%;
+  width: fit-content;
   margin-left: auto;
   margin-right: auto;
   border-radius: 6px;
@@ -25,7 +25,7 @@ const CreateProjectBox = styled.div`
   border-color: #dbdbdb;
   border-width: medium;
   border-style: dashed;
-  font-size: inherit;
+  font-size: initial;
 
   &:hover {
     border-style: solid;
@@ -35,9 +35,9 @@ const CreateProjectBox = styled.div`
 const CreateProjectButton = styled.button`
   border: none;
   width: -webkit-fill-available;
-  padding: 10px;
-  font-size: inherit;
+  font-size: initial;
   background-color: white;
+  padding: 10px 6vw;
 
   &:hover {
     border: none;
