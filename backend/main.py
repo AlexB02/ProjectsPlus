@@ -252,7 +252,7 @@ def createproject():
     try:
         email = session["email"]
         projectid = sp.addProject(request.json["title"])
-        sp.addMemberToProject(int(sp.getIDbyEmail(email)),projectid)
+        sp.addMemberToProject(int(sp.getIDbyEmail(email)),projectid,"manager")
         return jsonify({})
     except:
         return flask.redirect("/")

@@ -76,6 +76,7 @@ def create(c):
         c.execute("""CREATE TABLE IF NOT EXISTS projectmembers (
                     memberid integer,
                     projectid integer,
+                    role text,
                     PRIMARY KEY (memberid, projectid)
         )""")
 
@@ -108,17 +109,6 @@ def create(c):
 
     except:
         print("Create membertasks table error")
-        pass
-
-    try:
-        c.execute("""CREATE TABLE IF NOT EXISTS projectmembers (
-                    memberid integer,
-                    projectid integer,
-                    PRIMARY KEY (memberid,projectid)
-        )""")
-
-    except:
-        print("Create projectmembers table error")
         pass
 
     try:
@@ -325,7 +315,7 @@ def addProject(projecttitle):
     print(projects[-1][0])
     return projects[-1][0]
 
-def addMemberToProject(userid,projectid):
+def addMemberToProject(userid,projectid,role):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
 
@@ -333,7 +323,7 @@ def addMemberToProject(userid,projectid):
         c.execute("""select memberid from projectmembers where projectid=? and memberid=?""",(projectid,userid,))
         if c.fetchone() == None:
             try:
-                c.execute("""insert into projectmembers (memberid,projectid) values (?,?)""",(userid,projectid,))
+                c.execute("""insert into projectmembers (memberid,projectid,role) values (?,?,?)""",(userid,projectid,role,))
             except Exception as e:
                 return(str(e))
     except:
