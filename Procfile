@@ -1,1 +1,1 @@
-web: gunicorn --chdir backend main:app
+web: newrelic-admin run-program gunicorn --chdir backend main:app
