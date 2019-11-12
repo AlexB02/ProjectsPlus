@@ -10,7 +10,8 @@ class DropdownMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {"title":props.title || "title",
-                  "items":props.items};
+                  "items":props.items,
+                  "projectid":0};
   }
 
   componentWillReceiveProps(props) {
@@ -50,7 +51,7 @@ class DropdownMenu extends React.Component {
     else {
       var projectid = this.props.projectid;
       for (var i = 0; i < this.props.items.length; i++) {
-        if (this.props.items[i]["title"] === this.state.title) {
+        if (this.props.items[i]["id"] === this.state.projectid) {
           this.props.items.splice(i,1);
         }
       }
