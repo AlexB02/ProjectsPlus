@@ -21,6 +21,9 @@ class DropdownMenu extends React.Component {
     if (props.items) {
       this.setState({"items":props.items});
     }
+    if (props.projectid) {
+      this.setState({"projectid":props.projectid});
+    }
   }
 
   selectChange = (event) => {
@@ -48,21 +51,47 @@ class DropdownMenu extends React.Component {
         </html>
       )
     }
-    else {
-      var projectid = this.props.projectid;
-      for (var i = 0; i < this.props.items.length; i++) {
-        if (this.props.items[i]["id"] === this.state.projectid) {
-          this.props.items.splice(i,1);
+    else if (this.state.title !== "title") {
+      if (this.props.items) {
+        console.log("-----start-----");
+
+        var projectid = this.props.projectid;
+        console.log(JSON.stringify(this.props.items));
+        console.log("Projectid: "+projectid);
+
+        for (var i = 0; i < this.props.items.length; i++) {
+
+          console.log("Item id: "+this.props.items[i]["id"]);
+
+          console.log("Item: "+JSON.stringify(this.props.items[i]));
+
+          if (this.props.items[i]["id"] == this.props.projectid) {
+
+            console.log("Items id is projectid");
+            this.props.items.splice(i,1);
+
+          }
         }
+        console.log("-----fin-----");
+        return (
+          <html>
+            <select id="ProjectViewDropdown" class="ProjectViewDropdown" onChange={this.selectChange}>
+              <option value={this.state.title}>{this.state.title}</option>
+              {this.state.items && this.state.items.length && this.state.items.map((project,i) => <option value={project["title"]}>{project["title"]}</option>)}
+              <option value="profile">Your Profile</option>
+            </select>
+          </html>
+        )
       }
+      else {
+        return (
+          <div>none</div>
+        )
+      }
+    }
+    else {
       return (
-        <html>
-          <select id="ProjectViewDropdown" class="ProjectViewDropdown" onChange={this.selectChange}>
-            <option value={this.state.title}>{this.state.title}</option>
-            {this.state.items && this.state.items.length && this.state.items.map((project,i) => <option value={project["title"]}>{project["title"]}</option>)}
-            <option value="profile">Your Profile</option>
-          </select>
-        </html>
+        <div>none</div>
       )
     }
   }
@@ -73,9 +102,15 @@ class NavBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {username:"",page:"",projects:[]};
+    this.state = {username:"",page:"",projectid:0,projects:[]};
     this.setState({username:props.username});
     this.setState({page:props.page});
+    if (props.projectid) {
+      this.setState({projectid:props.projectid});
+    }
+    else {
+      this.setState({projectid:0});
+    }
     this.setState({projects:props.projects});
   }
 
@@ -84,6 +119,9 @@ class NavBar extends React.Component {
     this.setState({page:props.page});
     if (props.projects) {
       this.setState({projects:props.projects});
+    }
+    if (props.projectid) {
+      this.setState({projectid:props.projectid});
     }
   }
 
@@ -301,7 +339,7 @@ class ProfilePage extends React.Component {
         <button onClick={this.addEfficiency} />
         <div className="widgets">
           <div className="widgets-column">
-            <EfficienciesWidget title="Your best skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={7} colour="#42c376"/>
+            <EfficienciesWidget title="Your best skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={7} colour="#9de69a"/>
             <div className="verticalWidgetGap"/>
             <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={5} colour="#ff6961"/>
           </div>

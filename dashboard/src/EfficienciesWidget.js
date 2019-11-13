@@ -9,14 +9,15 @@ const Tracker = styled.div`
   background: #FFFFFF;
   border-color: #bebebe;
   border-style: solid;
+  border-width: 1.8px;
   border-radius: 4px;
   align-items: left;
 `
 
 const ProgressFillUp = styled.div`
   width: ${props => props.percentage}%;
-  height: 20px;
   background-color: ${props => props.colour};
+  height: 20px;
   border-radius: 1px;
 `
 
