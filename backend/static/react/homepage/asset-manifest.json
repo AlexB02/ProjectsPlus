@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/react/homepage/css/main.9863af88.chunk.css",
-    "main.js": "/static/react/homepage/js/main.74a252f0.chunk.js",
-    "main.js.map": "/static/react/homepage/js/main.74a252f0.chunk.js.map",
+    "main.css": "/static/react/homepage/css/main.fdf2f0b1.chunk.css",
+    "main.js": "/static/react/homepage/js/main.a596f0d1.chunk.js",
+    "main.js.map": "/static/react/homepage/js/main.a596f0d1.chunk.js.map",
     "runtime~main.js": "/static/react/homepage/js/runtime~main.60e2f3bb.js",
     "runtime~main.js.map": "/static/react/homepage/js/runtime~main.60e2f3bb.js.map",
-    "js/2.9eef4c7e.chunk.js": "/static/react/homepage/js/2.9eef4c7e.chunk.js",
-    "js/2.9eef4c7e.chunk.js.map": "/static/react/homepage/js/2.9eef4c7e.chunk.js.map",
+    "js/2.6571a1bf.chunk.js": "/static/react/homepage/js/2.6571a1bf.chunk.js",
+    "js/2.6571a1bf.chunk.js.map": "/static/react/homepage/js/2.6571a1bf.chunk.js.map",
     "../../templatefolder/index.html": "/static/react/homepage/../../templatefolder/index.html",
-    "css/main.9863af88.chunk.css.map": "/static/react/homepage/css/main.9863af88.chunk.css.map",
+    "css/main.fdf2f0b1.chunk.css.map": "/static/react/homepage/css/main.fdf2f0b1.chunk.css.map",
     "favicon.ico": "/static/react/homepage/favicon.ico",
     "media/crown.svg": "/static/react/homepage/media/crown.82939c39.svg",
     "media/dashboardpicture1.png": "/static/react/homepage/media/dashboardpicture1.048f7f75.png",
-    "media/down-arrow.svg": "/static/react/homepage/media/down-arrow.852e4fbe.svg",
-    "media/up-arrow.svg": "/static/react/homepage/media/up-arrow.305e2626.svg",
-    "precache-manifest.68d5e8d95b39c34c6eee27f95af2efdb.js": "/static/react/homepage/precache-manifest.68d5e8d95b39c34c6eee27f95af2efdb.js",
+    "media/down-arrow.svg": "/static/react/homepage/media/down-arrow.ed47687f.svg",
+    "media/up-arrow.svg": "/static/react/homepage/media/up-arrow.957a2b25.svg",
+    "precache-manifest.375f65d6c45a944e5947cac0bfff7d04.js": "/static/react/homepage/precache-manifest.375f65d6c45a944e5947cac0bfff7d04.js",
     "service-worker.js": "/static/react/homepage/service-worker.js"
   }
 }

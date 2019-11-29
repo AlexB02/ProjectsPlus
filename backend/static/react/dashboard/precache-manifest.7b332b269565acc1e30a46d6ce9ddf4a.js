@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "63dd90d5b6fa089606abfe95aef91498",
+    "revision": "80d506b74c51e4482669ec1d18d749b0",
     "url": "/static/react/dashboard/../../templatefolder/dashboard.html"
   },
   {
-    "revision": "02b09b3ffb8e1a26bcd6",
-    "url": "/static/react/dashboard/css/main.204abb2e.chunk.css"
+    "revision": "ab46f2239e2bbd8be4d1",
+    "url": "/static/react/dashboard/css/main.4930fb6e.chunk.css"
   },
   {
     "revision": "3f44179173c65a1eb0675346cafd1ecc",
@@ -16,19 +16,19 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/react/dashboard/js/2.20569170.chunk.js"
   },
   {
-    "revision": "02b09b3ffb8e1a26bcd6",
-    "url": "/static/react/dashboard/js/main.95e5a0d3.chunk.js"
+    "revision": "ab46f2239e2bbd8be4d1",
+    "url": "/static/react/dashboard/js/main.bf4e258e.chunk.js"
   },
   {
     "revision": "c4167eada54f8e56f290",
     "url": "/static/react/dashboard/js/runtime~main.e33af38e.js"
   },
   {
-    "revision": "852e4fbe099fc87a78f8ff0a2d4a1721",
-    "url": "/static/react/dashboard/media/down-arrow.852e4fbe.svg"
+    "revision": "ed47687f82fd54c6abd14b1577d69094",
+    "url": "/static/react/dashboard/media/down-arrow.ed47687f.svg"
   },
   {
-    "revision": "305e26261d0b10c6a9dfe2f4ae694a56",
-    "url": "/static/react/dashboard/media/up-arrow.305e2626.svg"
+    "revision": "957a2b25c6ec99d0c72ce9445746e0e5",
+    "url": "/static/react/dashboard/media/up-arrow.957a2b25.svg"
   }
 ]);
