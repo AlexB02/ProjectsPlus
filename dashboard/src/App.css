@@ -125,7 +125,7 @@
 }
 
 .arrowsvg {
-  width: 10px;
+  width: 8px;
 }
 
 .ArrowButton {
@@ -141,7 +141,7 @@
 }
 
 .widgets {
-  padding-top: calc(100px + 1vmin);
+  padding-top: calc(50px + 1vmin);
   display: inline-flex;
 }
 

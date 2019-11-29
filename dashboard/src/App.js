@@ -98,6 +98,12 @@ class DropdownMenu extends React.Component {
 
 }
 
+const NavBarDiv = styled.div`
+  z-index: 4;
+  height: calc(50px + 1vmin);
+  border-bottom: ${props => props.colour} solid 3px;
+`
+
 class NavBar extends React.Component {
 
   constructor(props) {
@@ -132,12 +138,14 @@ class NavBar extends React.Component {
   render () {
     return (
       <html>
-      <div className="NavBar">
-        <b><a><button onClick={this.logOut}>Log Out</button></a></b>
-        <b><a>Welcome, {this.state.username}</a></b>
-        <a class="pageStateNavBar">Currently Viewing: <DropdownMenu title={this.state.page} items={this.props.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid}/>
-        </a>
-      </div>
+        <NavBarDiv colour={this.props.colour}>
+          <div class="NavBar">
+            <b><a><div onClick={this.logOut} style={{"border-color":"#e2f2f2","border-style":"solid","cursor":"pointer","border-radius":"6px","padding":"5px","font-size":"2vh","position":"relative","bottom":"5px","border-width":"2px"}}>Log Out</div></a></b>
+            <b><a>Welcome, {this.state.username}</a></b>
+            <a class="pageStateNavBar">Currently Viewing: <DropdownMenu title={this.state.page} items={this.props.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid}/>
+            </a>
+          </div>
+        </NavBarDiv>
       </html>
   )
   }
@@ -308,7 +316,7 @@ class ProfilePage extends React.Component {
   render() {
       return (
       <html>
-      <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={"Your Profile"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0}/>
+      <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={"Your Profile"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0} colour="crimson"/>
       <body className="Body">
         <PageMask visible={this.state.CreateProjectPopUpVisibility} onClick={this.clickOffCreateProjectPopUp}>
           <CreateProjectPopUp visible={this.state.CreateProjectPopUpVisibility} onClick={this.clickCreateProjectPopupCreateButton}>
@@ -339,15 +347,15 @@ class ProfilePage extends React.Component {
         <button onClick={this.addEfficiency} />
         <div className="widgets">
           <div className="widgets-column">
-            <EfficienciesWidget title="Your best skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={7} colour="#9de69a"/>
+            <EfficienciesWidget title="Your best skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={7} colour="rgb(112, 175, 121)"/>
             <div className="verticalWidgetGap"/>
-            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={5} colour="#ff6961"/>
+            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={5} colour="#C0392B"/>
           </div>
           <div className="horizontalWidgetGap" />
           <div className="widgets-column">
             <ViewProjectsWidget title="Your projects" projects={this.state.projects} triggerCreateProject={this.createNewProject} triggerParentUpdate={this.props.triggerParentUpdate}/>
             <div className="verticalWidgetGap"/>
-            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={9} colour="#ff6961"/>
+            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={9} colour="#5DADE2"/>
           </div>
         </div>
       </body>
@@ -400,7 +408,7 @@ class ProjectPage extends React.Component {
 
   render() {
     return (
-      <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid}/>
+      <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour="#e6e573"/>
     )
   }
 }

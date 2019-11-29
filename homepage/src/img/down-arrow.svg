@@ -1,32 +1,13 @@
-<svg width="492" height="492" xmlns="http://www.w3.org/2000/svg">
-
- <g>
-  <title>background</title>
-  <rect fill="none" id="canvas_background" height="494" width="494" y="-1" x="-1"/>
- </g>
+<svg width="310" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
  <g>
   <title>Layer 1</title>
-  <g transform="rotate(-90 245.99995422363284,245.99998474121097) " id="svg_19">
-   <g id="svg_1">
-    <g id="svg_2">
-     <path fill="#dbdbdb" id="svg_3" d="m464.344,207.418l0.768,0.168l-329.224,0l103.496,-103.724c5.068,-5.064 7.848,-11.924 7.848,-19.124c0,-7.2 -2.78,-14.012 -7.848,-19.088l-16.104,-16.112c-5.064,-5.064 -11.812,-7.864 -19.008,-7.864c-7.2,0 -13.952,2.78 -19.016,7.844l-177.412,177.396c-5.084,5.084 -7.864,11.856 -7.844,19.06c-0.02,7.244 2.76,14.02 7.844,19.096l177.412,177.412c5.064,5.06 11.812,7.844 19.016,7.844c7.196,0 13.944,-2.788 19.008,-7.844l16.104,-16.112c5.068,-5.056 7.848,-11.808 7.848,-19.008c0,-7.196 -2.78,-13.592 -7.848,-18.652l-104.664,-104.304l329.992,0c14.828,0 27.288,-12.78 27.288,-27.6l0,-22.788c0,-14.82 -12.828,-26.6 -27.656,-26.6z"/>
-    </g>
+  <g id="svg_6" transform="rotate(-180 151.90078735351565,237.4233856201172) ">
+   <rect ry="9" rx="9" id="svg_1" height="385.00001" width="65" y="80.84673" x="120.80176" stroke-width="5" fill="#ffffff" transform="rotate(180 153.30175781249997,273.34674072265625) " stroke="#ffffff"/>
+   <g id="svg_5">
+    <rect ry="7" rx="7" stroke="#ffffff" transform="rotate(224.35626220703125 210.67950439453125,99.97167968750001) " id="svg_2" height="50" width="209.11074" y="74.97168" x="106.12414" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="#ffffff"/>
+    <rect ry="7" rx="7" id="svg_3" stroke="#ffffff" transform="rotate(316.35626220703125 93.80163574218751,100.84681701660155) " height="50" width="209.11074" y="75.84682" x="-10.75372" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="5" fill="#ffffff"/>
    </g>
-   <g id="svg_4"/>
-   <g id="svg_5"/>
-   <g id="svg_6"/>
-   <g id="svg_7"/>
-   <g id="svg_8"/>
-   <g id="svg_9"/>
-   <g id="svg_10"/>
-   <g id="svg_11"/>
-   <g id="svg_12"/>
-   <g id="svg_13"/>
-   <g id="svg_14"/>
-   <g id="svg_15"/>
-   <g id="svg_16"/>
-   <g id="svg_17"/>
-   <g transform="rotate(-97 0,0) " id="svg_18"/>
   </g>
  </g>
 </svg>

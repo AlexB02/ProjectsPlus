@@ -143,6 +143,7 @@ const EfficiencyTitleBar = styled.span`
   background-color: ${props => props.colour};
   transition: all 0.2s;
   z-index: 1;
+  color: white;
 `
 
 export class EfficienciesWidget extends React.Component {
