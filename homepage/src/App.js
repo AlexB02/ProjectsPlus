@@ -355,7 +355,7 @@ export class Body extends Component {
             <div className="diamond">
               <img className="crownsvg" src={crown}/>
               <div className="diamondboxtext">
-                <p className="mostpopulartext">most popular</p>
+                <p className="mostpopulartext" style={{"margin-top":"0px"}}>most popular</p>
                 <a className="boxtitle">Diamond</a>
                 <p>Efficiency reports and employee recommendations</p>
                 <p>Up to 50 team members</p>
