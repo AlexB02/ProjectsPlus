@@ -5,6 +5,7 @@ import { Link } from "react-scroll";
 import crown from "./img/crown.svg";
 import dashboardpicture1 from "./img/dashboardpicture1.png";
 import $ from 'jquery';
+import styled from 'styled-components';
 
 export function App() {
     return (
@@ -35,6 +36,10 @@ export function NavBar() {
     );
   };
 
+const MessageWrapper = styled.div`
+  visibility: ${props => props.visible};
+`
+
 export class Body extends Component {
 
 ///////////////////////////////////////////////////////////////////
@@ -55,11 +60,13 @@ export class Body extends Component {
       confirmpassword: "",
       confirmpasswordstatus: "",
       loginmessage: "",
-      signupmessage: ""
+      signupmessage: "",
+      signupmessagevisible: "",
+      loginmessagevisible: ""
     }
 
     // Interval for checking if confirm password is equal to password
-    let timerId = setInterval(() => this.check(), 750);
+    let timerId = setInterval(() => this.check(), 300);
     setTimeout(
       function() {
         this.forceUpdate()
@@ -76,11 +83,32 @@ export class Body extends Component {
 ///////////////////////////////////////////////////////////////////////
 
   check() {
+    if (this.state.signupmessage != "") {
+      this.setState({"signupmessagevisible":"visible"});
+    }
+    else {
+      this.setState({"signupmessagevisible":"hidden"});
+    }
+    if (this.state.loginmessage != "") {
+      this.setState({"loginmessagevisible":"visible"});
+    }
+    else {
+      this.setState({"loginmessagevisible":"hidden"});
+    }
+    if (this.state.confirmpasswordstatus != "") {
+      this.setState({"confirmpasswordstatusvisible":"visible"});
+    }
+    else {
+      this.setState({"confirmpasswordstatusvisible":"hidden"});
+    }
     try {
 
       if (this.state.password === this.state.confirmpassword) {
         // Both blank
-        if (this.state.password === "") {}
+        if (this.state.password === "") {
+          this.setState({confirmpasswordstatus: ""});
+          this.setState({signupmessage: ""});
+        }
         // Both the same
         else {
           this.setState({confirmpasswordstatus: ""});
@@ -296,7 +324,7 @@ export class Body extends Component {
   };
 
   render() {
-      return (
+    return (
       <html>
       <div className="space2"></div>
       <body className="Body">
@@ -373,7 +401,7 @@ export class Body extends Component {
             <div className="boxspace"></div>
 
             <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
-            <div className="platinum">
+            <div className="platinum" style={{"padding-bottom":"8vh"}}>
               <a className="boxtitle">Platinum</a>
               <p>Efficiency reports and employee recommendations</p>
               <p>Unlimited team members</p>
@@ -413,12 +441,13 @@ export class Body extends Component {
                 <div className="midboxbreak"/>
 
                 <input type="password" className="boxinput" placeholder="create password" name="password" id="password" value={this.state.password} onChange={this.getPassword} required/>
-                <div class="signupmessage">{this.state.signupmessage}</div>
+                <MessageWrapper visible={this.state.signupmessagevisible}><div class="signupmessage">{this.state.signupmessage}</div></MessageWrapper>
 
                 <div className="midboxbreak"/>
 
                 <input type="password" className="boxinput" placeholder="confirm password" name="confirmpassword" id="confirmpassword" value={this.state.confirmpassword} onChange={this.getConfirmPassword} required/>
-                <div className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</div>
+                <MessageWrapper visible={this.state.confirmpasswordstatusvisible}><div className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</div></MessageWrapper>
+                <div className="midboxbreak"/>
 
                 <input type="hidden" name="identifier" value="signup" />
 
@@ -439,7 +468,7 @@ export class Body extends Component {
                 <input type="hidden" name="identifier" value="login" />
                 <input type="submit" className="boxinput" value="log in" onClick={this.loginsubmit}/>
                 </form>
-              <div class="signupmessage">{this.state.loginmessage}</div>
+              <MessageWrapper visible={this.state.loginmessagevisible}><div class="signupmessage">{this.state.loginmessage}</div></MessageWrapper>
             </div>
         </div>
       </b>
