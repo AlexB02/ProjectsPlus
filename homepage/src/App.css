@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: white;
+  background-color: #FAFAFA;
   min-height: calc(12px + 5vmin);
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
 
 .space1{
   padding: 18vmin;
-  background-color: white;
+  background-color: #FAFAFA;
 }
 
 .title {
@@ -62,12 +62,11 @@
 
 .space2{
   padding: 45vh;
-  background-color: transparent;
+  background-color: #FAFAFA;
 }
 
 .Body{
-  background-color: #F3F3EF;
-  background-color: white;
+  background-color: #FAFAFA;
   font-family: 'Source Sans Pro', sans-serif;
   min-height: 150vmin;
   text-align: center;
@@ -89,9 +88,8 @@
   font-family: 'Karla', sans-serif;
   border-radius: 6px;
   background-color: white;
-  box-shadow: 0 0 10px 1px #E2E2E2;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
   background-color: white;
-  transition: all 0.2s;
   z-index: 0;
   display: grid;
   width: 30vw;
@@ -105,14 +103,12 @@
   padding: 10px;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  box-shadow: 0 0px 0 white ,0 0 3px 0.5px #dadada;
   background-color: white;
-  transition: all 0.2s;
   z-index: 0;
 }
 
 .widget:hover {
-  box-shadow: 0 0 6px 1px #bebebe;
+  box-shadow: 0 0 8px 2px #E2E2E2;
 }
 
 .efficiencyWidgetData {
@@ -231,8 +227,7 @@
 
 .priceboxes{
   padding-top: 80px;
-  background-color: #F3F3EF;
-  background-color: white;
+  background-color: #FAFAFA;
   height: 10vh;
 }
 
@@ -394,10 +389,15 @@
 }
 
 .signup{
-  padding-bottom: 50%;
-  width: 18vw;
+  padding: 2vw;
+  border-style: solid;
+  border-radius: 6px;
+  border-width: thin;
+  border-color: #C0C0C0;
+  width: 28vw;
   display: inline-block;
   align-items: center;
+  background-color: white;
 }
 
 .texttoinputbreak{
@@ -410,7 +410,7 @@
 
 .boxinput{
   padding: 15px;
-  background-color: white;
+  background-color: #FAFAFA;
   transition-property: background-color, outline;
   transition-duration: 0.3s, 0.2s;
   border: 1px;
@@ -418,7 +418,7 @@
   border-style: solid;
   border-color: #C0C0C0;
   box-shadow: none;
-  width: 135%;
+  width: 100%;
   outline: none;
   align-content: center;
   float: none;
@@ -436,11 +436,17 @@
 
 .confirmpasswordstatus {
   margin: 0px;
-  padding: 0px;
   font-size: 90%;
   margin-top: 1vw;
   margin-bottom: 1vw;
   color: #ff3333;
+  z-index: 1;
+  position: absolute;
+  padding: 2px;
+  background-color: white;
+  border-radius: 6px;
+  border-color: black;
+  border-style: solid;
 }
 
 .signup p {
@@ -461,11 +467,18 @@
   margin-bottom: 1vw;
   color: #ff3333;
   text-align: left;
+  z-index: 1;
+  position: absolute;
+  padding: 2px;
+  background-color: white;
+  border-radius: 6px;
+  border-color: black;
+  border-style: solid;
 }
 
 .signupsigninbreak {
   display: inline-block;
-  padding-right: 10vw;
+  padding-right: 5vw;
 }
 
 .login {
@@ -473,13 +486,18 @@
   align-items: center;
   vertical-align: top;
   text-align: center;
-  width: 18vw;
+  width: 28vw;
+  padding: 2vw;
+  border-style: solid;
+  border-color: #C0C0C0;
+  border-width: thin;
+  border-radius: 6px;
+  background-color: white;
 }
 
 .loginsignuptitle {
   position: relative;
-  bottom: 2vh;
-  left: 2.5vw;
+  padding-bottom: 2vh;
 }
 
 .dropdown{
@@ -487,8 +505,9 @@
 }
 
 .footer{
-  background-color: white;
   text-align: center;
   font-family: 'Heebo', sans-serif;
   padding-bottom: 20px;
+  padding-top: 10vh;
+  background-color: #FAFAFA;
 }

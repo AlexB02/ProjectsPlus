@@ -31,6 +31,9 @@ class DropdownMenu extends React.Component {
     for(var i = 0; i < this.props.items.length; i++) {
 
       if(this.props.items[i]["title"] === event.target.value) {
+
+        console.log("Changing dashboard state");
+
         this.props.triggerParentUpdate(event.target.value,this.props.items[i]["id"]);
         return;
       }
@@ -53,26 +56,17 @@ class DropdownMenu extends React.Component {
     }
     else if (this.state.title !== "title") {
       if (this.props.items) {
-        console.log("-----start-----");
 
         var projectid = this.props.projectid;
-        console.log(JSON.stringify(this.props.items));
-        console.log("Projectid: "+projectid);
 
         for (var i = 0; i < this.props.items.length; i++) {
 
-          console.log("Item id: "+this.props.items[i]["id"]);
-
-          console.log("Item: "+JSON.stringify(this.props.items[i]));
-
           if (this.props.items[i]["id"] == this.props.projectid) {
-
-            console.log("Items id is projectid");
+            console.log("Removed: "+JSON.stringify(this.props.items[i]));
             this.props.items.splice(i,1);
 
           }
         }
-        console.log("-----fin-----");
         return (
           <html>
             <select id="ProjectViewDropdown" class="ProjectViewDropdown" onChange={this.selectChange}>
@@ -102,6 +96,8 @@ const NavBarDiv = styled.div`
   z-index: 4;
   height: calc(50px + 1vmin);
   border-bottom: ${props => props.colour} solid 3px;
+  position: fixed;
+  width: 100%;
 `
 
 class NavBar extends React.Component {
@@ -408,7 +404,10 @@ class ProjectPage extends React.Component {
 
   render() {
     return (
-      <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour="#e6e573"/>
+      <html>
+        <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour="#e6e573"/>
+        <div style={{"padding-top":"calc(75px + 1vh)"}}>Project: {this.state.title}</div>
+      </html>
     )
   }
 }
@@ -421,8 +420,9 @@ export class Body extends React.Component {
   }
 
   updatePage = (page,projectid) => {
-      this.setState({"page":page});
-      this.state.projectid = projectid;
+    console.log("Updating page")
+    this.setState({"page":page});
+    this.state.projectid = projectid;
   }
 
   render() {

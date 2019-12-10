@@ -400,29 +400,29 @@ export class Body extends Component {
           <div className="signupandlogin"/>
 
             <div className="signup">
-              <input type="hidden" name="form_name" value="signup"/>
-              <form onSubmit={this.removeformsubmit}>
               <span class="loginsignuptitle">sign up</span>
-              <input type="text" className="boxinput" placeholder="first name" name="fname" id="fname" required/>
-              <div className="midboxbreak"/>
+              <input type="hidden" name="form_name" value="signup"/>
+              <form onSubmit={this.removeformsubmit} style={{"padding-top":"2vh"}}>
+                <input type="text" className="boxinput" placeholder="first name" name="fname" id="fname" required/>
+                <div className="midboxbreak"/>
 
-              <input type="text" className="boxinput" placeholder="last name" name="lname" id="lname" required/>
-              <div className="midboxbreak"/>
+                <input type="text" className="boxinput" placeholder="last name" name="lname" id="lname" required/>
+                <div className="midboxbreak"/>
 
-              <input type="email" className="boxinput" placeholder="e-mail address" name="email" id="email" required/>
-              <div className="midboxbreak"/>
+                <input type="email" className="boxinput" placeholder="e-mail address" name="email" id="email" required/>
+                <div className="midboxbreak"/>
 
-              <input type="password" className="boxinput" placeholder="create password" name="password" id="password" value={this.state.password} onChange={this.getPassword} required/>
-              <div class="signupmessage">{this.state.signupmessage}</div>
+                <input type="password" className="boxinput" placeholder="create password" name="password" id="password" value={this.state.password} onChange={this.getPassword} required/>
+                <div class="signupmessage">{this.state.signupmessage}</div>
 
-              <div className="midboxbreak"/>
+                <div className="midboxbreak"/>
 
-              <input type="password" className="boxinput" placeholder="confirm password" name="confirmpassword" id="confirmpassword" value={this.state.confirmpassword} onChange={this.getConfirmPassword} required/>
-              <div className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</div>
+                <input type="password" className="boxinput" placeholder="confirm password" name="confirmpassword" id="confirmpassword" value={this.state.confirmpassword} onChange={this.getConfirmPassword} required/>
+                <div className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</div>
 
-              <input type="hidden" name="identifier" value="signup" />
+                <input type="hidden" name="identifier" value="signup" />
 
-              <input type="submit" className="boxinput" value="sign up" onClick={this.signupsubmit}/>
+                <input type="submit" className="boxinput" value="sign up" onClick={this.signupsubmit}/>
               </form>
 
             </div>
@@ -430,8 +430,8 @@ export class Body extends Component {
             <div className="signupsigninbreak"/>
 
             <div className="login">
-            <form onSubmit={this.removeformsubmit}>
-              <span class="loginsignuptitle">login</span>
+            <span class="loginsignuptitle">login</span>
+            <form onSubmit={this.removeformsubmit} style={{"padding-top":"2vh"}}>
                 <input type="email" className="boxinput" placeholder="e-mail address" name="email" id="loginemail" required/>
                 <div className="midboxbreak"/>
                 <input type="password" className="boxinput" placeholder="password" name="password" id="loginpassword" required/>

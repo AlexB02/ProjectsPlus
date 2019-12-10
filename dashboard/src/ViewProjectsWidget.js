@@ -75,7 +75,6 @@ export class ViewProjectsWidget extends React.Component {
       for (var project in this.state.projects) {
         projectColours[project] = colours[Math.round(Math.random())];
       }
-      console.log(JSON.stringify(projectColours));
       return (
         <html class="widget">
           <EfficiencyTitleBar colour="#A569BD"><b>{this.props.title}</b></EfficiencyTitleBar>
