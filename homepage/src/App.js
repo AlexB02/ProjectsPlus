@@ -37,7 +37,10 @@ export function NavBar() {
   };
 
 const MessageWrapper = styled.div`
-  visibility: ${props => props.visible};
+  display: ${props => props.visible};
+  width: inherit;
+  float: left;
+  width: -webkit-fill-available;
 `
 
 export class Body extends Component {
@@ -84,22 +87,22 @@ export class Body extends Component {
 
   check() {
     if (this.state.signupmessage != "") {
-      this.setState({"signupmessagevisible":"visible"});
+      this.setState({"signupmessagevisible":"contents"});
     }
     else {
-      this.setState({"signupmessagevisible":"hidden"});
+      this.setState({"signupmessagevisible":"none"});
     }
     if (this.state.loginmessage != "") {
-      this.setState({"loginmessagevisible":"visible"});
+      this.setState({"loginmessagevisible":"contents"});
     }
     else {
-      this.setState({"loginmessagevisible":"hidden"});
+      this.setState({"loginmessagevisible":"none"});
     }
     if (this.state.confirmpasswordstatus != "") {
-      this.setState({"confirmpasswordstatusvisible":"visible"});
+      this.setState({"confirmpasswordstatusvisible":"contents"});
     }
     else {
-      this.setState({"confirmpasswordstatusvisible":"hidden"});
+      this.setState({"confirmpasswordstatusvisible":"none"});
     }
     try {
 
@@ -122,16 +125,17 @@ export class Body extends Component {
       console.log("Error")
     }
     if (!(this.state.password === "")) {
+      this.setState({signupmessage:""});
       var password = this.state.password;
       if (password.length < 8) {
-        this.setState({signupmessage: "Password must be at least 8 characters long"});
-        return;
+        this.setState({signupmessage: "- Password must be at least 8 characters long\n"});
       }
 
       var symbols = 0;
       var lowercase = 0;
       var uppercase = 0;
       var numbers = 0;
+
       for (var i=0; i<password.length; i++){
         if ("abcdefghijklmnopqrstuvwxyz".includes(password[i])) {
           lowercase += 1;
@@ -146,26 +150,21 @@ export class Body extends Component {
           symbols += 1;
         }
         else {
-          this.setState({signupmessage: "Passwords may only contain letters, numbers and the following symbols: '!-_<>.&$£'"});
-          return;
+          this.setState({signupmessage: this.state.signupmessage + "- Passwords may only contain letters, numbers and the following symbols: '!-_<>.&$£'\n"});
         }
       }
       if (!((symbols > 0) && (lowercase > 0) && (uppercase > 0) && (numbers > 0))){
         if (symbols == 0) {
-          this.setState({signupmessage: "Passwords must contain at least 1 allowed symbol: '!-_<>.&$£'"});
-          return;
+          this.setState({signupmessage: this.state.signupmessage + "- Passwords must contain at least 1 allowed symbol: '!-_<>.&$£'\n"});
         }
-        else if (lowercase == 0) {
-          this.setState({signupmessage: "Passwords must contain at least one lowercase letter"});
-          return;
+        if (lowercase == 0) {
+          this.setState({signupmessage: this.state.signupmessage + "- Passwords must contain at least one lowercase letter\n"});
         }
-        else if (uppercase == 0) {
-          this.setState({signupmessage: "Passwords must contain at least one uppercase letter"});
-          return;
+        if (uppercase == 0) {
+          this.setState({signupmessage: this.state.signupmessage + "- Passwords must contain at least one uppercase letter\n"});
         }
-        else if (numbers == 0) {
-          this.setState({signupmessage: "Passwords must contain at least one number"});
-          return;
+        if (numbers == 0) {
+          this.setState({signupmessage: this.state.signupmessage + "- Passwords must contain at least one number\n"});
         }
       }
       else if ((!(this.state.signupmessage === "Account creation error")) || (!(this.state.signupmessage === "") || (!(this.state.signupmessage === "Account already exists, try logging in")))){
@@ -441,12 +440,12 @@ export class Body extends Component {
                 <div className="midboxbreak"/>
 
                 <input type="password" className="boxinput" placeholder="create password" name="password" id="password" value={this.state.password} onChange={this.getPassword} required/>
-                <MessageWrapper visible={this.state.signupmessagevisible}><div class="signupmessage">{this.state.signupmessage}</div></MessageWrapper>
+                <MessageWrapper visible={this.state.signupmessagevisible}><div class="signupmessage" style={{"margin":"2vh 0px 0px 0px","white-space":"pre-wrap"}}>{this.state.signupmessage}</div></MessageWrapper>
 
                 <div className="midboxbreak"/>
 
                 <input type="password" className="boxinput" placeholder="confirm password" name="confirmpassword" id="confirmpassword" value={this.state.confirmpassword} onChange={this.getConfirmPassword} required/>
-                <MessageWrapper visible={this.state.confirmpasswordstatusvisible}><div className="confirmpasswordstatus">{this.state.confirmpasswordstatus}</div></MessageWrapper>
+                <MessageWrapper visible={this.state.confirmpasswordstatusvisible}><div className="confirmpasswordstatus" style={{"margin":"2vh 0px 0px 0px"}}>{this.state.confirmpasswordstatus}</div></MessageWrapper>
                 <div className="midboxbreak"/>
 
                 <input type="hidden" name="identifier" value="signup" />
@@ -468,7 +467,7 @@ export class Body extends Component {
                 <input type="hidden" name="identifier" value="login" />
                 <input type="submit" className="boxinput" value="log in" onClick={this.loginsubmit}/>
                 </form>
-              <MessageWrapper visible={this.state.loginmessagevisible}><div class="signupmessage">{this.state.loginmessage}</div></MessageWrapper>
+              <MessageWrapper visible={this.state.loginmessagevisible}><div class="signupmessage" style={{"text-align":"center"}}>{this.state.loginmessage}</div></MessageWrapper>
             </div>
         </div>
       </b>

@@ -440,13 +440,12 @@
   margin-top: 1vw;
   margin-bottom: 1vw;
   color: #ff3333;
-  z-index: 1;
-  position: absolute;
-  padding: 2px;
+  padding: 10px;
   background-color: white;
   border-radius: 6px;
   border-color: black;
   border-style: solid;
+  width: inherit;
 }
 
 .signup p {
@@ -461,19 +460,17 @@
 
 .signupmessage{
   margin: 0px;
-  padding: 0px;
+  padding: 10px;
   font-size: 90%;
   margin-top: 1vw;
   margin-bottom: 1vw;
   color: #ff3333;
   text-align: left;
-  z-index: 1;
-  position: absolute;
-  padding: 2px;
   background-color: white;
   border-radius: 6px;
   border-color: black;
   border-style: solid;
+  width: inherit;
 }
 
 .signupsigninbreak {
