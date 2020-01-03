@@ -56,8 +56,6 @@ const ToolTipText = styled.span`
   position: absolute;
   background-color: #FFB5A5
   border-radius: 5px;
-  margin-left: ${props => props.leftMargin}px;
-  margin-top: -7px;
 `;
 
 class EfficiencySkillAbbrv extends React.Component {
@@ -89,10 +87,10 @@ class EfficiencySkillAbbrv extends React.Component {
 
   render() {
     if (this.state.abbrv) {
+      var title = this.props.skillTitle + ": " + this.props.efficiency + "/200";
       return (
         <html>
-          <button onClick={this.updateVisibility} class="progressBarSkill" title="Click to view more detail">{this.props.abbrv}</button>
-          <ToolTipText visible={this.state.ToolTipTextVisible} leftMargin={Math.round(30-1.5*this.props.abbrv.length)}>{this.props.skillTitle}: {this.props.efficiency}/200</ToolTipText>
+          <button onClick={this.updateVisibility} class="progressBarSkill" title={this.props.skillTitle+": "+this.props.efficiency+"/200"}>{this.props.abbrv}</button>
         </html>
       )
     }
@@ -115,20 +113,16 @@ class EfficiencyProgress extends React.Component {
     this.state = {"percentageEfficiency":Math.round((this.props.efficiency/200)*100)};
     if (this.props) {
       return (
-        <html>
-          <div class="progressBarEfficiencyValue">{this.state.percentageEfficiency}%</div>
-          <table class="EfficienciesTable" align="centre">
-            <tr>
-              <td class="progressBarSkillTD"><EfficiencySkillAbbrv class="progressBarSkill" abbrv={this.props.skillAbbrv} skillTitle={this.props.skillTitle} efficiency={this.props.efficiency}/></td>
-              <td class="progressBarBarTD"><div class="progressBarBar"><ProgressBar efficiency={this.props.efficiency}/></div></td>
-            </tr>
-          </table>
-        </html>
+        <tr>
+          <td style= {{"width":"40%"}} class="progressBarSkillTD"><EfficiencySkillAbbrv class="progressBarSkill" abbrv={this.props.skillAbbrv} skillTitle={this.props.skillTitle} efficiency={this.props.efficiency}/></td>
+          <td style={{"width":"fit-content"}}><div class="progressBarEfficiencyValue">{this.state.percentageEfficiency}%</div></td>
+          <td class="progressBarBarTD"><div class="progressBarBar"><ProgressBar efficiency={this.props.efficiency}/></div></td>
+        </tr>
       )
     }
     else {
       return (
-        <div>No props</div>
+        <tr>No props</tr>
       )
     }
   }
@@ -208,11 +202,10 @@ export class EfficienciesWidget extends React.Component {
           else {
             presentable = data.slice(0,this.state.length);
           }
-
           return (
-            <span>
-            {presentable && presentable.length && presentable.map((skill, i) => React.createElement(EfficiencyProgress, {"skillTitle":skill["skillTitle"],"skillAbbrv":skill["skillAbbrv"],"efficiency":skill["avg"]}))}
-            </span>
+            <table>
+              {presentable && presentable.length && presentable.map((skill, i) => React.createElement(EfficiencyProgress, {"skillTitle":skill["skillTitle"],"skillAbbrv":skill["skillAbbrv"],"efficiency":skill["avg"]}))}
+            </table>
           );
         }
         else if (!this.state.title) {

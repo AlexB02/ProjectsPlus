@@ -69,7 +69,7 @@ export class Body extends Component {
     }
 
     // Interval for checking if confirm password is equal to password
-    let timerId = setInterval(() => this.check(), 300);
+    let timerId = setInterval(() => this.check(), 100);
     setTimeout(
       function() {
         this.forceUpdate()

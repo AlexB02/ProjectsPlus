@@ -342,6 +342,7 @@ class ProfilePage extends React.Component {
         </PageMask>
         <button onClick={this.addEfficiency} />
         <div className="widgets">
+          <div className="horizontalWidgetGap" />
           <div className="widgets-column">
             <EfficienciesWidget title="Your best skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={7} colour="rgb(112, 175, 121)"/>
             <div className="verticalWidgetGap"/>
@@ -353,6 +354,13 @@ class ProfilePage extends React.Component {
             <div className="verticalWidgetGap"/>
             <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={9} colour="#5DADE2"/>
           </div>
+          <div className="horizontalWidgetGap" />
+          <div className="widgets-column">
+            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={9} colour="#1596B9"/>
+            <div className="verticalWidgetGap"/>
+            <ViewProjectsWidget title="Your projects" projects={this.state.projects} triggerCreateProject={this.createNewProject} triggerParentUpdate={this.props.triggerParentUpdate}/>
+          </div>
+          <div className="horizontalWidgetGap" />
         </div>
       </body>
 
