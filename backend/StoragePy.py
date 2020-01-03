@@ -303,17 +303,16 @@ def getSkillAbbrv(skill):
     c.execute("""SELECT abbrv FROM skillslist where title=?""",(skill,))
     return c.fetchone()[0]
 
-def addProject(projecttitle):
-    print("Inside add project")
+def addProject(projecttitle,colour):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
-    c.execute("""insert into projectslist (projectid,projecttitle,iconlocation) values (NULL,?,?)""",(projecttitle,"/"))
+    c.execute("""insert into projectslist (projectid,projecttitle,iconlocation,colour) values (NULL,?,?,?)""",(projecttitle,"/",colour,))
+    print("this happened")
     c.execute("""select projectid from projectslist where projecttitle=?""",(projecttitle,))
     projects = c.fetchall()
     conn.commit()
     conn.close()
 
-    print(projects[-1][0])
     return projects[-1][0]
 
 def addMemberToProject(userid,projectid,role):
@@ -347,7 +346,9 @@ def getProjectNames(userid):
     for id in projectids:
         c.execute("""select projecttitle from projectslist where projectid=?""",(id,))
         title = c.fetchone()[0]
-        projects.append({"id":id,"title":title})
+        c.execute("""select colour from projectslist where projectid=?""",(id,))
+        colour = c.fetchone()[0]
+        projects.append({"id":id,"title":title,"colour":colour})
     return projects
 
 def getProjectTitle(projectid):

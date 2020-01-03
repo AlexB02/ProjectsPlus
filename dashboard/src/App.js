@@ -273,6 +273,7 @@ class ProfilePage extends React.Component {
   submitNewProject = () => {
     var projecttitle = $("#projecttitle").val()
     var priceplan = $("#priceplan").val();
+    var colour = $("#projectcolour").val();
 
     if (projecttitle === "") {
       return;
@@ -280,8 +281,11 @@ class ProfilePage extends React.Component {
     if (priceplan === null) {
       return;
     }
+    if (colour === null) {
+      return;
+    }
     // Submission is Valid
-    var project = {"title":projecttitle,"pricing":priceplan};
+    var project = {"title":projecttitle,"pricing":priceplan,"colour":colour};
     let _this = this;
     $(document).ready(function(){
       var req = $.ajax({url: "/createproject",
@@ -321,6 +325,8 @@ class ProfilePage extends React.Component {
               <div>
                 <form style={{"display":"grid"}} onSubmit={this.removeformsubmit}>
                   <input type="text" className="boxinput" placeholder="project title" name="projecttitle" id="projecttitle" onInput={this.clickCreateProjectPopupCreateButton} required style={{"margin-left":"auto","margin-right":"auto","width":"100%","text-align":"center"}}/>
+                  <p/>
+                  <input type="color" id="projectcolour" onInput={this.clickCreateProjectPopupCreateButton} required/>
                   <p/>
                   <DropDownSelect id="priceplan" required>
                     <option value="" disabled selected>select price plan</option>

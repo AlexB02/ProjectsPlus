@@ -69,17 +69,11 @@ export class ViewProjectsWidget extends React.Component {
 
   render() {
     if (this.state.projects.length) {
-      var projectColours = {};
-      var colours = ["#daadad","#e6e573"];
-
-      for (var project in this.state.projects) {
-        projectColours[project] = colours[Math.round(Math.random())];
-      }
       return (
         <html class="widget">
           <EfficiencyTitleBar colour="#A569BD"><b>{this.props.title}</b></EfficiencyTitleBar>
           <p/>
-          {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage} colour={projectColours[project["id"]-1]}>{project["title"]}</Project><p/></div>)}
+          {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage} colour={project["colour"]}>{project["title"]}</Project><p/></div>)}
           <CreateProjectButton onClick={this.props.triggerCreateProject}>Create a project</CreateProjectButton>
           <p/>
         </html>
@@ -88,7 +82,7 @@ export class ViewProjectsWidget extends React.Component {
     else {
       return (
         <html class="widget">
-          <EfficiencyTitleBar colour="#a580b8"><b>{this.props.title}</b></EfficiencyTitleBar>
+          <EfficiencyTitleBar colour="#A569BD"><b>{this.props.title}</b></EfficiencyTitleBar>
           <p/>
           You are not a member of any projects
           <p/>

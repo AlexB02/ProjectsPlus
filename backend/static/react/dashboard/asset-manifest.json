@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/react/dashboard/css/main.1744586f.chunk.css",
-    "main.js": "/static/react/dashboard/js/main.be3e36d6.chunk.js",
-    "main.js.map": "/static/react/dashboard/js/main.be3e36d6.chunk.js.map",
+    "main.js": "/static/react/dashboard/js/main.e2949d85.chunk.js",
+    "main.js.map": "/static/react/dashboard/js/main.e2949d85.chunk.js.map",
     "runtime~main.js": "/static/react/dashboard/js/runtime~main.e33af38e.js",
     "runtime~main.js.map": "/static/react/dashboard/js/runtime~main.e33af38e.js.map",
     "js/2.20569170.chunk.js": "/static/react/dashboard/js/2.20569170.chunk.js",
@@ -12,7 +12,7 @@
     "favicon.ico": "/static/react/dashboard/favicon.ico",
     "media/down-arrow.svg": "/static/react/dashboard/media/down-arrow.ed47687f.svg",
     "media/up-arrow.svg": "/static/react/dashboard/media/up-arrow.957a2b25.svg",
-    "precache-manifest.5733f464927390c40d2a891124d878af.js": "/static/react/dashboard/precache-manifest.5733f464927390c40d2a891124d878af.js",
+    "precache-manifest.03f0ac3bd660883f81ac75da0b883ba6.js": "/static/react/dashboard/precache-manifest.03f0ac3bd660883f81ac75da0b883ba6.js",
     "service-worker.js": "/static/react/dashboard/service-worker.js"
   }
 }
