@@ -64,6 +64,7 @@ def create(c):
                     projectid integer,
                     projecttitle text,
                     iconlocation text,
+                    colour text,
                     PRIMARY KEY (projectid)
         )""")
 

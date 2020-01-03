@@ -358,7 +358,7 @@ class ProfilePage extends React.Component {
           <div className="widgets-column">
             <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={9} colour="#1596B9"/>
             <div className="verticalWidgetGap"/>
-            <ViewProjectsWidget title="Your projects" projects={this.state.projects} triggerCreateProject={this.createNewProject} triggerParentUpdate={this.props.triggerParentUpdate}/>
+            <ViewProjectsWidget title="Your tasks" projects={this.state.projects} triggerCreateProject={this.createNewProject} triggerParentUpdate={this.props.triggerParentUpdate}/>
           </div>
           <div className="horizontalWidgetGap" />
         </div>
