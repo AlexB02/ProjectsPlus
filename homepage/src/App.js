@@ -6,17 +6,20 @@ import crown from "./img/crown.svg";
 import dashboardpicture1 from "./img/dashboardpicture1.png";
 import $ from 'jquery';
 import styled from 'styled-components';
+import Fade from 'react-reveal/Fade';
 
 export function App() {
     return (
       <html>
-      <div className="App" id="home">
-        <header className="App-header">
-          <div className="space1"></div>
-          <h1 className="title"><b>projects plus+</b></h1>
-          <a className="strapline"><b>team management, made simple.</b></a>
-          </header>
-      </div>
+        <Fade bottom>
+          <div className="App" id="home">
+            <header className="App-header">
+              <div className="space1"></div>
+              <h1 className="title"><b>projects plus+</b></h1>
+              <a className="strapline"><b>team management, made simple.</b></a>
+              </header>
+          </div>
+        </Fade>
       </html>
     );
   };
@@ -329,96 +332,101 @@ export class Body extends Component {
       <body className="Body">
       <b>
       <div id="about">
-        <a className="bodytitle">strive for efficiency+</a>
-        <p>Understand what makes your team work, and uncover where they fall down.</p>
-        <p style={{"padding-bottom":"5vh"}}>Using a series of advanced algorithms, Projects Plus learns the strengths and weaknesses of each individual member, showing the data on a simple easy-to-use dashboard.</p>
-        <EfficienciesWidget title="Example Efficiency Widget" data={[{"skillAbbrv":"Skill 1","skillTitle":"Skill 1 Full Title","avg":169.84},{"skillAbbrv":"Skill 2","skillTitle":"Skill 2 Full Title","avg":101.23},{"skillAbbrv":"Skill 3","skillTitle":"Skill 3 Full Title","avg":89.45},{"skillAbbrv":"Skill 4","skillTitle":"Skill 4 Full Title","avg":76.74},{"skillAbbrv":"Skill 5","skillTitle":"Skill 5 Full Title","avg":34.87}]} length={5} colour="#F1C40F"/>
-        <a class="bodytitle">track your tasks+</a>
-        <p>Follow what you have to do, for when, with an easy to understand widget</p>
+        <Fade bottom>
+          <a className="bodytitle">strive for efficiency+</a>
+          <p>Understand what makes your team work, and uncover where they fall down.</p>
+          <p style={{"padding-bottom":"5vh"}}>Using a series of advanced algorithms, Projects Plus learns the strengths and weaknesses of each individual member, showing the data on a simple easy-to-use dashboard.</p>
+          <EfficienciesWidget title="Example Efficiency Widget" data={[{"skillAbbrv":"Skill 1","skillTitle":"Skill 1 Full Title","avg":169.84},{"skillAbbrv":"Skill 2","skillTitle":"Skill 2 Full Title","avg":101.23},{"skillAbbrv":"Skill 3","skillTitle":"Skill 3 Full Title","avg":89.45},{"skillAbbrv":"Skill 4","skillTitle":"Skill 4 Full Title","avg":76.74},{"skillAbbrv":"Skill 5","skillTitle":"Skill 5 Full Title","avg":34.87}]} length={5} colour="#F1C40F"/>
+        </Fade>
+        <Fade bottom>
+          <a className="bodytitle">track your tasks+</a>
+          <p>Follow what you have to do, for when, with an easy to understand widget</p>
+        </Fade>
       </div>
 
       <div className="space2"></div>
+      <Fade bottom>
+        <div id="pricing">
+          <a className="bodytitle">all at a price you can't say no to+</a>
+          <p>discover all 4 price plans, for 4 different sized projects.</p>
 
-      <div id="pricing">
-        <a className="bodytitle">all at a price you can't say no to+</a>
-        <p>discover all 4 price plans, for 4 different sized projects.</p>
+            <div className="priceboxes">
 
-          <div className="priceboxes">
-
-            <div className="prepricebox"></div>
-            <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
-            <div className="silver">
-              <a className="boxtitle">Silver</a>
-              <p>Efficiency reports and employee recommendations</p>
-              <p>Up to 5 team members</p>
-              <p>Up to 20 active tasks</p>
-              <div className="payboxgap"></div>
-              <div className="paybox">
-              <div className="price">£2.89</div>
-              <p>pcm per member</p>
-              </div>
-            </div>
-            </a></Link>
-            <div className="boxspace"></div>
-
-            <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
-            <div className="gold">
-              <a className="boxtitle">Gold</a>
-              <p>Efficiency reports and employee recommendations</p>
-              <p>Up to 25 team members</p>
-              <p>Up to 100 active tasks</p>
-              <p>Up to 8 tasks in the critical path</p>
-              <div className="payboxgap"></div>
-              <div className="paybox">
-              <div className="price">£5.89</div>
-              <p>pcm per member</p>
-              </div>
-            </div>
-            </a></Link>
-
-            <div className="boxspace"></div>
-
-            <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
-            <div className="diamond">
-              <img className="crownsvg" src={crown}/>
-              <div className="diamondboxtext">
-                <p className="mostpopulartext" style={{"margin-top":"0px"}}>most popular</p>
-                <a className="boxtitle">Diamond</a>
+              <div className="prepricebox"></div>
+              <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
+              <div className="silver">
+                <a className="boxtitle">Silver</a>
                 <p>Efficiency reports and employee recommendations</p>
-                <p>Up to 50 team members</p>
-                <p>Up to 1000 active tasks</p>
-                <p>Up to 15 tasks in the critical path</p>
+                <p>Up to 5 team members</p>
+                <p>Up to 20 active tasks</p>
                 <div className="payboxgap"></div>
                 <div className="paybox">
-                  <div className="price">£8.89</div>
-                  <p>pcm per member</p>
+                <div className="price">£2.89</div>
+                <p>pcm per member</p>
                 </div>
               </div>
-            </div>
-            </a></Link>
+              </a></Link>
+              <div className="boxspace"></div>
 
-            <div className="boxspace"></div>
-
-            <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
-            <div className="platinum" style={{"padding-bottom":"8vh"}}>
-              <a className="boxtitle">Platinum</a>
-              <p>Efficiency reports and employee recommendations</p>
-              <p>Unlimited team members</p>
-              <p>Unlimited active tasks</p>
-              <p>Unlimited tasks in the critical path</p>
-              <p>Extra stuff for paying more - filler point</p>
-              <div className="payboxgap"></div>
-              <div className="paybox">
-              <div className="price">£15.89</div>
-              <p>pcm per member</p>
+              <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
+              <div className="gold">
+                <a className="boxtitle">Gold</a>
+                <p>Efficiency reports and employee recommendations</p>
+                <p>Up to 25 team members</p>
+                <p>Up to 100 active tasks</p>
+                <p>Up to 8 tasks in the critical path</p>
+                <div className="payboxgap"></div>
+                <div className="paybox">
+                <div className="price">£5.89</div>
+                <p>pcm per member</p>
+                </div>
               </div>
+              </a></Link>
+
+              <div className="boxspace"></div>
+
+              <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
+              <div className="diamond">
+                <img className="crownsvg" src={crown}/>
+                <div className="diamondboxtext">
+                  <p className="mostpopulartext" style={{"margin-top":"0px"}}>most popular</p>
+                  <a className="boxtitle">Diamond</a>
+                  <p>Efficiency reports and employee recommendations</p>
+                  <p>Up to 50 team members</p>
+                  <p>Up to 1000 active tasks</p>
+                  <p>Up to 15 tasks in the critical path</p>
+                  <div className="payboxgap"></div>
+                  <div className="paybox">
+                    <div className="price">£8.89</div>
+                    <p>pcm per member</p>
+                  </div>
+                </div>
+              </div>
+              </a></Link>
+
+              <div className="boxspace"></div>
+
+              <Link to="signupsection" smooth={true} activeClass="active" offset={-70}><a href="#">
+              <div className="platinum" style={{"padding-bottom":"8vh"}}>
+                <a className="boxtitle">Platinum</a>
+                <p>Efficiency reports and employee recommendations</p>
+                <p>Unlimited team members</p>
+                <p>Unlimited active tasks</p>
+                <p>Unlimited tasks in the critical path</p>
+                <p>Extra stuff for paying more - filler point</p>
+                <div className="payboxgap"></div>
+                <div className="paybox">
+                <div className="price">£15.89</div>
+                <p>pcm per member</p>
+                </div>
+              </div>
+              </a></Link>
+
+              <div className="postpricebox"></div>
             </div>
-            </a></Link>
 
-            <div className="postpricebox"></div>
-          </div>
-
-      </div>
+        </div>
+      </Fade>
 
       <div className="space2"/>
         <div id="signupsection" className="signupsection">

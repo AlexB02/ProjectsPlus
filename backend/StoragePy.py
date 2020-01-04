@@ -359,3 +359,12 @@ def getProjectTitle(projectid):
         return c.fetchone()[0]
     except:
         return "none"
+
+def getProjectColour(projectid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT colour FROM projectslist where projectid=?""",(projectid,))
+        return c.fetchone()[0]
+    except:
+        return "none"

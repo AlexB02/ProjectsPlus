@@ -237,11 +237,12 @@ def GetUserProject():
                 userid = sp.getIDbyEmail(email)
 
                 user = sp.userObj(userid)
-                username=user.firstname
+                username = user.firstname
                 projects = sp.getProjectNames(userid)
 
                 title = sp.getProjectTitle(request.json["projectid"])
-                return jsonify({"username":username,"projects":projects,"title":title})
+                colour = sp.getProjectColour(request.json["projectid"])
+                return jsonify({"username":username,"projects":projects,"title":title,"colour":colour})
     except:
         return flask.redirect("/")
 

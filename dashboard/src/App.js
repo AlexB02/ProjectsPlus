@@ -278,6 +278,10 @@ class ProfilePage extends React.Component {
     if (projecttitle === "") {
       return;
     }
+    if (projecttitle.length > 25) {
+      window.alert("Project titles must be less than 25 characters");
+      return;
+    }
     if (priceplan === null) {
       return;
     }
@@ -318,6 +322,8 @@ class ProfilePage extends React.Component {
       <html>
       <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={"Your Profile"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0} colour="crimson"/>
       <body className="Body">
+
+
         <PageMask visible={this.state.CreateProjectPopUpVisibility} onClick={this.clickOffCreateProjectPopUp}>
           <CreateProjectPopUp visible={this.state.CreateProjectPopUpVisibility} onClick={this.clickCreateProjectPopupCreateButton}>
             <div style={{"display":"grid"}}>
@@ -326,8 +332,9 @@ class ProfilePage extends React.Component {
                 <form style={{"display":"grid"}} onSubmit={this.removeformsubmit}>
                   <input type="text" className="boxinput" placeholder="project title" name="projecttitle" id="projecttitle" onInput={this.clickCreateProjectPopupCreateButton} required style={{"margin-left":"auto","margin-right":"auto","width":"100%","text-align":"center"}}/>
                   <p/>
-                  <input type="color" id="projectcolour" onInput={this.clickCreateProjectPopupCreateButton} required/>
+                  <input type="color" style={{"margin-left":"auto","margin-right":"auto","border-style":"none"}} id="projectcolour" onInput={this.clickCreateProjectPopupCreateButton} required/>
                   <p/>
+
                   <DropDownSelect id="priceplan" required>
                     <option value="" disabled selected>select price plan</option>
                     <option value="silver">silver</option>
@@ -335,6 +342,7 @@ class ProfilePage extends React.Component {
                     <option value="diamond">diamond</option>
                     <option value="platinum">platinum</option>
                   </DropDownSelect>
+
                   <p/>
                   <div style={{"display":"inline-flex","margin-left":"auto","margin-right":"auto"}}>
                     <input type="reset" value="Cancel" onClick={this.clickCreateProjectPopupCancelButton}/>
@@ -346,6 +354,8 @@ class ProfilePage extends React.Component {
             </div>
           </CreateProjectPopUp>
         </PageMask>
+
+
         <button onClick={this.addEfficiency} />
         <div className="widgets">
           <div className="horizontalWidgetGap" />
@@ -410,6 +420,7 @@ class ProjectPage extends React.Component {
           _this.setState({username: data.username});
           _this.setState({projects: data.projects});
           _this.setState({title: data.title});
+          _this.setState({colour: data.colour});
         });
       }
       catch (e) {};
@@ -419,7 +430,7 @@ class ProjectPage extends React.Component {
   render() {
     return (
       <html>
-        <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour="#e6e573"/>
+        <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour={this.state.colour}/>
         <div style={{"padding-top":"calc(75px + 1vh)"}}>Project: {this.state.title}</div>
       </html>
     )
