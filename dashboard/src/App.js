@@ -100,6 +100,23 @@ const NavBarDiv = styled.div`
   width: 100%;
 `
 
+const LogOutButtonWrapper = styled.div`
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 5px;
+  font-size: 2vh;
+  position: relative;
+  bottom: 5px;
+  border-width: 0.5px;
+  border-style: solid;
+  background-color: white;
+  padding: 7px 18px;
+
+  &:hover {
+    background-color: rgb(247,247,247);
+  }
+`
+
 class NavBar extends React.Component {
 
   constructor(props) {
@@ -136,10 +153,12 @@ class NavBar extends React.Component {
       <html>
         <NavBarDiv colour={this.props.colour}>
           <div class="NavBar">
-            <b><a><div onClick={this.logOut} style={{"border-color":"#e2f2f2","border-style":"solid","cursor":"pointer","border-radius":"6px","padding":"5px","font-size":"2vh","position":"relative","bottom":"5px","border-width":"2px"}}>Log Out</div></a></b>
-            <b><a>Welcome, {this.state.username}</a></b>
-            <a class="pageStateNavBar">Currently Viewing: <DropdownMenu title={this.state.page} items={this.props.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid}/>
-            </a>
+            <div>
+              <a class="pageStateNavBar" style={{"float":"left","margin-left":"4vw"}}><DropdownMenu title={this.state.page} items={this.props.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid}/></a>
+            </div>
+            <div>
+              <b><a><LogOutButtonWrapper onClick={this.logOut} style={{"margin-right":"4vw"}}>Log Out</LogOutButtonWrapper></a></b>
+            </div>
           </div>
         </NavBarDiv>
       </html>
@@ -320,7 +339,7 @@ class ProfilePage extends React.Component {
   render() {
       return (
       <html>
-      <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={"Your Profile"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0} colour="crimson"/>
+      <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={this.state.username + "'s Dashboard"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0} colour="crimson"/>
       <body className="Body">
 
 
@@ -330,9 +349,13 @@ class ProfilePage extends React.Component {
               <div style={{"font-size":"2.5vh","padding-bottom":"3vh"}}><b>Create a new project</b></div>
               <div>
                 <form style={{"display":"grid"}} onSubmit={this.removeformsubmit}>
+
                   <input type="text" className="boxinput" placeholder="project title" name="projecttitle" id="projecttitle" onInput={this.clickCreateProjectPopupCreateButton} required style={{"margin-left":"auto","margin-right":"auto","width":"100%","text-align":"center"}}/>
+
                   <p/>
+
                   <input type="color" style={{"margin-left":"auto","margin-right":"auto","border-style":"none"}} id="projectcolour" onInput={this.clickCreateProjectPopupCreateButton} required/>
+
                   <p/>
 
                   <DropDownSelect id="priceplan" required>
