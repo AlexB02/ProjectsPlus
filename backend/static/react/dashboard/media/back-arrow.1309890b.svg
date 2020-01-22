@@ -1,0 +1,16 @@
+<svg width="479.99999999999994" height="310" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="312" width="482" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect stroke="#8e8e8e" transform="rotate(90 269.8241271972657,153.02238464355472) " fill="#8e8e8e" stroke-width="5" x="237.324129" y="-39.477611" width="65" height="385.00001" id="svg_1" rx="9" ry="9"/>
+  <g transform="rotate(-90 96.52697753906254,154.42338562011722) " id="svg_5">
+   <rect fill="#8e8e8e" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="50.75033" y="129.34549" width="209.11074" height="50" id="svg_2" transform="rotate(224.35626220703125 155.30569458007812,154.34548950195312) " stroke="#8e8e8e" rx="7" ry="7"/>
+   <rect fill="#8e8e8e" stroke-width="5" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="-66.12753" y="130.22063" width="209.11074" height="50" transform="rotate(316.35626220703125 38.427833557128885,155.22062683105466) " stroke="#8e8e8e" id="svg_3" rx="7" ry="7"/>
+  </g>
+ </g>
+</svg>

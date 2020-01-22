@@ -11,10 +11,12 @@ const Project = styled.div`
   cursor: default;
   border-color: ${props => props.colour};
   border-style: solid;
-  border-width: 2px;
+  border-width: 0.5px;
+  background-color: white;
 
   &:hover {
-    box-shadow: 0 0 5px 0.5px #E2E2E2;
+    background-color: rgb(247,247,247);
+    cursor: pointer;
   }
 `
 
@@ -25,12 +27,14 @@ const CreateProjectButton = styled.div`
   border-radius: 6px;
   padding: 10px;
   cursor: default;
+  border-width: 0.5px;
   border-style: solid;
-  border-color: #e2f2f2;
-  border-width: 2px;
+  border-color: #e4e4e4;
+  background-color: white;
 
   &:hover {
-    box-shadow: 0 0 5px 0.5px #E2E2E2;
+    background-color: rgb(247,247,247);
+    cursor: pointer;
   }
 `
 

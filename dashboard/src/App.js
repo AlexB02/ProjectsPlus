@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { EfficienciesWidget } from "./EfficienciesWidget.js";
 import { ViewProjectsWidget } from "./ViewProjectsWidget.js";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import backarrow from "./img/back-arrow.svg";
 import styled from 'styled-components';
 
 class DropdownMenu extends React.Component {
@@ -109,6 +110,7 @@ const LogOutButtonWrapper = styled.div`
   bottom: 5px;
   border-width: 0.5px;
   border-style: solid;
+  border-color: #e4e4e4;
   background-color: white;
   padding: 7px 18px;
 
@@ -148,21 +150,45 @@ class NavBar extends React.Component {
     window.location.href = "/";
   }
 
+  back = () => {
+    this.props.triggerParentUpdate("profile",0);
+    return;
+  }
+
   render () {
-    return (
-      <html>
-        <NavBarDiv colour={this.props.colour}>
-          <div class="NavBar">
-            <div>
-              <a class="pageStateNavBar" style={{"float":"left","margin-left":"4vw"}}><DropdownMenu title={this.state.page} items={this.props.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid}/></a>
+    if (this.state.page === (this.state.username + "'s Dashboard")) {
+      return (
+        <html>
+          <NavBarDiv colour={this.props.colour}>
+            <div class="NavBar">
+              <div>
+                <a class="pageStateNavBar" style={{"float":"left","margin-left":"4vw"}}>{this.state.page}</a>
+              </div>
+              <div>
+                <a><LogOutButtonWrapper onClick={this.logOut} style={{"margin-right":"4vw"}}>Log Out</LogOutButtonWrapper></a>
+              </div>
             </div>
-            <div>
-              <b><a><LogOutButtonWrapper onClick={this.logOut} style={{"margin-right":"4vw"}}>Log Out</LogOutButtonWrapper></a></b>
+          </NavBarDiv>
+        </html>
+      )
+    }
+    else {
+      return (
+        <html>
+          <NavBarDiv colour={this.props.colour}>
+            <div class="NavBar">
+              <div>
+                <img class="arrowsvgvert" src={backarrow} onClick={this.back} title="Back to profile" style={{"padding-left":"4vw","padding-top":"calc(15px + 1vmin)"}}/>
+                <a class="pageStateNavBar" style={{"float":"left"}}>Alex Bainbridge / <b>{this.state.page}</b></a>
+              </div>
+              <div>
+                <a><LogOutButtonWrapper onClick={this.logOut} style={{"margin-right":"4vw"}}>Log Out</LogOutButtonWrapper></a>
+              </div>
             </div>
-          </div>
-        </NavBarDiv>
-      </html>
-  )
+          </NavBarDiv>
+        </html>
+      )
+    }
   }
 }
 
@@ -454,7 +480,7 @@ class ProjectPage extends React.Component {
     return (
       <html>
         <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour={this.state.colour}/>
-        <div style={{"padding-top":"calc(75px + 1vh)"}}>Project: {this.state.title}</div>
+        <div style={{"padding-top":"calc(75px + 1vh)","padding-left":"4vw"}}>Project: {this.state.title}</div>
       </html>
     )
   }

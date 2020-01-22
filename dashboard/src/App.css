@@ -127,6 +127,15 @@
   width: 8px;
 }
 
+.arrowsvgvert {
+  width: 25px;
+  float: left;
+}
+
+.arrowsvgvert:hover {
+  cursor: pointer;
+}
+
 .ArrowButton {
   width: min-content;
   border: 0;
