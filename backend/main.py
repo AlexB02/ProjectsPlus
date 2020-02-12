@@ -222,7 +222,9 @@ def getuserprofile():
         timeEfficienciesMin = sp.getEfficiencies(userid,"time","min")
         scheduleEfficienciesMax = sp.getEfficiencies(userid,"time","max")
         projects = sp.getProjectNames(userid)
-        return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin,"scheduleEfficienciesMax":scheduleEfficienciesMax,"projects":projects})
+        tasks = sp.getOverviewTasks(userid)
+        print(str(tasks))
+        return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin,"scheduleEfficienciesMax":scheduleEfficienciesMax,"projects":projects,"tasks":tasks})
     except:
         print("Error")
         return flask.redirect("/")
@@ -238,11 +240,39 @@ def GetUserProject():
 
                 user = sp.userObj(userid)
                 username = user.firstname
-                projects = sp.getProjectNames(userid)
+                lastname = sp.getLastnameByID(userid)
 
                 title = sp.getProjectTitle(request.json["projectid"])
                 colour = sp.getProjectColour(request.json["projectid"])
-                return jsonify({"username":username,"projects":projects,"title":title,"colour":colour})
+                description = sp.getProjectDescription(request.json["projectid"])
+                tasks = sp.getProjectTasks(request.json["projectid"])
+
+                return jsonify({"username":username,"lastname":lastname,"title":title,"colour":colour,"description":description,"tasks":tasks})
+    except:
+        return flask.redirect("/")
+
+@app.route("/getusertask",methods=["POST","GET"])
+def GetUserTask():
+    try:
+        if session["authenticated"] == "True":
+            if request.method == "POST":
+                email = session["email"]
+
+                userid = sp.getIDbyEmail(email)
+
+                user = sp.userObj(userid)
+
+                username = user.firstname
+                lastname = sp.getLastnameByID(userid)
+                taskid = request.json["taskid"]
+                taskname = sp.getTaskName(taskid)
+                projectid = sp.getTaskProjectID(taskid)
+                colour = sp.getProjectColour(projectid)
+                projecttitle = sp.getProjectTitle(projectid)
+
+                description = sp.getTaskDescription(taskid)
+
+                return jsonify({"username":username,"lastname":lastname,"project":projecttitle,"projectid":projectid,"taskname":taskname,"colour":colour,"description":description})
     except:
         return flask.redirect("/")
 
@@ -250,7 +280,7 @@ def GetUserProject():
 def createproject():
     try:
         email = session["email"]
-        projectid = sp.addProject(request.json["title"],str(request.json["colour"]))
+        projectid = sp.addProject(request.json["title"],str(request.json["colour"]),request.json["description"])
         sp.addMemberToProject(int(sp.getIDbyEmail(email)),projectid,"manager")
         return jsonify({})
     except:
@@ -263,6 +293,16 @@ def addefficiency():
         userid = sp.getIDbyEmail(email)
         skills = sp.getSkillsList()
         sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),skills[random.randint(0,len(skills)-1)],1)
+        return jsonify({})
+    except:
+        return flask.redirect("/")
+
+@app.route("/updatetask",methods=["POST","GET"])
+def updatetask():
+    try:
+        id = request.json["taskid"]
+        state = request.json["state"]
+        sp.updateTask(id,str(state))
         return jsonify({})
     except:
         return flask.redirect("/")

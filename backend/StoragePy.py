@@ -65,6 +65,7 @@ def create(c):
                     projecttitle text,
                     iconlocation text,
                     colour text,
+                    description text,
                     PRIMARY KEY (projectid)
         )""")
 
@@ -91,7 +92,8 @@ def create(c):
                     taskid integer,
                     title text,
                     description text,
-                    targetCompletionDate real,
+                    deadline real,
+                    complete text,
                     PRIMARY KEY (projectid,taskid)
         )""")
 
@@ -104,7 +106,6 @@ def create(c):
                     memberid integer,
                     taskid integer,
                     status text,
-                    inProgressDate real,
                     PRIMARY KEY (memberid,taskid)
         )""")
 
@@ -303,11 +304,10 @@ def getSkillAbbrv(skill):
     c.execute("""SELECT abbrv FROM skillslist where title=?""",(skill,))
     return c.fetchone()[0]
 
-def addProject(projecttitle,colour):
+def addProject(projecttitle,colour,description):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
-    c.execute("""insert into projectslist (projectid,projecttitle,iconlocation,colour) values (NULL,?,?,?)""",(projecttitle,"/",colour,))
-    print("this happened")
+    c.execute("""insert into projectslist (projectid,projecttitle,iconlocation,colour,description) values (NULL,?,?,?,?)""",(projecttitle,"/",colour,description))
     c.execute("""select projectid from projectslist where projecttitle=?""",(projecttitle,))
     projects = c.fetchall()
     conn.commit()
@@ -367,4 +367,115 @@ def getProjectColour(projectid):
         c.execute("""SELECT colour FROM projectslist where projectid=?""",(projectid,))
         return c.fetchone()[0]
     except:
+        return "none"
+
+def getLastnameByID(userid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT lastname FROM members where memberid=?""",(userid,))
+        return c.fetchone()[0]
+    except:
+        return "none"
+
+def getOverviewTasks(userid):
+
+    # Need to get task name, the project the task is from, the due date and the task id
+    # Get all task ids assigned to the user
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT taskid FROM membertasks where memberid=?""",(userid,))
+        taskids = []
+        for task in c.fetchall():
+            taskids.append(task[0])
+
+        #Get project id, title and deadline using task id from tasks
+        tasklist = []
+        newtasklist = []
+        for taskid in taskids:
+            c.execute("""SELECT projectid, title, deadline, complete FROM tasks where taskid=?""",(taskid,))
+            task = c.fetchone()
+            # taskid, projectid, title, deadline, complete
+            tasklist.append([taskid,task[0],task[1],task[2],task[3]])
+
+        # Get project title using projectid from projects list
+        for task in tasklist:
+            c.execute("""SELECT projecttitle FROM projectslist where projectid=?""",(task[1],))
+            projecttitle = c.fetchone()[0]
+            # task id, project title, project id,
+            newtasklist.append([task[0],projecttitle,task[2],task[3],task[4]])
+        return newtasklist
+    except:
+        return "none"
+
+def getProjectTasks(projectid):
+
+    # Need to get task name, the project the task is from, the due date and the task id
+    # Get all task ids assigned to the user
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT taskid, title, deadline, complete FROM tasks where projectid=?""",(projectid,))
+        # Needs to return list of dictionaries with each task id as the key and all the values as the value
+        tasksQuery = c.fetchall()
+        tasks = []
+        for task in tasksQuery:
+            print(task[3])
+            tasks.append({task[0]:[task[1],task[2],task[3]]})
+
+        return tasks
+        # Obtain task name, description, deadline, complete
+
+    except Exception as e:
+        return "none"
+
+def getTaskName(taskid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT title FROM tasks where taskid=?""",(taskid,))
+        return c.fetchone()[0]
+    except:
+        return "none"
+
+def getTaskProjectID(taskid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT projectid FROM tasks where taskid=?""",(taskid,))
+        return c.fetchone()[0]
+    except:
+        return "none"
+
+def getTaskDescription(taskid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT description FROM tasks where taskid=?""",(taskid,))
+        return c.fetchone()[0]
+    except:
+        return "none"
+
+def getProjectDescription(projectid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT description FROM projectslist where projectid=?""",(projectid,))
+        return c.fetchone()[0]
+    except:
+        return "none"
+
+def updateTask(taskid,state):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+
+        c.execute("UPDATE tasks SET complete='"+str(state)+"' WHERE taskid="+taskid)
+
+        conn.commit()
+        conn.close()
+
+    except Exception as e:
+        print(str(e))
         return "none"

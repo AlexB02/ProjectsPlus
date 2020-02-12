@@ -3,95 +3,15 @@ import './App.css';
 import $ from 'jquery';
 import { EfficienciesWidget } from "./EfficienciesWidget.js";
 import { ViewProjectsWidget } from "./ViewProjectsWidget.js";
+import { ViewTasksWidget } from "./ViewTasksWidget.js";
+import { ProjectViewTasksWidget } from "./ProjectViewTasksWidget.js";
+import { ProjectStatisticsWidget } from "./ProjectStatisticsWidget.js";
+import { ProjectOverview } from "./ProjectOverview.js";
+import { LatestManagersNotes } from "./LatestManagersNotes.js";
+import { ProjectMembersWidget } from "./ProjectMembersWidget.js";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import backarrow from "./img/back-arrow.svg";
 import styled from 'styled-components';
-
-class DropdownMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {"title":props.title || "title",
-                  "items":props.items,
-                  "projectid":0};
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.title) {
-      this.setState({"title":props.title});
-    }
-    if (props.items) {
-      this.setState({"items":props.items});
-    }
-    if (props.projectid) {
-      this.setState({"projectid":props.projectid});
-    }
-  }
-
-  selectChange = (event) => {
-
-    for(var i = 0; i < this.props.items.length; i++) {
-
-      if(this.props.items[i]["title"] === event.target.value) {
-
-        console.log("Changing dashboard state");
-
-        this.props.triggerParentUpdate(event.target.value,this.props.items[i]["id"]);
-        return;
-      }
-
-    }
-    this.props.triggerParentUpdate(event.target.value,0);
-
-  }
-
-  render() {
-    if (this.state.title === "Your Profile") {
-      return (
-        <html>
-          <select id="ProjectViewDropdown" class="ProjectViewDropdown" onChange={this.selectChange}>
-            <option value={"profile"}>{this.props.title}</option>
-            {this.state.items && this.state.items.length && this.state.items.map((project,i) => <option value={project["title"]}>{project["title"]}</option>)}
-          </select>
-        </html>
-      )
-    }
-    else if (this.state.title !== "title") {
-      if (this.props.items) {
-
-        var projectid = this.props.projectid;
-
-        for (var i = 0; i < this.props.items.length; i++) {
-
-          if (this.props.items[i]["id"] == this.props.projectid) {
-            console.log("Removed: "+JSON.stringify(this.props.items[i]));
-            this.props.items.splice(i,1);
-
-          }
-        }
-        return (
-          <html>
-            <select id="ProjectViewDropdown" class="ProjectViewDropdown" onChange={this.selectChange}>
-              <option value={this.state.title}>{this.state.title}</option>
-              {this.state.items && this.state.items.length && this.state.items.map((project,i) => <option value={project["title"]}>{project["title"]}</option>)}
-              <option value="profile">Your Profile</option>
-            </select>
-          </html>
-        )
-      }
-      else {
-        return (
-          <div>none</div>
-        )
-      }
-    }
-    else {
-      return (
-        <div>none</div>
-      )
-    }
-  }
-
-}
 
 const NavBarDiv = styled.div`
   z-index: 4;
@@ -117,13 +37,24 @@ const LogOutButtonWrapper = styled.div`
   &:hover {
     background-color: rgb(247,247,247);
   }
+
+  &:active {
+    background-color: rgb(200,200,200);
+  }
+`
+
+const TextHoverUnderline = styled.div`
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `
 
 class NavBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {username:"",page:"",projectid:0,projects:[]};
+    this.state = {username:"",lastname:"",page:"",projectid:0,projects:[]};
     this.setState({username:props.username});
     this.setState({page:props.page});
     if (props.projectid) {
@@ -137,6 +68,7 @@ class NavBar extends React.Component {
 
   componentWillReceiveProps(props) {
     this.setState({username:props.username});
+    this.setState({lastname:props.lastname});
     this.setState({page:props.page});
     if (props.projects) {
       this.setState({projects:props.projects});
@@ -144,18 +76,47 @@ class NavBar extends React.Component {
     if (props.projectid) {
       this.setState({projectid:props.projectid});
     }
+    // Will receive next if a task redirection
+    if (props.task) {
+        this.setState({task:props.task});
+    }
+    if (props.projectname) {
+        this.setState({projectname:props.projectname});
+    }
   }
 
   logOut = () => {
     window.location.href = "/";
   }
 
-  back = () => {
-    this.props.triggerParentUpdate("profile",0);
+  toProfile = () => {
+    this.props.triggerParentUpdate("profile","profile",0);
+    return;
+  }
+
+  toProject = () => {
+    this.props.triggerParentUpdate(this.state.projectname,"project",this.state.projectid);
     return;
   }
 
   render () {
+    if (this.state.task == "true") {
+      return (
+        <html>
+          <NavBarDiv colour={this.props.colour}>
+            <div class="NavBar">
+              <div>
+                <img class="arrowsvgvert" src={backarrow} onClick={this.toProject} title="Back to profile" style={{"padding-left":"4vw","padding-top":"calc(18px + 1vh)"}}/>
+                <a class="pageStateNavBar" style={{"float":"left"}}><TextHoverUnderline onClick={this.toProfile}>{this.state.username} {this.state.lastname}</TextHoverUnderline> / <TextHoverUnderline onClick={this.toProject}>{this.state.projectname}</TextHoverUnderline> / <b>{this.state.page}</b></a>
+              </div>
+              <div>
+                <a><LogOutButtonWrapper onClick={this.logOut} style={{"margin-right":"4vw"}}>Log Out</LogOutButtonWrapper></a>
+              </div>
+            </div>
+          </NavBarDiv>
+        </html>
+      )
+    }
     if (this.state.page === (this.state.username + "'s Dashboard")) {
       return (
         <html>
@@ -178,8 +139,8 @@ class NavBar extends React.Component {
           <NavBarDiv colour={this.props.colour}>
             <div class="NavBar">
               <div>
-                <img class="arrowsvgvert" src={backarrow} onClick={this.back} title="Back to profile" style={{"padding-left":"4vw","padding-top":"calc(15px + 1vmin)"}}/>
-                <a class="pageStateNavBar" style={{"float":"left"}}>Alex Bainbridge / <b>{this.state.page}</b></a>
+                <img class="arrowsvgvert" src={backarrow} onClick={this.toProfile} title="Back to profile" style={{"padding-left":"4vw","padding-top":"calc(18px + 1vh)"}}/>
+                <a class="pageStateNavBar" style={{"float":"left"}}><TextHoverUnderline onClick={this.toProfile}>{this.state.username} {this.state.lastname}</TextHoverUnderline> / <b>{this.state.page}</b></a>
               </div>
               <div>
                 <a><LogOutButtonWrapper onClick={this.logOut} style={{"margin-right":"4vw"}}>Log Out</LogOutButtonWrapper></a>
@@ -251,6 +212,7 @@ class ProfilePage extends React.Component {
         req.done(function(data){
             _this.setState({username: data.username});
             _this.setState({projects: data.projects});
+            _this.setState({tasks: data.tasks});
             _this.setState({timeEfficienciesMax: data.timeEfficienciesMax});
             _this.setState({timeEfficienciesMin: data.timeEfficienciesMin});
             return;
@@ -259,7 +221,8 @@ class ProfilePage extends React.Component {
       catch (e) {
         console.log("Error");
       };
-    })};
+    })
+  };
 
   constructor(props) {
 
@@ -269,6 +232,7 @@ class ProfilePage extends React.Component {
     this.state = {
       username: "",
       projects: [],
+      tasks: "",
       timeEfficienciesMax: [],
       timeEfficienciesMin: [],
       CreateProjectPopUpVisibility: "hidden",
@@ -317,24 +281,24 @@ class ProfilePage extends React.Component {
 
   submitNewProject = () => {
     var projecttitle = $("#projecttitle").val()
-    var priceplan = $("#priceplan").val();
+    var description = $("#description").val()
     var colour = $("#projectcolour").val();
 
     if (projecttitle === "") {
+      return;
+    }
+    if (description === "") {
       return;
     }
     if (projecttitle.length > 25) {
       window.alert("Project titles must be less than 25 characters");
       return;
     }
-    if (priceplan === null) {
-      return;
-    }
     if (colour === null) {
       return;
     }
     // Submission is Valid
-    var project = {"title":projecttitle,"pricing":priceplan,"colour":colour};
+    var project = {"title":projecttitle,"colour":colour,"description":description};
     let _this = this;
     $(document).ready(function(){
       var req = $.ajax({url: "/createproject",
@@ -365,7 +329,7 @@ class ProfilePage extends React.Component {
   render() {
       return (
       <html>
-      <NavBar className="NavBar" username={this.state.username} projects={this.state.projects} page={this.state.username + "'s Dashboard"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0} colour="crimson"/>
+      <NavBar className="NavBar" username={this.state.username} lastname="" projects={this.state.projects} page={this.state.username + "'s Dashboard"} triggerParentUpdate={this.props.triggerParentUpdate} projectid={0} colour="crimson"/>
       <body className="Body">
 
 
@@ -380,17 +344,11 @@ class ProfilePage extends React.Component {
 
                   <p/>
 
-                  <input type="color" style={{"margin-left":"auto","margin-right":"auto","border-style":"none"}} id="projectcolour" onInput={this.clickCreateProjectPopupCreateButton} required/>
+                  <input type="text" className="boxinput" placeholder="description" name="description" id="description" onInput={this.clickCreateProjectPopupCreateButton} required style={{"margin-left":"auto","margin-right":"auto","width":"100%","text-align":"center"}}/>
 
                   <p/>
 
-                  <DropDownSelect id="priceplan" required>
-                    <option value="" disabled selected>select price plan</option>
-                    <option value="silver">silver</option>
-                    <option value="gold">gold</option>
-                    <option value="diamond">diamond</option>
-                    <option value="platinum">platinum</option>
-                  </DropDownSelect>
+                  <input type="color" style={{"margin-left":"auto","margin-right":"auto","border-style":"none"}} id="projectcolour" onInput={this.clickCreateProjectPopupCreateButton} required/>
 
                   <p/>
                   <div style={{"display":"inline-flex","margin-left":"auto","margin-right":"auto"}}>
@@ -404,28 +362,29 @@ class ProfilePage extends React.Component {
           </CreateProjectPopUp>
         </PageMask>
 
-
-        <button onClick={this.addEfficiency} />
-        <div className="widgets">
+        <div style={{"display":"inline-flex","width":"100%"}}>
+          <div style={{"padding-top":"calc(47px + 1vmin)","width":"max-content"}}>
+            {/*Potential placement of view projects widget as a side bar*/}
+          </div>
+          <div className="widgets">
           <div className="horizontalWidgetGap" />
           <div className="widgets-column">
-            <EfficienciesWidget title="Your best skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={7} colour="rgb(112, 175, 121)"/>
+            <ViewTasksWidget tasks={this.state.tasks} triggerParentUpdate={this.props.triggerParentUpdate}/>
+            {/*<button onClick={this.addEfficiency} />*/}
             <div className="verticalWidgetGap"/>
-            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={5} colour="#C0392B"/>
+          </div>
+          <div className="horizontalWidgetGap" />
+          <div className="widgets-column">
+            <EfficienciesWidget title="Your top 5 skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={5} colour="rgb(112, 175, 121)"/>
+            <div className="verticalWidgetGap"/>
+            <EfficienciesWidget title="Your lowest 5 skills when meeting a deadline" data={this.state.timeEfficienciesMin} length={5} colour="#C0392B"/>
+            <div className="verticalWidgetGap"/>
           </div>
           <div className="horizontalWidgetGap" />
           <div className="widgets-column">
             <ViewProjectsWidget title="Your projects" projects={this.state.projects} triggerCreateProject={this.createNewProject} triggerParentUpdate={this.props.triggerParentUpdate}/>
-            <div className="verticalWidgetGap"/>
-            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={9} colour="#5DADE2"/>
           </div>
-          <div className="horizontalWidgetGap" />
-          <div className="widgets-column">
-            <EfficienciesWidget title="Skills to improve when meeting a deadline" data={this.state.timeEfficienciesMin} length={9} colour="#1596B9"/>
-            <div className="verticalWidgetGap"/>
-            <ViewProjectsWidget title="Your tasks" projects={this.state.projects} triggerCreateProject={this.createNewProject} triggerParentUpdate={this.props.triggerParentUpdate}/>
-          </div>
-          <div className="horizontalWidgetGap" />
+        </div>
         </div>
       </body>
 
@@ -437,6 +396,8 @@ class ProfilePage extends React.Component {
   };
 };
 
+// ################################# Project page #################################
+
 class ProjectPage extends React.Component {
 
   constructor(props) {
@@ -445,15 +406,16 @@ class ProjectPage extends React.Component {
     // Setup all state variables for the body
     this.state = {
       username: "",
+      lastname: "",
       projects: [],
       projectid: 0,
       title: ""
     }
     this.setState({projectid:props.projectid});
-    this.getUserProjectData(props.projectid);
+    this.getProjectData(props.projectid);
   }
 
-  getUserProjectData = (projectid) => {
+  getProjectData = (projectid) => {
     let _this = this;
     $(document).ready(function(){
       // Get user details
@@ -467,9 +429,11 @@ class ProjectPage extends React.Component {
       try {
         req.done(function(data) {
           _this.setState({username: data.username});
-          _this.setState({projects: data.projects});
+          _this.setState({lastname: data.lastname});
           _this.setState({title: data.title});
           _this.setState({colour: data.colour});
+          _this.setState({description: data.description});
+          _this.setState({tasks: data.tasks});
         });
       }
       catch (e) {};
@@ -479,8 +443,75 @@ class ProjectPage extends React.Component {
   render() {
     return (
       <html>
-        <NavBar className="NavBar" username={this.state.username} page={this.state.title} projects={this.state.projects} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour={this.state.colour}/>
-        <div style={{"padding-top":"calc(75px + 1vh)","padding-left":"4vw"}}>Project: {this.state.title}</div>
+        <NavBar className="NavBar" username={this.state.username} lastname={this.state.lastname} page={this.state.title} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour={this.state.colour}/>
+        <div class="widgets">
+
+          <div className="horizontalWidgetGap"/>
+          <div class="widgets-column" style={{"width":"66vw"}}>
+            <div style={{"display":"flex"}}>
+              <ProjectOverview text={this.state.description}/>
+              <div className="horizontalWidgetGap"/>
+              <LatestManagersNotes text="These are the latest managers notes but if theres more text here then the box will get alrger. Or will the text get larger? not sure tbh, theres loads here not mate ngl, so do you reckon itll get even bigger or what?"/>
+            </div>
+            <div class="verticalWidgetGap" />
+            <ProjectViewTasksWidget tasks={this.state.tasks} triggerParentUpdate={this.props.triggerParentUpdate}/>
+            <div class="verticalWidgetGap" />
+            <ProjectStatisticsWidget />
+          </div>
+          <div className="horizontalWidgetGap" />
+          <div class="widgets-column" style={{"width":"20vw"}}>
+            {/* Requires number of tasks complete and number of tasks*/}
+            <ProjectMembersWidget members={[{"1":["Alex Bainbridge",1]}]} triggerParentUpdate={this.props.triggerParentUpdate}/>
+          </div>
+        </div>
+        <div style={{"padding-bottom":"5vh"}} />
+      </html>
+    )
+  }
+}
+
+class TaskPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    // Setup all state variables for the body
+    this.state = {};
+    this.getTaskData(props.taskid);
+  }
+
+  getTaskData = (taskid) => {
+    let _this = this;
+    $(document).ready(function(){
+      // Get user details
+      var req = $.ajax({url: "/getusertask",
+                        type: "POST" ,
+                        data: JSON.stringify({taskid}),
+                        dataType: "json",
+                        contentType: "application/json;charset=utf-8",
+                      });
+
+      try {
+        req.done(function(data) {
+          // NavBar
+          _this.setState({username: data.username});
+          _this.setState({lastname: data.lastname});
+          _this.setState({project: data.project});
+          _this.setState({projectid: data.projectid});
+          _this.setState({taskname: data.taskname});
+          _this.setState({colour: data.colour});
+
+          // Body
+          _this.setState({description: data.description});
+        });
+      }
+      catch (e) {};
+    });
+  };
+  render() {
+    return (
+      <html>
+        <NavBar className="NavBar" username={this.state.username} lastname={this.state.lastname} projectname={this.state.project} projectid={this.state.projectid} page={this.state.taskname} task="true" triggerParentUpdate={this.props.triggerParentUpdate} colour={this.state.colour}/>
       </html>
     )
   }
@@ -493,21 +524,34 @@ export class Body extends React.Component {
     this.state.page = "profile";
   }
 
-  updatePage = (page,projectid) => {
-    console.log("Updating page")
-    this.setState({"page":page});
-    this.state.projectid = projectid;
+  updatePage = (page,taskorproject,id) => {
+    if (taskorproject == "project") {
+      this.setState({"page":["project",page]});
+      this.state.projectid = id;
+    }
+    else if (taskorproject == "task") {
+      this.setState({"page":["task",page]});
+      this.state.taskid = id;
+    }
+    else {
+      this.setState({"page":["profile",page]});
+    }
   }
 
   render() {
-    if (this.state.page === "profile") {
+    if (this.state.page[0] === "project") {
       return (
-        <ProfilePage triggerParentUpdate={this.updatePage}/>
+        <ProjectPage projectid={this.state.projectid} triggerParentUpdate={this.updatePage}/>
+      )
+    }
+    else if (this.state.page[0] === "task") {
+      return (
+        <TaskPage taskid={this.state.taskid} triggerParentUpdate={this.updatePage}/>
       )
     }
     else {
       return (
-        <ProjectPage projectid={this.state.projectid} triggerParentUpdate={this.updatePage}/>
+        <ProfilePage triggerParentUpdate={this.updatePage}/>
       )
     }
   }

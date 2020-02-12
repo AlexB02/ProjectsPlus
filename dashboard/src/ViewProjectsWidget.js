@@ -18,6 +18,10 @@ const Project = styled.div`
     background-color: rgb(247,247,247);
     cursor: pointer;
   }
+
+  &:active {
+    background-color: rgb(200,200,200);
+  }
 `
 
 const CreateProjectButton = styled.div`
@@ -36,6 +40,10 @@ const CreateProjectButton = styled.div`
     background-color: rgb(247,247,247);
     cursor: pointer;
   }
+
+  &:active {
+    background-color: rgb(200,200,200);
+  }
 `
 
 const EfficiencyTitleBar = styled.span`
@@ -48,6 +56,8 @@ const EfficiencyTitleBar = styled.span`
   transition: all 0.2s;
   z-index: 1;
   color: white;
+  cursor: default;
+  font-weight: bold;
 `
 
 export class ViewProjectsWidget extends React.Component {
@@ -65,7 +75,7 @@ export class ViewProjectsWidget extends React.Component {
 
     for (var index in this.state.projects) {
       if (JSON.stringify(this.state.projects[index]["id"]) === event.target.id) {
-        this.props.triggerParentUpdate(JSON.stringify(this.state.projects[index]["title"]),event.target.id);
+        this.props.triggerParentUpdate(JSON.stringify(this.state.projects[index]["title"]),"project",event.target.id);
       }
     }
 
@@ -75,7 +85,7 @@ export class ViewProjectsWidget extends React.Component {
     if (this.state.projects.length) {
       return (
         <html class="widget">
-          <EfficiencyTitleBar colour="#A569BD"><b>{this.props.title}</b></EfficiencyTitleBar>
+          <EfficiencyTitleBar colour="#008080"><b>{this.props.title}</b></EfficiencyTitleBar>
           <p/>
           {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage} colour={project["colour"]}>{project["title"]}</Project><p/></div>)}
           <CreateProjectButton onClick={this.props.triggerCreateProject}>Create a project</CreateProjectButton>
@@ -86,7 +96,7 @@ export class ViewProjectsWidget extends React.Component {
     else {
       return (
         <html class="widget">
-          <EfficiencyTitleBar colour="#A569BD"><b>{this.props.title}</b></EfficiencyTitleBar>
+          <EfficiencyTitleBar colour="#008080"><b>{this.props.title}</b></EfficiencyTitleBar>
           <p/>
           You are not a member of any projects
           <p/>
