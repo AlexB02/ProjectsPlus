@@ -154,7 +154,11 @@ def getIDbyEmail(email):
     c = conn.cursor()
     c.execute("""SELECT memberid FROM members WHERE email=?""",(email,))
 
-    return c.fetchall()[0][0]
+    try:
+        id = c.fetchall()[0][0]
+        return id
+    except:
+        return "False"
 
 ###########################################################
 # User Class for login authentication #####################
@@ -344,7 +348,6 @@ def getProjectMembers(projectid):
         memberlist = []
         for member in members:
             id = member[0]
-            print(id)
             c.execute("""select firstname, lastname from members where memberid=?""",(id,))
             name = c.fetchone()
             firstname = name[0]
@@ -352,7 +355,6 @@ def getProjectMembers(projectid):
             name = firstname + " " + lastname
             memberlist.append([id,name])
 
-        print(memberlist)
         return memberlist
     except:
         print("Exception")

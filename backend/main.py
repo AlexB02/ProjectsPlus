@@ -307,6 +307,22 @@ def updatetask():
     except:
         return flask.redirect("/")
 
+@app.route("/addmembertoproject",methods=["POST","GET"])
+def addmembertoproject():
+    try:
+        email = request.json["email"]
+        projectid = request.json["projectid"]
+        memberid = sp.getIDbyEmail(email)
+
+        if memberid == "False":
+            return jsonify({"isMember":"False"})
+
+        sp.addMemberToProject(memberid,projectid,"member")
+
+        return jsonify({})
+    except:
+        return flask.redirect("/")
+
 @app.errorhandler(404)
 def page_not_found(e):
     session["authenticated"] = "False"
