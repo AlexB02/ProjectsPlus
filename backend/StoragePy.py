@@ -333,6 +333,32 @@ def addMemberToProject(userid,projectid,role):
     conn.commit()
     conn.close()
 
+def getProjectMembers(projectid):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+
+    try:
+        c.execute("""select memberid from projectmembers where projectid=?""",(projectid,))
+        members = c.fetchall()
+
+        memberlist = []
+        for member in members:
+            id = member[0]
+            print(id)
+            c.execute("""select firstname, lastname from members where memberid=?""",(id,))
+            name = c.fetchone()
+            firstname = name[0]
+            lastname = name[1]
+            name = firstname + " " + lastname
+            memberlist.append([id,name])
+
+        print(memberlist)
+        return memberlist
+    except:
+        print("Exception")
+
+    conn.close()
+
 def getProjectNames(userid):
     projects = []
     projectids = []
@@ -421,7 +447,6 @@ def getProjectTasks(projectid):
         tasksQuery = c.fetchall()
         tasks = []
         for task in tasksQuery:
-            print(task[3])
             tasks.append({task[0]:[task[1],task[2],task[3]]})
 
         return tasks

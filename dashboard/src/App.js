@@ -434,6 +434,7 @@ class ProjectPage extends React.Component {
           _this.setState({colour: data.colour});
           _this.setState({description: data.description});
           _this.setState({tasks: data.tasks});
+          _this.setState({members: data.members});
         });
       }
       catch (e) {};
@@ -461,7 +462,7 @@ class ProjectPage extends React.Component {
           <div className="horizontalWidgetGap" />
           <div class="widgets-column" style={{"width":"20vw"}}>
             {/* Requires number of tasks complete and number of tasks*/}
-            <ProjectMembersWidget members={[{"1":["Alex Bainbridge",1]}]} triggerParentUpdate={this.props.triggerParentUpdate}/>
+            <ProjectMembersWidget members={this.state.members} triggerParentUpdate={this.props.triggerParentUpdate}/>
           </div>
         </div>
         <div style={{"padding-bottom":"5vh"}} />

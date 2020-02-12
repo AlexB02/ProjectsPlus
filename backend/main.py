@@ -28,7 +28,7 @@ def load_user(id):
 # Set the secret key of the site to a randomly generated string of letters, numbers and characters
 app.secret_key = secrets.token_urlsafe(32)
 # Set the time for a valid login (test value)
-app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(seconds=1800)
+app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(days=31)
 
 app.EXPLAIN_TEMPLATE_LOADING = True
 
@@ -223,7 +223,6 @@ def getuserprofile():
         scheduleEfficienciesMax = sp.getEfficiencies(userid,"time","max")
         projects = sp.getProjectNames(userid)
         tasks = sp.getOverviewTasks(userid)
-        print(str(tasks))
         return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin,"scheduleEfficienciesMax":scheduleEfficienciesMax,"projects":projects,"tasks":tasks})
     except:
         print("Error")
@@ -246,8 +245,9 @@ def GetUserProject():
                 colour = sp.getProjectColour(request.json["projectid"])
                 description = sp.getProjectDescription(request.json["projectid"])
                 tasks = sp.getProjectTasks(request.json["projectid"])
+                members = sp.getProjectMembers(request.json["projectid"])
 
-                return jsonify({"username":username,"lastname":lastname,"title":title,"colour":colour,"description":description,"tasks":tasks})
+                return jsonify({"username":username,"lastname":lastname,"title":title,"colour":colour,"description":description,"tasks":tasks,"members":members})
     except:
         return flask.redirect("/")
 

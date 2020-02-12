@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from "styled-components";
+import Popup from "reactjs-popup";
 
 const EfficiencyTitleBar = styled.span`
   font-family: 'Karla', sans-serif;
@@ -73,7 +74,7 @@ export class ProjectMembersWidget extends React.Component {
       var memberlist = [];
 
       for (let member in members) {
-        memberlist.push(members[member][Object.keys(members[member])]);
+        memberlist.push(members[member]);
       }
 
       this.setState({"members":memberlist});
@@ -84,11 +85,14 @@ export class ProjectMembersWidget extends React.Component {
     if (this.state.members.length) {
       return (
         <html class="widget">
+
           <EfficiencyTitleBar colour="#FF476C">Members</EfficiencyTitleBar>
           <Gap />
           <table style={{"border-collapse":"collapse","font-size":"large"}}>
-            {this.state.members.map((member,i) => <Member><td id={member[1]}>{member[0]}</td></Member>)}
-            <AddMember><td>Add member +</td></AddMember>
+            {this.state.members.map((member,i) => <Member><td id={member[0]}>{member[1]}</td></Member>)}
+            <AddMember><td><Popup trigger={<div>Add member +</div>} position="right center" modal>
+            <div style={{"color":"black"}}>Popup content here !!</div>
+            </Popup></td></AddMember>
           </table>
           <Gap />
         </html>
