@@ -506,3 +506,17 @@ def updateTask(taskid,state):
     except Exception as e:
         print(str(e))
         return "none"
+
+def addTask(projectid,title,deadline,description):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT taskid FROM tasks""")
+        latesttask = c.fetchall()[-1][0]
+        c.execute("""insert into tasks (projectid,taskid,title,description,deadline,complete) values (?,?,?,?,?,?)""",(int(projectid),latesttask+1,title,description,float(deadline),"False"))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print("Error adding task")
+        print(str(e))
+    return

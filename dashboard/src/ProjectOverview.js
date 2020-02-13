@@ -30,7 +30,7 @@ export class ProjectOverview extends React.Component {
 
   render() {
     return (
-      <html class="widget">
+      <html class="widget" style={{"width":"100%"}}>
         <TitleBar colour="#BF0864">Project Overview</TitleBar>
         <div style={{"text-align":"center","padding":"10px","font-size":"large"}}>
           <p/>

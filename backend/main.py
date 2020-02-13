@@ -323,6 +323,20 @@ def addmembertoproject():
     except:
         return flask.redirect("/")
 
+@app.route("/addtasktoproject",methods=["POST","GET"])
+def addtasktoproject():
+    try:
+        projectid = request.json["projectid"]
+        title = request.json["title"]
+        deadline = request.json["deadline"]
+        description = request.json["description"]
+
+        sp.addTask(projectid,title,deadline,description)
+
+        return jsonify({})
+    except:
+        return flask.redirect("/")
+
 @app.errorhandler(404)
 def page_not_found(e):
     session["authenticated"] = "False"

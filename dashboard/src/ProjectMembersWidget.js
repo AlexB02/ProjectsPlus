@@ -161,7 +161,7 @@ export class ProjectMembersWidget extends React.Component {
             <AddMember><td><Popup trigger={<div>Add member +</div>} position="right center" modal style={{"border-radius":"10px"}}>
             <div style={{"color":"black","padding":"5vmin"}}>
               <div>Add member to project</div>
-              <input id="memberEmail" type="text" class="boxinput" placeholder="email" required/>
+              <input id="memberEmail" type="text" class="boxinput" placeholder="email" required style={{"text-align":"center"}}/>
               <p />
               <InviteMemberSubmitDiv onClick={this.inviteMember}>Invite</InviteMemberSubmitDiv>
               <div style={{"color":"red"}}>{this.state.addMemberFailMessage}</div>

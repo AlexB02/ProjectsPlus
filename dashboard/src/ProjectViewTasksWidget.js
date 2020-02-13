@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import styled from "styled-components";
 import Switch from '@material-ui/core/Switch';
 import $ from 'jquery';
+import Popup from "reactjs-popup";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const EfficiencyTitleBar = styled.span`
   font-family: 'Karla', sans-serif;
@@ -17,9 +20,32 @@ const EfficiencyTitleBar = styled.span`
   font-weight: bold;
 `
 
-const Task = styled.tr`
+const AddTaskSubmitDiv = styled.div`
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  cursor: default;
   background-color: white;
-  width: auto;
+  transition: 0.1s;
+  white-space: pre;
+  font-weight: normal;
+  line-height: 35px;
+  color: #a2a2a2;
+  text-align: center;
+  border-style: solid;
+  border-width: thin;
+  border-color: silver;
+  border-radius: 6px;
+
+  &:hover {
+    background-color: rgb(247,247,247);
+    cursor: pointer;
+  }
+`
+
+const Task = styled.tr`
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
@@ -66,7 +92,7 @@ export class ProjectViewTasksWidget extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {"tasks":[],"checked":[]};
+    this.state = {"tasks":[],"checked":[],"addTaskDate":(new Date()),"addTaskSuccessMessage":"","addTaskFailMessage":""};
   }
 
   componentWillReceiveProps(props) {
@@ -147,6 +173,51 @@ export class ProjectViewTasksWidget extends React.Component {
     }
   }
 
+  addTaskDateChange = (date) => {
+    this.setState({"addTaskDate":date});
+  }
+
+  addTask = () => {
+    var title = $("#tasktitle").val();
+    if (title == "") {
+      this.setState({"addTaskFailMessage":"Task must have a title"});
+      return
+    }
+    var description = $("#description").val();
+    if (description == "") {
+      this.setState({"addTaskFailMessage":"Task must have a description"});
+      return
+    }
+    var deadline = this.state.addTaskDate;
+    deadline = deadline.getTime();
+
+    var task = {"projectid":this.props.projectid,"title":title,"deadline":deadline,"description":description};
+    let _this = this;
+    $(document).ready(function(){
+      var req = $.ajax({url: "/addtasktoproject",
+                        type: "POST",
+                        data: JSON.stringify(task),
+                        dataType: "json",
+                        contentType: "application/json;charset=utf-8",
+                      });
+
+      try {
+        req.done(function(data) {
+          try {
+            _this.setState({"addTaskSuccessMessage":"Added Task"});
+            _this.props.reloadPage();
+          }
+          catch (e) {
+            console.log("Error adding task");
+            console.log(e);
+          }
+        });
+      }
+      catch (e) {
+
+      }});
+  }
+
   render() {
     if (this.state.tasks.length) {
       return (
@@ -161,6 +232,23 @@ export class ProjectViewTasksWidget extends React.Component {
             </tr>
             {this.state.tasks.map((task,i) => <Task colour={task[3]} onClick={this.updatePage}><td id={task[0]}>{task[1]}</td><td id={task[0]}>{(new Date(task[2])).getDate().toString()}/{((new Date(task[2])).getMonth()+1).toString()}/{((new Date(task[2])).getYear()-100).toString()}</td><td id={task[0]}><Switch id={task[0]+"s"} onChange={this.updateCheck} checked={task[4]} color="primary"/></td></Task>)}
           </table>
+          <table>
+            <Task colour="rgb(162,162,162)"><td><Popup trigger={<div id="addTask" style={{"font-size":"large","text-align":"center"}}>Add Task +</div>} position="right center" modal style={{"border-radius":"10px"}}>
+              <div style={{"color":"black","padding":"5vmin","display":"grid"}}>
+                <div>Add task to project</div>
+                <input id="tasktitle" type="text" class="boxinput" placeholder="title" required style={{"text-align":"center","margin-left":"auto","margin-right":"auto"}}/>
+                <p style={{"margin-block-start":"0.5em","margin-block-end":"0.5em"}}/>
+                <input id="description" type="text" class="boxinput" placeholder="description" required style={{"text-align":"center","margin-left":"auto","margin-right":"auto"}}/>
+                <p style={{"margin-block-start":"0.5em","margin-block-end":"0.5em"}}/>
+                <div>Set a deadline</div>
+                <DatePicker selected={this.state.addTaskDate} onChange={this.addTaskDateChange} dateFormat="d MM yy" minDate={new Date()}/>
+                <p style={{"margin-block-start":"0.5em","margin-block-end":"0.5em"}}/>
+                <AddTaskSubmitDiv onClick={this.addTask}>Add</AddTaskSubmitDiv>
+                <div style={{"color":"red"}}>{this.state.addTaskFailMessage}</div>
+                <div style={{"color":"green"}}>{this.state.addTaskSuccessMessage}</div>
+              </div>
+            </Popup></td></Task>
+            </table>
           <TaskGap />
         </html>
       )
@@ -170,8 +258,25 @@ export class ProjectViewTasksWidget extends React.Component {
         <html class="widget">
           <EfficiencyTitleBar colour="#7B91FF">Tasks</EfficiencyTitleBar>
           <p/>
-          You currently do not have any assigned tasks
-          <p/>
+          This project currently does not have any tasks assigned
+          <p style={{"margin-block-start":"0.5em","margin-block-end":"0.5em"}}/>
+          <table>
+            <Task colour="rgb(162,162,162)"><td><Popup trigger={<div id="addTask" style={{"font-size":"large","text-align":"center"}}>Add Task +</div>} position="right center" modal style={{"border-radius":"10px"}}>
+              <div style={{"color":"black","padding":"5vmin","display":"grid"}}>
+                <div>Add task to project</div>
+                <input id="tasktitle" type="text" class="boxinput" placeholder="title" required style={{"text-align":"center","margin-left":"auto","margin-right":"auto"}}/>
+                <p style={{"margin-block-start":"0.5em","margin-block-end":"0.5em"}}/>
+                <input id="description" type="text" class="boxinput" placeholder="description" required style={{"text-align":"center","margin-left":"auto","margin-right":"auto"}}/>
+                <p style={{"margin-block-start":"0.5em","margin-block-end":"0.5em"}}/>
+                <div>Set a deadline</div>
+                <DatePicker selected={this.state.addTaskDate} onChange={this.addTaskDateChange} dateFormat="d MM yy" minDate={new Date()}/>
+                <p style={{"margin-block-start":"0.5em","margin-block-end":"0.5em"}}/>
+                <AddTaskSubmitDiv onClick={this.addTask}>Add</AddTaskSubmitDiv>
+                <div style={{"color":"red"}}>{this.state.addTaskFailMessage}</div>
+                <div style={{"color":"green"}}>{this.state.addTaskSuccessMessage}</div>
+              </div>
+            </Popup></td></Task>
+            </table>
         </html>
       )
     }

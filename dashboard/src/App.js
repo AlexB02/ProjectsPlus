@@ -415,6 +415,12 @@ class ProjectPage extends React.Component {
     this.getProjectData(props.projectid);
   }
 
+
+  reloadPage = () => {
+    this.getProjectData(this.props.projectid);
+  }
+
+
   getProjectData = (projectid) => {
     let _this = this;
     $(document).ready(function(){
@@ -451,11 +457,10 @@ class ProjectPage extends React.Component {
           <div class="widgets-column" style={{"width":"66vw"}}>
             <div style={{"display":"flex"}}>
               <ProjectOverview text={this.state.description}/>
-              <div className="horizontalWidgetGap"/>
-              <LatestManagersNotes text="These are the latest managers notes but if theres more text here then the box will get alrger. Or will the text get larger? not sure tbh, theres loads here not mate ngl, so do you reckon itll get even bigger or what?"/>
+              {/*<LatestManagersNotes text="These are the latest managers notes but if theres more text here then the box will get alrger. Or will the text get larger? not sure tbh, theres loads here not mate ngl, so do you reckon itll get even bigger or what?"/>*/}
             </div>
             <div class="verticalWidgetGap" />
-            <ProjectViewTasksWidget tasks={this.state.tasks} triggerParentUpdate={this.props.triggerParentUpdate}/>
+            <ProjectViewTasksWidget tasks={this.state.tasks} projectid={this.props.projectid} triggerParentUpdate={this.props.triggerParentUpdate} reloadPage={this.reloadPage}/>
             <div class="verticalWidgetGap" />
             <ProjectStatisticsWidget />
           </div>
