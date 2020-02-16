@@ -92,7 +92,7 @@ export class ProjectViewTasksWidget extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {"tasks":[],"checked":[],"addTaskDate":(new Date()),"addTaskSuccessMessage":"","addTaskFailMessage":""};
+    this.state = {"tasks":[],"checked":[],"addTaskDate":(new Date()),"addTaskSuccessMessage":"","addTaskFailMessage":"",addTaskWindowOpen:false};
 
 
     if (typeof(props.tasks) == "object") {
@@ -249,6 +249,7 @@ export class ProjectViewTasksWidget extends React.Component {
           try {
             _this.setState({"addTaskSuccessMessage":"Added Task"});
             _this.props.reloadPage();
+            _this.hideModal();
           }
           catch (e) {
             console.log("Error adding task");
@@ -296,6 +297,14 @@ export class ProjectViewTasksWidget extends React.Component {
 )
 }
 
+  hideModal = () => {
+    this.setState({addTaskWindowOpen:false});
+  }
+
+  showModal = () => {
+    this.setState({addTaskWindowOpen:true});
+  }
+
   render() {
     var tasks = this.state.tasks;
     if (tasks.length > 0) {
@@ -315,7 +324,7 @@ export class ProjectViewTasksWidget extends React.Component {
             {tasks.map((task,i) => <Task colour={task[3]} onClick={this.updatePage}><td id={task[0]}>{task[1]}</td><td id={task[0]}>{(new Date(task[2])).getDate().toString()}/{((new Date(task[2])).getMonth()+1).toString()}/{((new Date(task[2])).getYear()-100).toString()}</td><td id={task[0]}>{task[5]}</td><td id={task[0]}><Switch id={task[0]+"s"} onChange={this.updateCheck} checked={task[4]} color="primary"/></td><td id={task[0]}>{task[6]}</td><td id={task[0]+"s"} style={{"color":"rgb(162,162,162)"}} onClick={this.deleteTask}>Delete</td></Task>)}
           </table>
           <table>
-            <Task colour="rgb(162,162,162)"><td><Popup trigger={<div id="addTask" style={{"font-size":"large","text-align":"center"}}>Add Task +</div>} position="right center" modal style={{"border-radius":"10px"}}>
+            <Task colour="rgb(162,162,162)"><td><Popup isOpen={this.state.addTaskWindowOpen} trigger={<div id="addTask" onClick={this.showModal} style={{"font-size":"large","text-align":"center"}}>Add Task +</div>} position="right center" modal style={{"border-radius":"10px"}}>
               <div style={{"color":"black","padding":"5vmin","display":"grid"}}>
                 <div>Add task to project</div>
                 <input id="tasktitle" type="text" class="boxinput" placeholder="title" required style={{"text-align":"center","margin-left":"auto","margin-right":"auto"}}/>
