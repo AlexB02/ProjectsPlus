@@ -26,25 +26,77 @@ const CircleGap = styled.td`
 `
 
 export class ProjectStatisticsWidget extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {tasksCirclePercent:0,
+                  completetasksnumber:0,
+                  tasksnumber:0,
+                  tasksCircleColour:"#000000"
+                };
+    if (props.tasksnumber) {
+      try {
+        this.setState({tasksCirclePercent:(props.completetasksnumber / props.tasksnumber)*100});
+      }
+      catch (e){};
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.tasksnumber) {
+      try {
+        this.setState({tasksCirclePercent:(props.completetasksnumber / props.tasksnumber)*100});
+        if ((props.completetasksnumber / props.tasksnumber)*100 < 34) {
+          this.setState({tasksCircleColour:"#DE614A"})
+        }
+        else if ((props.completetasksnumber / props.tasksnumber)*100 < 68) {
+          this.setState({tasksCircleColour:"#FF8429"})
+        }
+        else if ((props.completetasksnumber / props.tasksnumber)*100 < 101) {
+          this.setState({tasksCircleColour:"#00CC66"})
+        }
+      }
+      catch (e) {};
+    }
+    if (props.projectEfficiency) {
+      try {
+        if (props.projectEfficiency < 34) {
+          this.setState({efficiencyCircleColour:"#DE614A"})
+        }
+        else if (props.projectEfficiency < 68) {
+          this.setState({efficiencyCircleColour:"#FF8429"})
+        }
+        else if (props.projectEfficiency < 101) {
+          this.setState({efficiencyCircleColour:"#00CC66"})
+        }
+      }
+      catch (e) {};
+    }
+  }
+
   render() {
     return (
       <html class="widget">
-        <TitleBar colour="#BF0864">Statistics</TitleBar>
+        <TitleBar colour="#0094A2">Statistics</TitleBar>
         <p />
         <table>
 
           <CircleGap />
 
           <StatisticCircle>
-            0%
-            <Circle percent="0" strokeWidth="4" strokeColor="#DE614A"/>
+            <div>Project Completion</div>
+            <p/>
+            <div>{Math.round(this.state.tasksCirclePercent)}%</div>
+            <Circle percent={this.state.tasksCirclePercent} strokeWidth="4" strokeColor={this.state.tasksCircleColour}/>
           </StatisticCircle>
 
           <CircleGap />
 
           <StatisticCircle>
-            50%
-            <Circle percent="50" strokeWidth="4" strokeColor="#FF8429"/>
+            <div>Average efficiency</div>
+            <p/>
+            <div>{Math.round(this.props.projectEfficiency)}%</div>
+            <Circle percent={this.props.projectEfficiency} strokeWidth="4" strokeColor={this.state.efficiencyCircleColour}/>
           </StatisticCircle>
 
           <CircleGap />

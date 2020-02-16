@@ -93,6 +93,47 @@ export class ProjectViewTasksWidget extends React.Component {
   constructor(props) {
     super(props);
     this.state = {"tasks":[],"checked":[],"addTaskDate":(new Date()),"addTaskSuccessMessage":"","addTaskFailMessage":""};
+
+
+    if (typeof(props.tasks) == "object") {
+
+      let tasks = props.tasks;
+      var tasksDeadlineList = [];
+      var deadline;
+
+      for (let task in tasks) {
+        deadline = tasks[task][Object.keys(tasks[task])[0]][1];
+        tasksDeadlineList.push(deadline);
+      }
+      // Pass through dict keys to sort by smallest to largest
+      tasksDeadlineList.sort((a, b) => a - b);
+
+      var finalTasks = [];
+      var checked = [];
+
+      for (var deadline in tasksDeadlineList) {
+        for (var task in tasks) {
+          // if deadline is in shortlisted deadline list and the outputted tasks list is less than 6 items
+          if (tasksDeadlineList[deadline] == tasks[task][Object.keys(tasks[task])[0]][1]) {
+
+            if ((tasks[task][Object.keys(tasks[task])[0]][1] - (new Date).getTime()) < 0) {
+              var colour = "red";
+            }
+            else {
+              var colour = "black";
+            }
+            if ((tasks[task][Object.keys(tasks[task])][2])=="True") {
+              var colour = "green";
+            }
+
+            finalTasks.push([Object.keys(tasks[task])[0],tasks[task][Object.keys(tasks[task])[0]][0],tasks[task][Object.keys(tasks[task])[0]][1],colour,(tasks[task][Object.keys(tasks[task])][2])=="True",tasks[task][Object.keys(tasks[task])][3],tasks[task][Object.keys(tasks[task])][4]]);
+            tasks.splice(task,1);
+          }
+        }
+      this.setState({"tasks":finalTasks});
+      }
+    }
+
   }
 
   componentWillReceiveProps(props) {
@@ -127,7 +168,7 @@ export class ProjectViewTasksWidget extends React.Component {
               var colour = "green";
             }
 
-            finalTasks.push([Object.keys(tasks[task])[0],tasks[task][Object.keys(tasks[task])[0]][0],tasks[task][Object.keys(tasks[task])[0]][1],colour,(tasks[task][Object.keys(tasks[task])][2])=="True"]);
+            finalTasks.push([Object.keys(tasks[task])[0],tasks[task][Object.keys(tasks[task])[0]][0],tasks[task][Object.keys(tasks[task])[0]][1],colour,(tasks[task][Object.keys(tasks[task])][2])=="True",tasks[task][Object.keys(tasks[task])][3],tasks[task][Object.keys(tasks[task])][4]]);
             tasks.splice(task,1);
           }
         }
@@ -169,6 +210,7 @@ export class ProjectViewTasksWidget extends React.Component {
         oldTasks[index][3] = colour;
         this.setState({tasks:oldTasks});
         this.updateTask(id,buttonState);
+        this.props.reloadPage();
       }
     }
   }
@@ -189,7 +231,8 @@ export class ProjectViewTasksWidget extends React.Component {
       return
     }
     var deadline = this.state.addTaskDate;
-    deadline = deadline.getTime();
+    var due = new Date(deadline.getFullYear().toString() + "-" + (deadline.getMonth()+1).toString() + "-" + (deadline.getDate()+1).toString());
+    deadline = due.getTime() - 1;
 
     var task = {"projectid":this.props.projectid,"title":title,"deadline":deadline,"description":description};
     let _this = this;
@@ -218,8 +261,44 @@ export class ProjectViewTasksWidget extends React.Component {
       }});
   }
 
+  deleteTask = (event) => {
+    var task = {"taskid":event.target.id};
+    let _this = this;
+    $(document).ready(function(){
+      var req = $.ajax({url: "/deletetask",
+                        type: "POST",
+                        data: JSON.stringify(task),
+                        dataType: "json",
+                        contentType: "application/json;charset=utf-8",
+                      });
+      try {
+        req.done(function(data) {
+          try {
+            if (_this.state.tasks.length == 1) {
+              _this.props.reloadPage();
+              _this.setState({tasks:[]});
+              _this.props.reloadPage();
+            }
+            else {
+              _this.props.reloadPage();
+            }
+            console.log(_this.props);
+          }
+          catch (e) {
+            console.log(e);
+          }
+        })
+      }
+      catch (e) {
+        console.log("DELETE TASK ERROR");
+      }
+  }
+)
+}
+
   render() {
-    if (this.state.tasks.length) {
+    var tasks = this.state.tasks;
+    if (tasks.length > 0) {
       return (
         <html class="widget">
           <EfficiencyTitleBar colour="#7B91FF">Tasks</EfficiencyTitleBar>
@@ -228,9 +307,12 @@ export class ProjectViewTasksWidget extends React.Component {
             <tr style={{"line-height":"30px"}}>
               <th>Name</th>
               <th>Due</th>
+              <th>Assigned to you</th>
               <th>Complete</th>
+              <th>Issues</th>
+              <th></th>
             </tr>
-            {this.state.tasks.map((task,i) => <Task colour={task[3]} onClick={this.updatePage}><td id={task[0]}>{task[1]}</td><td id={task[0]}>{(new Date(task[2])).getDate().toString()}/{((new Date(task[2])).getMonth()+1).toString()}/{((new Date(task[2])).getYear()-100).toString()}</td><td id={task[0]}><Switch id={task[0]+"s"} onChange={this.updateCheck} checked={task[4]} color="primary"/></td></Task>)}
+            {tasks.map((task,i) => <Task colour={task[3]} onClick={this.updatePage}><td id={task[0]}>{task[1]}</td><td id={task[0]}>{(new Date(task[2])).getDate().toString()}/{((new Date(task[2])).getMonth()+1).toString()}/{((new Date(task[2])).getYear()-100).toString()}</td><td id={task[0]}>{task[5]}</td><td id={task[0]}><Switch id={task[0]+"s"} onChange={this.updateCheck} checked={task[4]} color="primary"/></td><td id={task[0]}>{task[6]}</td><td id={task[0]+"s"} style={{"color":"rgb(162,162,162)"}} onClick={this.deleteTask}>Delete</td></Task>)}
           </table>
           <table>
             <Task colour="rgb(162,162,162)"><td><Popup trigger={<div id="addTask" style={{"font-size":"large","text-align":"center"}}>Add Task +</div>} position="right center" modal style={{"border-radius":"10px"}}>

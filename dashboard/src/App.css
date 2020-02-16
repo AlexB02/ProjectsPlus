@@ -150,7 +150,7 @@
 .widgets {
   padding-top: calc(100px + 1vmin);
   display: inline-flex;
-  width: max-content;
+  width: 100%;
 }
 
 .widget {

@@ -135,6 +135,7 @@ export class ProjectMembersWidget extends React.Component {
             else {
               _this.setState({addMemberFailMessage:""});
               _this.setState({addMemberSuccessMessage:"Added member"});
+              _this.props.reloadPage();
             }
           }
           catch (e) {
@@ -154,7 +155,7 @@ export class ProjectMembersWidget extends React.Component {
       return (
         <html class="widget">
 
-          <EfficiencyTitleBar colour="#FF476C">Members</EfficiencyTitleBar>
+          <EfficiencyTitleBar colour="#06bf62">Members</EfficiencyTitleBar>
           <Gap />
           <table style={{"border-collapse":"collapse","font-size":"large"}}>
             {this.state.members.map((member,i) => <Member><td id={member[0]}>{member[1]}</td></Member>)}

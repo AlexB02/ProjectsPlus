@@ -181,28 +181,10 @@ def signup():
 
 @app.route("/dashboard")
 def dashboard():
-    sp.addSkill("Python 3.7","Python")
-    sp.addSkill("React","React")
-    sp.addSkill("Flask","Flask")
-    sp.addSkill("HTML","HTML ")
-    sp.addSkill("CSS","CSS  ")
-    sp.addSkill("Microsoft Word","Word ")
-    sp.addSkill("Microsoft Powerpoint","Powerpoint")
-    sp.addSkill("Microsoft Excel","Excel")
-    sp.addSkill("Microsoft Publisher","Publisher")
-    sp.addSkill("Mac OSX","MacOS")
-    sp.addSkill("Windows 10","Windows")
-    sp.addSkill("Windows 7","Windows")
-    sp.addSkill("Javascript","JavaScript")
-    sp.addSkill("Ruby","Ruby ")
-    sp.addSkill("Adobe Illustrator","Illustrator")
-    sp.addSkill("Sony Vegas Pro","Vegas")
-    sp.addSkill("Adobe Premier Pro CC 2019","Premier Pro")
     try:
         if session["authenticated"] == "True":
             email = session["email"]
             user = sp.userObj(sp.getIDbyEmail(email))
-            skills = sp.getSkillsList()
 
             fl.login_user(user,remember=True,force=True)
             return flask.render_template("dashboard.html")
@@ -218,14 +200,29 @@ def getuserprofile():
         userid = sp.getIDbyEmail(email)
         user = sp.userObj(userid)
         username=user.firstname
-        timeEfficienciesMax = sp.getEfficiencies(userid,"time","max")
-        timeEfficienciesMin = sp.getEfficiencies(userid,"time","min")
-        scheduleEfficienciesMax = sp.getEfficiencies(userid,"time","max")
         projects = sp.getProjectNames(userid)
         tasks = sp.getOverviewTasks(userid)
-        return jsonify({"username":username,"timeEfficienciesMax":timeEfficienciesMax,"timeEfficienciesMin":timeEfficienciesMin,"scheduleEfficienciesMax":scheduleEfficienciesMax,"projects":projects,"tasks":tasks})
+        try:
+            recenttasks = sp.getRecentEfficiencies(userid)
+        except Exception as e:
+            print(str(e))
+        return jsonify({"username":username,"projects":projects,"tasks":tasks,"recenttasks":recenttasks})
     except:
         print("Error")
+        return flask.redirect("/")
+
+@app.route("/deletetask",methods=["POST","GET"])
+def deletetask():
+    try:
+        id = request.json["taskid"]
+        id = id[0:len(id)-1]
+        try:
+            sp.deleteTask(id)
+        except Exception as e:
+            print(str(e))
+        return jsonify({"success":"success"})
+    except:
+        print("Error deleting task in main")
         return flask.redirect("/")
 
 @app.route("/getuserproject",methods=["POST","GET"])
@@ -244,10 +241,11 @@ def GetUserProject():
                 title = sp.getProjectTitle(request.json["projectid"])
                 colour = sp.getProjectColour(request.json["projectid"])
                 description = sp.getProjectDescription(request.json["projectid"])
-                tasks = sp.getProjectTasks(request.json["projectid"])
+                tasks = sp.getProjectTasks(request.json["projectid"],userid)
                 members = sp.getProjectMembers(request.json["projectid"])
+                projectEfficiency = sp.getProjectEfficiency(request.json["projectid"])
 
-                return jsonify({"username":username,"lastname":lastname,"title":title,"colour":colour,"description":description,"tasks":tasks,"members":members})
+                return jsonify({"username":username,"lastname":lastname,"title":title,"colour":colour,"description":description,"tasks":tasks,"members":members,"projectEfficiency":projectEfficiency})
     except:
         return flask.redirect("/")
 
@@ -302,6 +300,8 @@ def updatetask():
     try:
         id = request.json["taskid"]
         state = request.json["state"]
+        projectid = sp.getTaskProjectID(id)
+
         sp.updateTask(id,str(state))
         return jsonify({})
     except:
@@ -323,6 +323,21 @@ def addmembertoproject():
     except:
         return flask.redirect("/")
 
+@app.route("/addmembertotask",methods=["POST","GET"])
+def addmembertotask():
+    try:
+        email = request.json["email"]
+        taskid = request.json["taskid"]
+        memberid = sp.getIDbyEmail(email)
+        if memberid == "False":
+            return jsonify({"isMember":"False"})
+
+        sp.addMemberToTask(memberid,taskid)
+
+        return jsonify({})
+    except:
+        return flask.redirect("/")
+
 @app.route("/addtasktoproject",methods=["POST","GET"])
 def addtasktoproject():
     try:
@@ -336,6 +351,28 @@ def addtasktoproject():
         return jsonify({})
     except:
         return flask.redirect("/")
+
+@app.route("/gettaskdata",methods=["POST","GET"])
+def getTaskData():
+    try:
+        taskid = request.json["taskid"]
+        members = sp.getTaskMembers(taskid)
+        return jsonify({"members":members})
+    except:
+        return flask.redirect("/")
+
+@app.route("/updatemembertaskstatus",methods=["POST","GET"])
+def updateMemberTaskStatus():
+    try:
+        memberid = request.json["id"]["memberid"]
+        taskid = request.json["taskid"]
+        newStatus = request.json["newStatus"]["memberid"]
+        sp.updateMemberTaskStatus(memberid,taskid,newStatus)
+
+        return jsonify({"message":"Updated member state"})
+    except:
+        return flask.redirect("/")
+
 
 @app.errorhandler(404)
 def page_not_found(e):

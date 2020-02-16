@@ -4,6 +4,7 @@ import hashlib
 from flask_login import UserMixin
 from datetime import datetime
 import time
+import math
 
 def connect():
 
@@ -30,28 +31,11 @@ def create(c):
         pass
 
     try:
-        c.execute("""CREATE TABLE IF NOT EXISTS skillslist (
-                    title text PRIMARY KEY,
-                    iconlocation text,
-                    abbrv text
-
-        )""")
-
-    except:
-        print("Create skillslist table error")
-        pass
-
-    try:
         c.execute("""CREATE TABLE IF NOT EXISTS efficiencylist (
-                    date text,
-                    time text,
-                    timesec real,
-                    type text,
-                    efficiency real,
-                    memberid integer,
-                    skill text,
                     projectid integer,
-                    PRIMARY KEY (memberid, skill, timesec)
+                    taskid integer,
+                    efficiency real,
+                    PRIMARY KEY (projectid, taskid)
         )""")
 
     except Exception as e:
@@ -94,11 +78,14 @@ def create(c):
                     description text,
                     deadline real,
                     complete text,
+                    setdate real,
+                    estimatedate real,
                     PRIMARY KEY (projectid,taskid)
         )""")
 
-    except:
+    except Exception as e:
         print("Create tasks table error")
+        print(str(e))
         pass
 
     try:
@@ -111,17 +98,6 @@ def create(c):
 
     except:
         print("Create membertasks table error")
-        pass
-
-    try:
-        c.execute("""CREATE TABLE IF NOT EXISTS taskskills (
-                    taskid integer,
-                    skillid integer,
-                    PRIMARY KEY (taskid,skillid)
-        )""")
-
-    except:
-        print("Create taskskills table error")
         pass
 
 def recordExists(email):
@@ -231,15 +207,6 @@ def addUser(firstname,lastname,email,password):
     conn.commit()
     conn.close()
 
-def addSkill(skill,abbrv):
-    conn = sql.connect('sqlite3/main.db')
-    c = conn.cursor()
-    c.execute("""SELECT title FROM skillslist WHERE title=?""",(skill,))
-    if not c.fetchone():
-        c.execute("""insert into skillslist (title,iconlocation,abbrv) values (?,?,?)""",(skill,"/",abbrv,))
-    conn.commit()
-    conn.close()
-
 def addEfficiency(type,efficiency,memberid,skill,projectid):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
@@ -292,22 +259,6 @@ def getEfficiencies(memberid,type,place):
             return sorted(efficienciesavg, key=lambda i: i["avg"])
     return []
 
-def getSkillsList():
-    conn = sql.connect('sqlite3/main.db')
-    c = conn.cursor()
-    skills = []
-    c.execute("""SELECT title FROM skillslist""")
-    for skill in c.fetchall():
-        skills.append(skill[0])
-
-    return skills
-
-def getSkillAbbrv(skill):
-    conn = sql.connect('sqlite3/main.db')
-    c = conn.cursor()
-    c.execute("""SELECT abbrv FROM skillslist where title=?""",(skill,))
-    return c.fetchone()[0]
-
 def addProject(projecttitle,colour,description):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
@@ -328,6 +279,24 @@ def addMemberToProject(userid,projectid,role):
         if c.fetchone() == None:
             try:
                 c.execute("""insert into projectmembers (memberid,projectid,role) values (?,?,?)""",(userid,projectid,role,))
+            except Exception as e:
+                return(str(e))
+    except:
+        print("Exception")
+
+
+    conn.commit()
+    conn.close()
+
+def addMemberToTask(userid,taskid):
+    conn = sql.connect('sqlite3/main.db')
+    c = conn.cursor()
+
+    try:
+        c.execute("""select memberid from membertasks where taskid=? and memberid=?""",(taskid,userid,))
+        if c.fetchone() == None:
+            try:
+                c.execute("""insert into membertasks (memberid,taskid,status) values (?,?,?)""",(userid,taskid,"in progress",))
             except Exception as e:
                 return(str(e))
     except:
@@ -378,6 +347,33 @@ def getProjectNames(userid):
         colour = c.fetchone()[0]
         projects.append({"id":id,"title":title,"colour":colour})
     return projects
+
+# Needs to return task name, project name and efficiency value using user id
+def getRecentEfficiencies(userid):
+    # [{"ProjectTitle":"Family Tasks","TaskTitle":"Task 3","avg":91.54}]
+    tasks = []
+    # Must get tasks then get the efficiencies of the completed ones
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT taskid FROM membertasks where memberid=?""",(userid,))
+        tasksQuery = c.fetchall()
+        for task in tasksQuery:
+            try:
+                c.execute("""SELECT title FROM tasks where taskid=?""",(task[0],))
+                taskname = c.fetchone()[0]
+                c.execute("""SELECT projectid FROM efficiencylist where taskid=?""",(task[0],))
+                projectid = c.fetchone()[0]
+                c.execute("""SELECT projecttitle FROM projectslist where projectid=?""",(projectid,))
+                projecttitle = c.fetchone()[0]
+                c.execute("""SELECT efficiency FROM efficiencylist where taskid=?""",(task[0],))
+                efficiency = c.fetchone()[0]
+                tasks.append({"ProjectTitle":projecttitle,"TaskTitle":taskname,"avg":efficiency})
+            except:
+                pass
+    except Exception as e:
+        print(e)
+    return tasks
 
 def getProjectTitle(projectid):
     try:
@@ -437,7 +433,7 @@ def getOverviewTasks(userid):
     except:
         return "none"
 
-def getProjectTasks(projectid):
+def getProjectTasks(projectid,memberid):
 
     # Need to get task name, the project the task is from, the due date and the task id
     # Get all task ids assigned to the user
@@ -449,13 +445,37 @@ def getProjectTasks(projectid):
         tasksQuery = c.fetchall()
         tasks = []
         for task in tasksQuery:
-            tasks.append({task[0]:[task[1],task[2],task[3]]})
+            issues = 0
+            c.execute("""SELECT status FROM membertasks where taskid=?""",(task[0],))
+            statuses = c.fetchall()
+            for status in statuses:
+                if status[0] == "issue":
+                    issues += 1
+
+            tasks.append({task[0]:[task[1],task[2],task[3],isTaskAssignedToMember(task[0],memberid),issues]})
 
         return tasks
         # Obtain task name, description, deadline, complete
 
     except Exception as e:
         return "none"
+
+def isTaskAssignedToMember(taskid,memberid):
+
+    # Need to get task
+    # Get all task ids assigned to the user
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT status FROM membertasks where taskid=? and memberid=?""",(taskid,memberid,))
+        # Needs to return list of dictionaries with each task id as the key and all the values as the value
+        tasksQuery = c.fetchone()[0]
+
+        return "Yes"
+        # Obtain task name, description, deadline, complete
+
+    except Exception as e:
+        return "No"
 
 def getTaskName(taskid):
     try:
@@ -500,6 +520,37 @@ def updateTask(taskid,state):
 
         c.execute("UPDATE tasks SET complete='"+str(state)+"' WHERE taskid="+taskid)
 
+        if str(state) == "True":
+
+            # Calculate efficiency, requires ratio
+            c.execute("""SELECT setdate FROM tasks where taskid=?""",(taskid,))
+            setdate = c.fetchone()[0]
+
+            c.execute("""SELECT deadline FROM tasks where taskid=?""",(taskid,))
+            deadline = c.fetchone()[0]
+
+            now = time.time()*1000
+
+            c.execute("""SELECT projectid FROM tasks where taskid=?""",(taskid,))
+            projectid = c.fetchone()[0]
+
+            # Time given over time taken
+            ratio = (deadline - setdate) / (now - setdate)
+            if ratio >= 1:
+                k = 5
+                cotpoint = 1/math.tan(5/math.pi)
+                a = (1/k)-cotpoint
+                efficiency = 20*(math.pi * ((math.pi/2)-math.atan((ratio/k)-a)))
+
+                c.execute("""insert into efficiencylist (projectid,taskid,efficiency) values (?,?,?)""",(projectid,taskid,efficiency,))
+            else:
+                efficiency = 100*((math.sin((ratio**2)/2)**2))
+                print("Efficiency: "+str(efficiency))
+                c.execute("""insert into efficiencylist (projectid,taskid,efficiency) values (?,?,?)""",(projectid,taskid,efficiency,))
+
+        else:
+            c.execute("""delete from efficiencylist where taskid=?""",(taskid,))
+
         conn.commit()
         conn.close()
 
@@ -512,11 +563,87 @@ def addTask(projectid,title,deadline,description):
         conn = sql.connect('sqlite3/main.db')
         c = conn.cursor()
         c.execute("""SELECT taskid FROM tasks""")
-        latesttask = c.fetchall()[-1][0]
-        c.execute("""insert into tasks (projectid,taskid,title,description,deadline,complete) values (?,?,?,?,?,?)""",(int(projectid),latesttask+1,title,description,float(deadline),"False"))
+        try:
+            tasks = c.fetchall()
+            highestid = 0
+            for task in tasks:
+                if task[0] > highestid:
+                    highestid = task[0]
+        except:
+            latesttask = 0
+        c.execute("""insert into tasks (projectid,taskid,title,description,deadline,complete,setdate,estimatedate) values (?,?,?,?,?,?,?,?)""",(int(projectid),highestid+1,title,description,float(deadline),"False",time.time()*1000,float(deadline)))
         conn.commit()
         conn.close()
     except Exception as e:
         print("Error adding task")
         print(str(e))
     return
+
+def deleteTask(taskid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""delete FROM tasks where taskid=?""",(taskid))
+        c.execute("""delete FROM efficiencylist where taskid=?""",(taskid))
+        c.execute("""delete FROM membertasks where taskid=?""",(taskid))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print("Error deleting task in sp")
+        print(str(e))
+    return
+
+def getTaskMembers(taskid):
+
+    # Need to get task
+    # Get all task ids assigned to the user
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""SELECT memberid FROM membertasks where taskid=?""",(taskid,))
+        membersQuery = c.fetchall()
+        members = []
+        for i in range(len(membersQuery)):
+            id  = membersQuery[i][0]
+            c.execute("""SELECT firstname FROM members where memberid=?""",(id,))
+            memberfirstname = c.fetchone()[0]
+            c.execute("""SELECT lastname FROM members where memberid=?""",(id,))
+            memberlastname = c.fetchone()[0]
+            membername = memberfirstname + " " + memberlastname
+            c.execute("""SELECT status FROM membertasks where memberid=? and taskid=?""",(id,taskid,))
+            status = c.fetchone()[0]
+            members.append([id,membername,status])
+
+        return members
+        # Obtain task name, description, deadline, complete
+    except:
+        return
+
+def updateMemberTaskStatus(memberid,taskid,newStatus):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("UPDATE membertasks SET status='"+str(newStatus)+"' WHERE taskid="+str(taskid)+" and memberid="+str(memberid))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(e)
+
+def getProjectEfficiency(projectid):
+    try:
+        conn = sql.connect('sqlite3/main.db')
+        c = conn.cursor()
+        c.execute("""select efficiency from efficiencylist where projectid=?""",(projectid,))
+        efficiencies = c.fetchall()
+        print(len(efficiencies))
+        if len(efficiencies) > 0:
+            efficiencysum = 0
+            for efficiency in efficiencies:
+                efficiencysum += efficiency[0]
+            projectEfficiency = efficiencysum / len(efficiencies)
+        else:
+            projectEfficiency = float(100)
+        return projectEfficiency
+
+    except Exception as e:
+        print(e)

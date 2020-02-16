@@ -7,6 +7,8 @@ import { ViewTasksWidget } from "./ViewTasksWidget.js";
 import { ProjectViewTasksWidget } from "./ProjectViewTasksWidget.js";
 import { ProjectStatisticsWidget } from "./ProjectStatisticsWidget.js";
 import { ProjectOverview } from "./ProjectOverview.js";
+import { TaskOverview } from "./TaskOverview.js";
+import { TaskMembersView } from "./TaskMembersView.js";
 import { LatestManagersNotes } from "./LatestManagersNotes.js";
 import { ProjectMembersWidget } from "./ProjectMembersWidget.js";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
@@ -213,8 +215,7 @@ class ProfilePage extends React.Component {
             _this.setState({username: data.username});
             _this.setState({projects: data.projects});
             _this.setState({tasks: data.tasks});
-            _this.setState({timeEfficienciesMax: data.timeEfficienciesMax});
-            _this.setState({timeEfficienciesMin: data.timeEfficienciesMin});
+            _this.setState({recenttasks: data.recenttasks});
             return;
         })
       }
@@ -233,8 +234,6 @@ class ProfilePage extends React.Component {
       username: "",
       projects: [],
       tasks: "",
-      timeEfficienciesMax: [],
-      timeEfficienciesMin: [],
       CreateProjectPopUpVisibility: "hidden",
       cancelClickOff: "False"
     }
@@ -375,9 +374,7 @@ class ProfilePage extends React.Component {
           </div>
           <div className="horizontalWidgetGap" />
           <div className="widgets-column">
-            <EfficienciesWidget title="Your top 5 skills for meeting a deadline" data={this.state.timeEfficienciesMax} length={5} colour="rgb(112, 175, 121)"/>
-            <div className="verticalWidgetGap"/>
-            <EfficienciesWidget title="Your lowest 5 skills when meeting a deadline" data={this.state.timeEfficienciesMin} length={5} colour="#C0392B"/>
+            <EfficienciesWidget title="Recently completed tasks" data={this.state.recenttasks} colour="#C0392B"/>
             <div className="verticalWidgetGap"/>
           </div>
           <div className="horizontalWidgetGap" />
@@ -409,7 +406,8 @@ class ProjectPage extends React.Component {
       lastname: "",
       projects: [],
       projectid: 0,
-      title: ""
+      title: "",
+      tasks: []
     }
     this.setState({projectid:props.projectid});
     this.getProjectData(props.projectid);
@@ -439,15 +437,32 @@ class ProjectPage extends React.Component {
           _this.setState({title: data.title});
           _this.setState({colour: data.colour});
           _this.setState({description: data.description});
-          _this.setState({tasks: data.tasks});
+
+          var tasks = data.tasks;
+          var complete = 0;
+
+          for (var task in tasks) {
+            if (tasks[task][Object.keys(tasks[task])][2] == "True") {
+              complete += 1;
+            }
+          }
+
+          _this.setState({tasksnumber:tasks.length});
+          _this.setState({completetasksnumber:complete});
+          _this.setState({tasks: tasks});
           _this.setState({members: data.members});
+          _this.setState({projectEfficiency: data.projectEfficiency})
+
         });
       }
-      catch (e) {};
+      catch (e) {
+        console.log(e);
+      };
     });
   };
 
   render() {
+    var tasks = this.state.tasks;
     return (
       <html>
         <NavBar className="NavBar" username={this.state.username} lastname={this.state.lastname} page={this.state.title} triggerParentUpdate={this.props.triggerParentUpdate} projectid={this.props.projectid} colour={this.state.colour}/>
@@ -460,14 +475,14 @@ class ProjectPage extends React.Component {
               {/*<LatestManagersNotes text="These are the latest managers notes but if theres more text here then the box will get alrger. Or will the text get larger? not sure tbh, theres loads here not mate ngl, so do you reckon itll get even bigger or what?"/>*/}
             </div>
             <div class="verticalWidgetGap" />
-            <ProjectViewTasksWidget tasks={this.state.tasks} projectid={this.props.projectid} triggerParentUpdate={this.props.triggerParentUpdate} reloadPage={this.reloadPage}/>
+            <ProjectViewTasksWidget tasks={tasks} projectid={this.props.projectid} triggerParentUpdate={this.props.triggerParentUpdate} reloadPage={this.reloadPage}/>
             <div class="verticalWidgetGap" />
-            <ProjectStatisticsWidget />
+            {/* Requires number of tasks complete and number of tasks*/}
+            <ProjectStatisticsWidget tasksnumber={this.state.tasksnumber} completetasksnumber={this.state.completetasksnumber} projectEfficiency={this.state.projectEfficiency}/>
           </div>
           <div className="horizontalWidgetGap" />
           <div class="widgets-column" style={{"width":"20vw"}}>
-            {/* Requires number of tasks complete and number of tasks*/}
-            <ProjectMembersWidget members={this.state.members} projectid={this.props.projectid} triggerParentUpdate={this.props.triggerParentUpdate}/>
+            <ProjectMembersWidget members={this.state.members} reloadPage={this.reloadPage} projectid={this.props.projectid} triggerParentUpdate={this.props.triggerParentUpdate}/>
           </div>
         </div>
         <div style={{"padding-bottom":"5vh"}} />
@@ -514,10 +529,22 @@ class TaskPage extends React.Component {
       catch (e) {};
     });
   };
+
+  reloadPage = () => {
+    this.getTaskData(this.props.taskid);
+  }
+
   render() {
     return (
       <html>
         <NavBar className="NavBar" username={this.state.username} lastname={this.state.lastname} projectname={this.state.project} projectid={this.state.projectid} page={this.state.taskname} task="true" triggerParentUpdate={this.props.triggerParentUpdate} colour={this.state.colour}/>
+        <div class="widgets">
+          <div className="horizontalWidgetGap"/>
+          <TaskOverview text={this.state.description} />
+          <div class="horizontalWidgetGap" />
+          <TaskMembersView taskid={this.props.taskid} reloadPage={this.reloadPage}/>
+          <div class="horizontalWidgetGap" />
+        </div>
       </html>
     )
   }

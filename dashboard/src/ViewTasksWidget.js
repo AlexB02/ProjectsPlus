@@ -110,7 +110,7 @@ export class ViewTasksWidget extends React.Component {
   render() {
     if (this.state.tasks.length) {
       return (
-        <html class="widget">
+        <html class="widget" style={{"width":"fit-content"}}>
           <EfficiencyTitleBar colour="#7B91FF">Tasks Overview</EfficiencyTitleBar>
           <TaskGap />
           <table style={{"border-collapse":"collapse","font-size":"large"}}>
