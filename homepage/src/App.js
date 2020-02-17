@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { EfficienciesWidget } from "./EfficienciesWidget.js";
+import { ProjectViewTasksWidget } from "./ProjectViewTasksWidget.js";
 import './App.css';
 import { Link } from "react-scroll";
 import crown from "./img/crown.svg";
@@ -335,12 +336,14 @@ export class Body extends Component {
         <Fade bottom>
           <a className="bodytitle">strive for efficiency+</a>
           <p>Understand what makes your team work, and uncover where they fall down.</p>
-          <p style={{"padding-bottom":"5vh"}}>Using a series of advanced algorithms, Projects Plus learns the strengths and weaknesses of each individual member, showing the data on a simple easy-to-use dashboard.</p>
-          <EfficienciesWidget title="Example Efficiency Widget" data={[{"skillAbbrv":"Skill 1","skillTitle":"Skill 1 Full Title","avg":169.84},{"skillAbbrv":"Skill 2","skillTitle":"Skill 2 Full Title","avg":101.23},{"skillAbbrv":"Skill 3","skillTitle":"Skill 3 Full Title","avg":89.45},{"skillAbbrv":"Skill 4","skillTitle":"Skill 4 Full Title","avg":76.74},{"skillAbbrv":"Skill 5","skillTitle":"Skill 5 Full Title","avg":34.87}]} length={5} colour="#F1C40F"/>
+          <p style={{"padding-bottom":"5vh"}}>Using a series of advanced algorithms, Projects Plus identifies how well time was utilised by team members in the completion of a task, showing the data on a simple easy-to-use dashboard.</p>
+          <EfficienciesWidget title="Example Efficiency Widget" data={[{"TaskTitle":"Task 1","ProjectTitle":"Task 1 project","avg":98.4},{"TaskTitle":"Task 2","ProjectTitle":"Task 2 project","avg":48.2},{"TaskTitle":"Task 3","ProjectTitle":"Task 3 project","avg":57.8},{"TaskTitle":"Task 4","ProjectTitle":"Task 4 project","avg":12.6},{"TaskTitle":"Task 5","ProjectTitle":"Task 5 project","avg":34.9}]} length={5} colour="#F1C40F"/>
+          <p/>
         </Fade>
         <Fade bottom>
           <a className="bodytitle">track your tasks+</a>
           <p>Follow what you have to do, for when, with an easy to understand widget</p>
+          <ProjectViewTasksWidget tasks={[]} projectid={0} />
         </Fade>
       </div>
 

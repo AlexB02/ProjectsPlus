@@ -335,17 +335,20 @@ def getProjectNames(userid):
     projectids = []
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
-    c.execute("""SELECT projectid FROM projectmembers where memberid=?""",(userid,))
+    try:
+        c.execute("""SELECT projectid FROM projectmembers where memberid=?""",(userid,))
 
-    for project in c.fetchall():
-        projectids.append(project[0])
+        for project in c.fetchall():
+            projectids.append(project[0])
 
-    for id in projectids:
-        c.execute("""select projecttitle from projectslist where projectid=?""",(id,))
-        title = c.fetchone()[0]
-        c.execute("""select colour from projectslist where projectid=?""",(id,))
-        colour = c.fetchone()[0]
-        projects.append({"id":id,"title":title,"colour":colour})
+        for id in projectids:
+            c.execute("""select projecttitle from projectslist where projectid=?""",(id,))
+            title = c.fetchone()[0]
+            c.execute("""select colour from projectslist where projectid=?""",(id,))
+            colour = c.fetchone()[0]
+            projects.append({"id":id,"title":title,"colour":colour})
+    except:
+        pass
     return projects
 
 # Needs to return task name, project name and efficiency value using user id
@@ -545,7 +548,6 @@ def updateTask(taskid,state):
                 c.execute("""insert into efficiencylist (projectid,taskid,efficiency) values (?,?,?)""",(projectid,taskid,efficiency,))
             else:
                 efficiency = 100*((math.sin((ratio**2)/2)**2))
-                print("Efficiency: "+str(efficiency))
                 c.execute("""insert into efficiencylist (projectid,taskid,efficiency) values (?,?,?)""",(projectid,taskid,efficiency,))
 
         else:
@@ -635,7 +637,6 @@ def getProjectEfficiency(projectid):
         c = conn.cursor()
         c.execute("""select efficiency from efficiencylist where projectid=?""",(projectid,))
         efficiencies = c.fetchall()
-        print(len(efficiencies))
         if len(efficiencies) > 0:
             efficiencysum = 0
             for efficiency in efficiencies:

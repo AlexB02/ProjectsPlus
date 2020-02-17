@@ -169,7 +169,7 @@ export class EfficienciesWidget extends React.Component {
   render() {
     if (this.state.data.length == 0) {
       return (
-        <html class="widget">
+        <html class="widget" style={{"width":"fit-content"}}>
           <EfficiencyTitleBar colour={this.props.colour}>
             <b>{this.state.title} </b>
           </EfficiencyTitleBar>
@@ -185,7 +185,7 @@ export class EfficienciesWidget extends React.Component {
     }
     else {
       return (
-          <html class="widget">
+          <html class="widget" style={{"width":"fit-content"}}>
             <EfficiencyTitleBar colour={this.props.colour}>
               <b>{this.state.title} </b>
             </EfficiencyTitleBar>

@@ -82,7 +82,6 @@ export class ViewProjectsWidget extends React.Component {
   }
 
   render() {
-    try {
       if (this.state.projects.length) {
         return (
           <html class="widget">
@@ -94,8 +93,7 @@ export class ViewProjectsWidget extends React.Component {
           </html>
         )
       }
-    }
-    catch {
+      else {
         return (
           <html class="widget">
             <EfficiencyTitleBar colour="#008080"><b>{this.props.title}</b></EfficiencyTitleBar>
@@ -106,5 +104,6 @@ export class ViewProjectsWidget extends React.Component {
             <p/>
           </html>
       )
-  }
+    }
+}
 }
