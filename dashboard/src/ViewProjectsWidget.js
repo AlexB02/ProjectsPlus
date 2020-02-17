@@ -82,28 +82,29 @@ export class ViewProjectsWidget extends React.Component {
   }
 
   render() {
-    if (this.state.projects.length) {
-      return (
-        <html class="widget">
-          <EfficiencyTitleBar colour="#008080"><b>{this.props.title}</b></EfficiencyTitleBar>
-          <p/>
-          {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage} colour={project["colour"]}>{project["title"]}</Project><p/></div>)}
-          <CreateProjectButton onClick={this.props.triggerCreateProject}>Create a project</CreateProjectButton>
-          <p/>
-        </html>
-      )
+    try {
+      if (this.state.projects.length) {
+        return (
+          <html class="widget">
+            <EfficiencyTitleBar colour="#008080"><b>{this.props.title}</b></EfficiencyTitleBar>
+            <p/>
+            {this.state.projects && this.state.projects.length && this.state.projects.map((project,i) => <div><Project id={project["id"]} onClick={this.updatePage} colour={project["colour"]}>{project["title"]}</Project><p/></div>)}
+            <CreateProjectButton onClick={this.props.triggerCreateProject}>Create a project</CreateProjectButton>
+            <p/>
+          </html>
+        )
+      }
     }
-    else {
-      return (
-        <html class="widget">
-          <EfficiencyTitleBar colour="#008080"><b>{this.props.title}</b></EfficiencyTitleBar>
-          <p/>
-          You are not a member of any projects
-          <p/>
-            <CreateProjectButton onClick={this.props.triggerCreateProject}>Create Project</CreateProjectButton>
-          <p/>
-        </html>
+    catch {
+        return (
+          <html class="widget">
+            <EfficiencyTitleBar colour="#008080"><b>{this.props.title}</b></EfficiencyTitleBar>
+            <p/>
+            You are not a member of any projects
+            <p/>
+              <CreateProjectButton onClick={this.props.triggerCreateProject}>Create Project</CreateProjectButton>
+            <p/>
+          </html>
       )
-    }
   }
 }
