@@ -454,7 +454,7 @@ def getProjectTasks(projectid,memberid):
             for status in statuses:
                 if status[0] == "issue":
                     issues += 1
-
+            # [{id:[title,deadline,complete,isassigned,issues]}]
             tasks.append({task[0]:[task[1],task[2],task[3],isTaskAssignedToMember(task[0],memberid),issues]})
 
         return tasks

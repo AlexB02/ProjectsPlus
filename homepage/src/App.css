@@ -61,6 +61,11 @@
 }
 
 .space2{
+  padding: 23vh;
+  background-color: #FAFAFA;
+}
+
+.space3{
   padding: 45vh;
   background-color: #FAFAFA;
 }

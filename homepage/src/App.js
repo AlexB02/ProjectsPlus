@@ -340,10 +340,11 @@ export class Body extends Component {
           <EfficienciesWidget title="Example Efficiency Widget" data={[{"TaskTitle":"Task 1","ProjectTitle":"Task 1 project","avg":98.4},{"TaskTitle":"Task 2","ProjectTitle":"Task 2 project","avg":48.2},{"TaskTitle":"Task 3","ProjectTitle":"Task 3 project","avg":57.8},{"TaskTitle":"Task 4","ProjectTitle":"Task 4 project","avg":12.6},{"TaskTitle":"Task 5","ProjectTitle":"Task 5 project","avg":34.9}]} length={5} colour="#F1C40F"/>
           <p/>
         </Fade>
+        <div class="space2"/>
         <Fade bottom>
           <a className="bodytitle">track your tasks+</a>
           <p>Follow what you have to do, for when, with an easy to understand widget</p>
-          <ProjectViewTasksWidget tasks={[]} projectid={0} />
+          <ProjectViewTasksWidget tasks={[{1:["Task 1",1581872941000,"True","Yes",2]},{2:["Task 2",1581972941000,"True","No",0]},{3:["Task 3",1581372941000,"False","Yes",3]}]} projectid={0} />
         </Fade>
       </div>
 
@@ -431,7 +432,7 @@ export class Body extends Component {
         </div>
       </Fade>
 
-      <div className="space2"/>
+      <div className="space3"/>
         <div id="signupsection" className="signupsection">
           <a className="bodytitle">sign up and experience the magic of automation+</a>
           <div className="texttoinputbreak"/>
