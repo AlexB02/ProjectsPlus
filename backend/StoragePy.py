@@ -47,7 +47,6 @@ def create(c):
         c.execute("""CREATE TABLE IF NOT EXISTS projectslist (
                     projectid integer,
                     projecttitle text,
-                    iconlocation text,
                     colour text,
                     description text,
                     PRIMARY KEY (projectid)
@@ -79,7 +78,6 @@ def create(c):
                     deadline real,
                     complete text,
                     setdate real,
-                    estimatedate real,
                     PRIMARY KEY (projectid,taskid)
         )""")
 
@@ -262,7 +260,7 @@ def getEfficiencies(memberid,type,place):
 def addProject(projecttitle,colour,description):
     conn = sql.connect('sqlite3/main.db')
     c = conn.cursor()
-    c.execute("""insert into projectslist (projectid,projecttitle,iconlocation,colour,description) values (NULL,?,?,?,?)""",(projecttitle,"/",colour,description))
+    c.execute("""insert into projectslist (projectid,projecttitle,colour,description) values (NULL,?,?,?)""",(projecttitle,colour,description))
     c.execute("""select projectid from projectslist where projecttitle=?""",(projecttitle,))
     projects = c.fetchall()
     conn.commit()
@@ -573,7 +571,7 @@ def addTask(projectid,title,deadline,description):
                     highestid = task[0]
         except:
             latesttask = 0
-        c.execute("""insert into tasks (projectid,taskid,title,description,deadline,complete,setdate,estimatedate) values (?,?,?,?,?,?,?,?)""",(int(projectid),highestid+1,title,description,float(deadline),"False",time.time()*1000,float(deadline)))
+        c.execute("""insert into tasks (projectid,taskid,title,description,deadline,complete,setdate) values (?,?,?,?,?,?,?)""",(int(projectid),highestid+1,title,description,float(deadline),"False",time.time()*1000))
         conn.commit()
         conn.close()
     except Exception as e:
