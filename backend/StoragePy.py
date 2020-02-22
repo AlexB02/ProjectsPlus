@@ -71,14 +71,14 @@ def create(c):
 
     try:
         c.execute("""CREATE TABLE IF NOT EXISTS tasks (
-                    projectid integer,
                     taskid integer,
+                    projectid integer,
                     title text,
                     description text,
                     deadline real,
                     complete text,
                     setdate real,
-                    PRIMARY KEY (projectid,taskid)
+                    PRIMARY KEY (taskid)
         )""")
 
     except Exception as e:

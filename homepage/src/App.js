@@ -207,6 +207,7 @@ export class Body extends Component {
           _this.setState({loginmessage: ""});
           return;
         }
+
         else {
           var req = $.ajax({url: "/login",
                             type: "POST" ,
@@ -238,6 +239,12 @@ export class Body extends Component {
       var confirmpassword = $("#confirmpassword").val();
 
       if (!firstname || !lastname || !email || !password) {
+        _this.setState({signupmessage: ""});
+        return;
+      }
+
+      // Test if firstname or lastname are blank strings
+      if (/^\s*$/.test(firstname) || /^\s*$/.test(lastname)) {
         _this.setState({signupmessage: ""});
         return;
       }

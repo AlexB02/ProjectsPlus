@@ -9,7 +9,6 @@ import { ProjectStatisticsWidget } from "./ProjectStatisticsWidget.js";
 import { ProjectOverview } from "./ProjectOverview.js";
 import { TaskOverview } from "./TaskOverview.js";
 import { TaskMembersView } from "./TaskMembersView.js";
-import { LatestManagersNotes } from "./LatestManagersNotes.js";
 import { ProjectMembersWidget } from "./ProjectMembersWidget.js";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import backarrow from "./img/back-arrow.svg";
@@ -56,7 +55,7 @@ class NavBar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {username:"",lastname:"",page:"",projectid:0,projects:[]};
+    this.state = {username:"",lastname:"",page:"",projectid:0};
     this.setState({username:props.username});
     this.setState({page:props.page});
     if (props.projectid) {
@@ -65,16 +64,12 @@ class NavBar extends React.Component {
     else {
       this.setState({projectid:0});
     }
-    this.setState({projects:props.projects});
   }
 
   componentWillReceiveProps(props) {
     this.setState({username:props.username});
     this.setState({lastname:props.lastname});
     this.setState({page:props.page});
-    if (props.projects) {
-      this.setState({projects:props.projects});
-    }
     if (props.projectid) {
       this.setState({projectid:props.projectid});
     }
@@ -241,22 +236,6 @@ class ProfilePage extends React.Component {
     this.getUserProfileData();
   }
 
-  addEfficiency = () => {
-    let _this = this;
-    $(document).ready(function(){
-      // add efficiency
-      var req = $.ajax({url: "/addefficiency",
-                        type:"POST",
-                        data: {}
-                      });
-      try {
-        req.done(function(data){});
-      }
-      catch (e) {};
-    })
-    window.location.reload();
-  };
-
   createNewProject = () => {
     this.setState({CreateProjectPopUpVisibility: "visible"});
   };
@@ -287,6 +266,10 @@ class ProfilePage extends React.Component {
       return;
     }
     if (description === "") {
+      return;
+    }
+    if (/^\s*$/.test(projecttitle) || /^\s*$/.test(description)) {
+      window.alert("You must have a project title and description");
       return;
     }
     if (projecttitle.length > 25) {
@@ -363,13 +346,11 @@ class ProfilePage extends React.Component {
 
         <div style={{"display":"inline-flex","width":"100%"}}>
           <div style={{"padding-top":"calc(47px + 1vmin)","width":"max-content"}}>
-            {/*Potential placement of view projects widget as a side bar*/}
           </div>
           <div className="widgets">
           <div className="horizontalWidgetGap" />
           <div className="widgets-column">
             <ViewTasksWidget tasks={this.state.tasks} triggerParentUpdate={this.props.triggerParentUpdate}/>
-            {/*<button onClick={this.addEfficiency} />*/}
             <div className="verticalWidgetGap"/>
           </div>
           <div className="horizontalWidgetGap" />

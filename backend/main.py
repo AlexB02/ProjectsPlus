@@ -285,17 +285,6 @@ def createproject():
     except:
         return flask.redirect("/")
 
-@app.route("/addefficiency",methods=["POST","GET"])
-def addefficiency():
-    try:
-        email = session["email"]
-        userid = sp.getIDbyEmail(email)
-        skills = sp.getSkillsList()
-        sp.addEfficiency("time",(random.randint(0,20000)/100),int(sp.getIDbyEmail(email)),skills[random.randint(0,len(skills)-1)],1)
-        return jsonify({})
-    except:
-        return flask.redirect("/")
-
 @app.route("/updatetask",methods=["POST","GET"])
 def updatetask():
     try:
